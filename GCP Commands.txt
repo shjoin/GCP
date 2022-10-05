@@ -1,0 +1,441 @@
+
+
+
+https://www.cloudskillsboost.google/games/2578 bigquery 
+
+ch1-na-genpact-532
+
+https://www.cloudskillsboost.google/games/2526 monitoring 
+
+
+https://www.cloudskillsboost.google/games/2479
+
+https://www.cloudskillsboost.google/games/2526
+ch1-na-genpact-606
+
+toyota rav4 XLE hybrid 2022 VIN 4T3RWRFV7NU14L236
+
+student-02-c7d9ad607635@qwiklabs.net
+
+3fjr28z39Rtd
+qwiklabs-gcp-04-3f8b2178458c
+
+
+
+gcloud config set compute/zone us-central1-b
+
+After you set the zone, start up a cluster for use in this lab:
+ gcloud container clusters create io
+
+Kubernetes engin--> Kubernetes clusters
+
+
+nuo of nodes : 3 by default 
+total vcpu 6
+NAME: io
+LOCATION: us-central1-b
+MASTER_VERSION: 1.21.10-gke.2000
+MASTER_IP: 35.202.117.142
+MACHINE_TYPE: e2-medium
+NODE_VERSION: 1.21.10-gke.2000
+NUM_NODES: 3
+STATUS: RUNNING
+
+it created instance templates and created  3 VMs 
+
+
+Clone the GitHub repository from the Cloud Shell command line:
+ gsutil cp -r gs://spls/gsp021/* .
+
+The easiest way to get started with Kubernetes is to use the kubectl 
+create command. Use it to launch a single instance of the nginx container.
+ kubectl create deployment nginx --image=nginx:1.10.0
+      output : deployment.apps/nginx created
+
+kubectl get pods
+
+Once the nginx container has a Running status you can expose it outside of Kubernetes using the kubectl expose command
+ kubectl expose deployment nginx --port 80 --type LoadBalancer
+
+  outup : service/nginx exposed
+kubectl get services
+
+
+curl http://34.121.109.160:80
+
+kubectl get pods
+pod is running 
+
+NAME                    READY   STATUS    RESTARTS   AGE
+nginx-56cd7f6b6-bssqf   1/1     Running   0          5m13s
+
+successfully created Kubernetes cluster and deploy Nginx container
+
+****Pods can be created using pod configuration files. Take a moment to explore the monolith pod configuration file.
+
+cat pods/monolith.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: monolith
+  labels:
+    app: monolith
+spec:
+  containers:
+    - name: monolith
+      image: kelseyhightower/monolith:1.0.0
+      args:
+        - "-http=0.0.0.0:80"
+        - "-health=0.0.0.0:81"
+        - "-secret=secret"
+      ports:
+        - name: http
+          containerPort: 80
+        - name: health
+          containerPort: 81
+      resources:
+        limits:
+          cpu: 0.2
+          memory: "10Mi"
+
+kubectl create -f pods/monolith.yaml
+kubectl get pods
+
+NAME                    READY   STATUS    RESTARTS   AGE
+monolith                1/1     Running   0          19s
+nginx-56cd7f6b6-bssqf   1/1     Running   0          12m
+
+
+kubectl describe pods monolith
+
+Interacting with Pods
+2nd terminal
+kubectl port-forward monolith 10080:80
+
+1st terminal 
+curl http://127.0.0.1:10080
+output {"message":"Hello"}
+
+
+Now use the curl command to see what happens when you hit a secure endpoint:
+
+check the cloud shell ip  ifconfig
+UP,LOOPBACK,RUNNING> inet 127.0.0.1  
+
+curl http://127.0.0.1:10080/secure
+
+
+curl -u user http://127.0.0.1:10080/login
+Enter host password for user 'user':
+{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJleHAiOjE2NTE0Mzc1ODEsImlhdCI6MTY1MTE3ODM4MSwiaXNzIjoiYXV0aC5zZXJ2aWNlIiwic3ViIjoidXNlciJ9.DRCNCRbo6o9N1ykNWML9DGoqAGCdmytQt5nkuOghWlI"}
+
+
+Logging in caused a JWT token to print out. Since Cloud Shell does not handle copying long strings well, create an environment variable for the token.
+
+TOKEN=$(curl http://127.0.0.1:10080/login -u user|jq -r '.token')
+
+
+Enter the super-secret password "password" again when prompted for the host password.
+
+Use this command to copy and then use the token to hit the secure endpoint with curl:
+
+curl -H "Authorization: Bearer $TOKEN" http://127.0.0.1:10080/secure
+
+kubectl logs monolith
+
+kubectl logs -f monolith
+
+Use the kubectl exec command to run an interactive shell inside the Monolith Pod. This can come in handy when you want to troubleshoot from within a container:
+
+kubectl exec monolith --stdin --tty -c monolith -- /bin/sh
+Copied!
+
+https://kubernetes.io/docs/concepts/workloads/pods/
+
+https://kubernetes.io/docs/concepts/storage/volumes/
+
+https://kubernetes.io/docs/concepts/services-networking/service/
+
+https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#what-is-a-deployment
+
+
+*******************DOCKER
+
+Open up Cloud Shell and enter the following command to run a hello world container to get started:
+
+docker run hello-world
+docker images
+docker run hello-world
+docker ps
+docker ps -a
+
+Build
+Let's build a Docker image that's based on a simple node application. Execute the following command to create and switch into a folder named test.
+
+  mkdir test && cd test
+
+cat > Dockerfile <<EOF
+# Use an official Node runtime as the parent image
+FROM node:lts
+# Set the working directory in the container to /app
+WORKDIR /app
+# Copy the current directory contents into the container at /app
+ADD . /app
+# Make the container's port 80 available to the outside world
+EXPOSE 80
+# Run app.js using node when the container launches
+CMD ["node", "shjoapp.js"]
+EOF
+
+This file instructs the Docker daemon on how to build your image.
+
+The initial line specifies the base parent image, which in this case is the official Docker image for node version long term support (lts).
+In the second, we set the working (current) directory of the container.
+In the third, we add the current directory's contents (indicated by the "." ) into the container.
+Then we expose the container's port so it can accept connections on that port and finally run the node command to start the application.
+
+Now you'll write the node application, and after that you'll build the image.
+
+Run the following to create the node application:
+
+cat > shjoapp.js <<EOF
+const http = require('http');
+const hostname = '0.0.0.0';
+const port = 80;
+const server = http.createServer((req, res) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/plain');
+    res.end('Hello World\n');
+});
+server.listen(port, hostname, () => {
+    console.log('Server running at http://%s:%s/', hostname, port);
+});
+process.on('SIGINT', function() {
+    console.log('Caught interrupt signal and will exit');
+    process.exit();
+});
+EOF
+
+docker build -t shjonode-app:0.1 .
+
+docker images
+
+docker run -p 4000:80 --name my-app shjonode-app:0.1
+
+curl http://localhost:4000
+
+docker stop my-app && docker rm my-app
+
+docker run -p 4000:80 --name my-app -d node-app:0.1
+docker ps
+
+docker logs [container_id]
+
+
+
+Snake Charmer - song by Eagle Eye Williamson
+
+**************************NGINX Ingress Controller on Google Kubernetes Engine
+
+Create a Kubernetes cluster
+Now that our zone is configured, deploy a Kubernetes Engine cluster. Run the following command to create a cluster named nginx-tutorial that's made up of two nodes (or worker machines):
+
+gcloud container clusters create nginx-tutorial --num-nodes 2
+
+Install Helm ->
+Helm is a tool that streamlines Kubernetes application installation and management. You can think of it like apt, yum, or homebrew for Kubernetes. Helm Charts are maintained by the Kubernetes community.
+
+helm version
+
+Add the chart repository and ensure the chart list is up to date:
+
+helm repo add stable https://charts.helm.sh/stable
+helm repo update
+
+Deploy an application in Kubernetes Engine
+Now that you have Helm configured, deploy a simple web-based application from the Google Cloud Repository. This application will be used as the backend for the Ingress.
+
+From the Cloud Shell, run the following command:
+kubectl create deployment hello-app --image=gcr.io/google-samples/hello-app:1.0
+
+Now expose the hello-app Deployment as a Service by running the following command:
+
+kubectl expose deployment hello-app  --port=8080
+
+
+Deploying the NGINX Ingress Controller via Helm-->
+
+The Kubernetes platform gives administrators flexibility when it comes to Ingress Controllers—you can integrate your own rather than having to work with your provider's built-in offering. The NGINX controller must be exposed for external access. This is done using Service type: LoadBalancer on the NGINX controller service. On Kubernetes Engine, this creates a Google Cloud Network (TCP/IP) Load Balancer with NGINX controller Service as a backend. Google Cloud also creates the appropriate firewall rules within the Service's VPC to allow web HTTP(S) traffic to the load balancer frontend IP address.
+
+
+***************Continuous Delivery Pipelines with Spinnaker and Kubernetes Engine
+
+Objectives
+Set up your environment by launching Google Cloud Shell, creating a Kubernetes Engine cluster, and configuring your identity and user management scheme.
+
+Download a sample application, create a Git repository then upload it to a Google Cloud Source Repository.
+
+Deploy Spinnaker to Kubernetes Engine using Helm.
+
+Build your Docker image.
+
+Create triggers to create Docker images when your application changes.
+
+Configure a Spinnaker pipeline to reliably and continuously deploy your application to Kubernetes Engine.
+
+Deploy a code change, triggering the pipeline, and watch it roll out to production.
+   gcloud config set compute/zone us-central1-f
+
+Create a Kubernetes Engine cluster using the Spinnaker tutorial sample application:
+   gcloud container clusters create spinnaker-tutorial \
+    --machine-type=n1-standard-2
+
+Create a Cloud Identity Access Management (Cloud IAM) service account to delegate permissions to Spinnaker, allowing it to store data in Cloud Storage. 
+Spinnaker stores its pipeline data in Cloud Storage to ensure reliability and resiliency. If your Spinnaker deployment unexpectedly fails, you can create an identical deployment in minutes with access to the same pipeline data as the original.
+
+
+Upload your startup script to a Cloud Storage bucket by following these steps:
+
+Create the service account:
+
+gcloud iam service-accounts create spinnaker-account \
+    --display-name spinnaker-account
+Copied!
+Store the service account email address and your current project ID in environment variables for use in later commands:
+
+export SA_EMAIL=$(gcloud iam service-accounts list \
+    --filter="displayName:spinnaker-account" \
+    --format='value(email)')
+Copied!
+export PROJECT=$(gcloud info --format='value(config.project)')
+Copied!
+Bind the storage.admin role to your service account:
+
+gcloud projects add-iam-policy-binding $PROJECT \
+    --role roles/storage.admin \
+    --member serviceAccount:$SA_EMAIL
+Copied!
+Download the service account key. In a later step, you will install Spinnaker and upload this key to Kubernetes Engine:
+
+gcloud iam service-accounts keys create spinnaker-sa.json \
+     --iam-account $SA_EMAIL
+
+Set up Cloud Pub/Sub to trigger Spinnaker pipelines
+
+
+gcloud pubsub topics create projects/$PROJECT/topics/gcr
+
+
+gcloud pubsub subscriptions create gcr-triggers \
+    --topic projects/${PROJECT}/topics/gcr
+
+export SA_EMAIL=$(gcloud iam service-accounts list \
+    --filter="displayName:spinnaker-account" \
+    --format='value(email)')
+
+gcloud beta pubsub subscriptions add-iam-policy-binding gcr-triggers \
+    --role roles/pubsub.subscriber --member serviceAccount:$SA_EMAIL
+
+Deploying Spinnaker using Helm
+
+kubectl create clusterrolebinding user-admin-binding \
+    --clusterrole=cluster-admin --user=$(gcloud config get-value account)
+
+
+Grant Spinnaker the cluster-admin role so it can deploy resources across all namespaces:
+
+kubectl create clusterrolebinding --clusterrole=cluster-admin \
+    --serviceaccount=default:default spinnaker-admin
+
+Add the stable charts deployments to Helm's usable repositories (includes Spinnaker):
+
+helm repo add stable https://charts.helm.sh/stable
+helm repo update
+
+
+Configure Spinnaker
+Still in Cloud Shell, create a bucket for Spinnaker to store its pipeline configuration:
+
+export PROJECT=$(gcloud info \
+    --format='value(config.project)')
+Copied!
+export BUCKET=$PROJECT-spinnaker-config
+Copied!
+gsutil mb -c regional -l us-central1 gs://$BUCKET
+Copied!
+Run the following command to create a spinnaker-config.yaml file, which describes how Helm should install Spinnaker:
+
+export SA_JSON=$(cat spinnaker-sa.json)
+export PROJECT=$(gcloud info --format='value(config.project)')
+export BUCKET=$PROJECT-spinnaker-config
+cat > spinnaker-config.yaml <<EOF
+gcs:
+  enabled: true
+  bucket: $BUCKET
+  project: $PROJECT
+  jsonKey: '$SA_JSON'
+dockerRegistries:
+- name: gcr
+  address: https://gcr.io
+  username: _json_key
+  password: '$SA_JSON'
+  email: 1234@5678.com
+# Disable minio as the default storage backend
+minio:
+  enabled: false
+# Configure Spinnaker to enable GCP services
+halyard:
+  spinnakerVersion: 1.19.4
+  image:
+    repository: us-docker.pkg.dev/spinnaker-community/docker/halyard
+    tag: 1.32.0
+    pullSecrets: []
+  additionalScripts:
+    create: true
+    data:
+      enable_gcs_artifacts.sh: |-
+        \$HAL_COMMAND config artifact gcs account add gcs-$PROJECT --json-path /opt/gcs/key.json
+        \$HAL_COMMAND config artifact gcs enable
+      enable_pubsub_triggers.sh: |-
+        \$HAL_COMMAND config pubsub google enable
+        \$HAL_COMMAND config pubsub google subscription add gcr-triggers \
+          --subscription-name gcr-triggers \
+          --json-path /opt/gcs/key.json \
+          --project $PROJECT \
+          --message-format GCR
+EOF
+
+git config --global user.name "student-03-ff50074488b1@qwiklabs.net"
+
+
+
+
+
+
+
+gcloud config set compute/zone us-central1-a
+
+gsutil -m cp -r gs://spls/gsp053/orchestrate-with-kubernetes .
+cd orchestrate-with-kubernetes/kubernetes
+
+
+gcloud container clusters create bootcamp --num-nodes 5 --scopes "https://www.googleapis.com/auth/projecthosting,storage-rw"
+
+
+kubectl explain deployment
+
+kubectl explain deployment --recursive
+
+kubectl explain deployment.metadata.name
+
+vi deployments/auth.yaml
+
+...
+containers:
+- name: auth
+  image: "kelseyhightower/auth:1.0.0"
+...
+
+curl -ks https://35.223.56.166
+
+
