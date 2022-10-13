@@ -1,0 +1,592 @@
+Question 1: Incorrect
+Your company built a TensorFlow neutral-network model with a large number of neurons and layers. The model fits well for the training data. However, when tested against new data, it performs poorly. What method can you employ to address this?
+
+
+
+
+
+
+•	 
+A. Threading
+
+(Incorrect)
+•	 
+B. Serialization
+•	 
+C. Dropout Methods
+(Correct)
+•	 
+D. Dimensionality Reduction
+Explanation
+correct answer -> Dropout Method * What is the dropout method? -> The key idea is to randomly drop units (along with their connections) from the neural network during training. This prevents units from co-adapting too much. * Why correct answer for this question is Dropout Method? -> Deep neural nets with a large number of parameters are very powerful machine learning systems. However, overfitting is a serious problem in such networks. Large networks are also slow to use, making it difficult to deal with overfitting by combining the predictions of many different large neural nets at test time. Dropout is a technique for addressing this problem. REFER HERE: https://jmlr.org/papers/v15/srivastava14a.html
+Question 2: 
+Skipped
+You are building a model to make clothing recommendations. You know a user's fashion preference is likely to change over time, so you build a data pipeline to stream new data back to the model as it becomes available. How should you use this data to train the model?
+
+
+
+
+•	 
+A. Continuously retrain the model on just the new data.
+•	 
+B. Continuously retrain the model on a combination of existing data and the new data.
+(Correct)
+•	 
+C. Train on the existing data while using the new data as your test set.
+•	 
+D. Train on the new data while using the existing data as your test set.
+Explanation
+I would go with B (but A is also possible If the market is fast changing) https://datascience.stackexchange.com/questions/12761/should-a-model-be-re-trained-if-new-observations-are-available: Suppose that your model attempts to predict customers' behavior, e.g. how likely is a customer to purchase your product given an offer tailored for him. Clearly, the market changes over time, customers' preferences change, and your competitors adjust. You should adjust as well, so you need to retrain periodically. In such a case I would recommend to add new data, but also omit old data that is not relevant anymore. If the market is fast changing, you should even consider retraining periodically based on new data only. https://docs.aws.amazon.com/machine-learning/latest/dg/retraining-models-on-new-data.html: It is a good practice to continuously monitor the incoming data and retrain your model on newer data if you find that the data distribution has deviated significantly from the original training data distribution
+Question 3: 
+Skipped
+You designed a database for patient records as a pilot project to cover a few hundred patients in three clinics. Your design used a single database table to represent all patients and their visits, and you used self-joins to generate reports. The server resource utilization was at 50%. Since then, the scope of the project has expanded. The database must now store 100 times more patient records. You can no longer run the reports, because they either take too long or they encounter errors with insufficient compute resources. How should you adjust the database design?
+
+•	 
+A. Add capacity (memory and disk space) to the database server by the order of 200.
+•	 
+B. Shard the tables into smaller ones based on date ranges, and only generate reports with prespecified date ranges.
+•	 
+C. Normalize the master patient-record table into the patient table and the visits table, and create other necessary tables to avoid self-join.
+(Correct)
+•	 
+D. Partition the table into smaller tables, with one for each clinic. Run queries against the smaller table pairs, and use unions for consolidated reports.
+Explanation
+C is correct because this option provides the least amount of inconvenience over using pre-specified date ranges or one table per clinic while also increasing performance due to avoiding self-joins.
+Question 4: 
+Skipped
+You create an important report for your large team in Google Data Studio 360. The report uses Google BigQuery as its data source. You notice that visualizations are not showing data that is less than 1 hour old. What should you do?
+•	 
+A. Disable caching by editing the report settings.
+
+(Correct)
+•	 
+B. Disable caching in BigQuery by editing table details.
+•	 
+C. Refresh your browser tab showing the visualizations.
+•	 
+D. Clear your browser history for the past hour then reload the tab showing the virtualizations.
+Explanation
+Reference:
+
+https://support.google.com/datastudio/answer/7020039?hl=en
+Question 5: 
+Skipped
+An external customer provides you with a daily dump of data from their database. The data flows into Google Cloud Storage GCS as comma-separated values
+(CSV) files. You want to analyze this data in Google BigQuery, but the data could have rows that are formatted incorrectly or corrupted. How should you build this pipeline?
+
+
+
+•	 
+A. Use federated data sources, and check data in the SQL query.
+
+•	 
+B. Enable BigQuery monitoring in Google Stackdriver and create an alert.
+•	 
+C. Import the data into BigQuery using the gcloud CLI and set max_bad_records to 0.
+•	 
+D. Run a Google Cloud Dataflow batch pipeline to import the data into BigQuery, and push errors to another dead-letter table for analysis.
+(Correct)
+Explanation
+The answer is D. An ETL pipeline will be implemented for this scenario. Check out handling invalid inputs in cloud data flow https://cloud.google.com/blog/products/gcp/handling-invalid-inputs-in-dataflow
+Question 6: 
+Skipped
+Your weather app queries a database every 15 minutes to get the current temperature. The frontend is powered by Google App Engine and server millions of users. How should you design the frontend to respond to a database failure?
+
+
+
+
+•	 
+A. Issue a command to restart the database servers.
+•	 
+B. Retry the query with exponential backoff, up to a cap of 15 minutes.
+(Correct)
+•	 
+C. Retry the query every second until it comes back online to minimize staleness of data.
+•	 
+D. Reduce the query frequency to once every hour until the database comes back online.
+Explanation
+Correct answer is B. App engine create applications that use Cloud SQL database connections effectively. Below is what is written in google cloud documnetation. If your application attempts to connect to the database and does not succeed, the database could be temporarily unavailable. In this case, sending too many simultaneous connection requests might waste additional database resources and increase the time needed to recover. Using exponential backoff prevents your application from sending an unresponsive number of connection requests when it can't connect to the database. This retry only makes sense when first connecting, or when first grabbing a connection from the pool. If errors happen in the middle of a transaction, the application must do the retrying, and it must retry from the beginning of a transaction. So even if your pool is configured properly, the application might still see errors if connections are lost. reference link is https://cloud.google.com/sql/docs/mysql/manage-connections
+Question 7: 
+Skipped
+You are creating a model to predict housing prices. Due to budget constraints, you must run it on a single resource-constrained virtual machine. Which learning algorithm should you use?
+•	 
+A. Linear regression
+(Correct)
+•	 
+B. Logistic classification
+•	 
+C. Recurrent neural network
+•	 
+D. Feedforward neural network
+Explanation
+Correct answer is A. A tip here to decide when a liner regression should be used or logistics regression needs to be used. If you are forecasting that is the values in the column that you are predicting is numeric, it is always liner regression. If you are classifying, that is buy or no buy, yes or no, you will be using logistics regression.
+Question 8: 
+Skipped
+You are building new real-time data warehouse for your company and will use Google BigQuery streaming inserts. There is no guarantee that data will only be sent in once but you do have a unique ID for each row of data and an event timestamp. You want to ensure that duplicates are not included while interactively querying data. Which query type should you use?
+
+•	 
+A. Include ORDER BY DESK on timestamp column and LIMIT to 1.
+•	 
+B. Use GROUP BY on the unique ID column and timestamp column and SUM on the values.
+•	 
+C. Use the LAG window function with PARTITION by unique ID along with WHERE LAG IS NOT NULL.
+
+•	 
+D. Use the ROW_NUMBER window function with PARTITION by unique ID along with WHERE row equals 1.
+(Correct)
+Explanation
+Correct answer is D. Group by column us used to check for the duplicates where you can have the count(*) for each of the unique id column. If the count is greater than 1, we will know duplicate exists.The easiest way to remove duplicates while streaming inserts is to use row_number. Use GROUP BY on the unique ID column and timestamp column and SUM on the values will not remove duplicates.
+I also executed LAG function and LAG function will return NULL on unique id when no previous records with same unique id exist. Hence LAG is also not an option here.
+Question 9: 
+Skipped
+Your company is using WILDCARD tables to query data across multiple tables with similar names. The SQL statement is currently failing with the following error:
+# Syntax error : Expected end of statement but got "-" at [4:11]
+
+SELECT age -
+
+FROM -
+bigquery-public-data.noaa_gsod.gsod
+
+WHERE -
+age != 99
+AND_TABLE_SUFFIX = "˜1929'
+
+ORDER BY -
+age DESC
+Which table name will make the SQL statement work correctly?
+
+
+
+•	 
+A. "˜bigquery-public-data.noaa_gsod.gsod"˜
+•	 
+B. bigquery-public-data.noaa_gsod.gsod*
+
+•	 
+C. "˜bigquery-public-data.noaa_gsod.gsod'*
+•	 
+D. "˜bigquery-public-data.noaa_gsod.gsod*`
+(Correct)
+Explanation
+D is correct because it follows the correct wildcard syntax of enclosing the table name in backticks and including the * wildcard character.
+A is not correct because this is not the correct wildcard syntax as there is no wildcard character present.
+B is not correct because this is not the correct wildcard syntax since it’s missing backticks.
+C is not correct because this is not the correct wildcard syntax since it’s not using a backtick as the last character.
+https://cloud.google.com/bigquery/docs/reference/standard-sql/wildcard-table-reference
+Question 10: 
+Skipped
+Your company is in a highly regulated industry. One of your requirements is to ensure individual users have access only to the minimum amount of information required to do their jobs. You want to enforce this requirement with Google BigQuery. Which three approaches can you take? (Choose three.)
+
+•	 
+A. Disable writes to certain tables.
+•	 
+B. Restrict access to tables by role.
+(Correct)
+•	 
+C. Ensure that the data is encrypted at all times.
+•	 
+D. Restrict BigQuery API access to approved users.
+(Correct)
+•	 
+E. Segregate data across multiple tables or databases.
+•	 
+F. Use Google Stackdriver Audit Logging to determine policy violations.
+(Correct)
+Explanation
+orrect option -> B. Restrict access to tables by role.
+Reference: https://cloud.google.com/bigquery/docs/table-access-controls-intro
+
+correct option -> D. Restrict BigQuery API access to approved users.
+***Only approved users will have access which means other users will have minimum amount of information required to do their job.***
+Reference: https://cloud.google.com/bigquery/docs/access-control
+
+correct option -> F. Use Google Stackdriver Audit Logging to determine policy violations.
+Reference: https://cloud.google.com/bigquery/docs/table-access-controls-intro#logging
+
+A. Disable writes to certain tables. ---> Read is still available(not minimal access)
+C. Ensure that the data is encrypted at all times. ---> Data is encrypted by default.
+E. Segregate data across multiple tables or databases. ---> Normalization is of no help here.
+Question 11: 
+Skipped
+You are designing a basket abandonment system for an ecommerce company. The system will send a message to a user based on these rules:
+✑ No interaction by the user on the site for 1 hour
+✑ Has added more than $30 worth of products to the basket
+✑ Has not completed a transaction
+You use Google Cloud Dataflow to process the data and decide if a message should be sent. How should you design the pipeline?
+
+
+•	 
+A. Use a fixed-time window with a duration of 60 minutes.
+
+•	 
+B. Use a sliding time window with a duration of 60 minutes.
+
+•	 
+C. Use a session window with a gap time duration of 60 minutes.
+(Correct)
+•	 
+D. Use a global window with a time based trigger with a delay of 60 minutes.
+Explanation
+The correct answer is C. There are 3 windowing concepts in dataflow and each can be used for below use case 1) Fixed window 2) Sliding window and 3) Session window. Fixed window = any aggregation use cases, any batch analysis of data, relatively simple use cases. Sliding window = Moving averages of data Session window = user session data, click data and real time gaming analysis.
+Question 12: 
+Skipped
+Your company handles data processing for a number of different clients. Each client prefers to use their own suite of analytics tools, with some allowing direct query access via Google BigQuery. You need to secure the data so that clients cannot see each other's data. You want to ensure appropriate access to the data.
+Which three steps should you take? (Choose three.)
+
+
+
+
+
+•	 
+A. Load data into different partitions.
+•	 
+B. Load data into a different dataset for each client.
+
+(Correct)
+•	 
+C. Put each client's BigQuery dataset into a different table.
+•	 
+D. Restrict a client's dataset to approved users.
+(Correct)
+•	 
+E. Only allow a service account to access the datasets.
+(Correct)
+•	 
+F. Use the appropriate identity and access management (IAM) roles for each client's users.
+Explanation
+According to me the answer is B, D AND E. When an identity calls a Google Cloud API, BigQuery requires that the identity has the appropriate permissions to use the resource. You can grant permissions by granting roles to a user, a group, or a service account. The question is about securing the data so that clients cannot see each other's data. A service account is a Google Account that is associated with your Google Cloud project
+Question 13: 
+Skipped
+You want to process payment transactions in a point-of-sale application that will run on Google Cloud Platform. Your user base could grow exponentially, but you do not want to manage infrastructure scaling.
+Which Google database service should you use?
+•	 
+A. Cloud SQL
+•	 
+B. BigQuery
+•	 
+C. Cloud Bigtable
+•	 
+D. Cloud Datastore
+(Correct)
+Explanation
+D is correct: Datastore (currently Firestore in native or datastore mode). It is a fully managed and serverless solution that allows for transactions and will autoscale (storage and compute) without the need to manage any infrastructure.
+A is wrong: Cloud SQL is fully a managed transactional DB, but only the storage grows automatically. As your user base increases, you will need to increase the CPU/memory of the instance, and to do that you must edit the instance manually (and the questions specifically says "you do not want to manage infrastructure scaling")
+B is wrong: Bigquery is OLAP (for analytics). NoOps, fully managed, autoscales and allows transactions, but it is not designed for this use case.
+C is wrong: Bigtable is a NoSQL database for massive writes, and to scale (storage and CPU) you must add nodes, so it is completely out of this use case.
+Question 14: 
+Skipped
+You want to use a database of information about tissue samples to classify future tissue samples as either normal or mutated. You are evaluating an unsupervised anomaly detection method for classifying the tissue samples. Which two characteristic support this method? (Choose two.)
+
+•	 
+A. There are very few occurrences of mutations relative to normal samples.
+•	 
+B. There are roughly equal occurrences of both normal and mutated samples in the database.
+•	 
+C. You expect future mutations to have different features from the mutated samples in the database.
+•	 
+D. You expect future mutations to have similar features to the mutated samples in the database.
+(Correct)
+•	 
+E. You already have labels for which samples are mutated and which are normal in the database.
+Explanation
+I think that AD makes more sense. D is the explanation you gave. In the rest, A makes more sense, in any anomaly detection algorithm it is assumed a priori that you have much more "normal" samples than mutated ones, so that you can model normal patterns and detect patterns that are "off" that normal pattern. For that you will always need the no. of normal samples to be much bigger than the no. of mutated samples.
+Question 15: 
+Skipped
+You need to store and analyze social media postings in Google BigQuery at a rate of 10,000 messages per minute in near real-time. Initially, design the application to use streaming inserts for individual postings. Your application also performs data aggregations right after the streaming inserts. You discover that the queries after streaming inserts do not exhibit strong consistency, and reports from the queries might miss in-flight data. How can you adjust your application design?
+•	 
+A. Re-write the application to load accumulated data every 2 minutes.
+•	 
+B. Convert the streaming insert code to batch load for individual messages.
+(Correct)
+•	 
+C. Load the original message to Google Cloud SQL, and export the table every hour to BigQuery via streaming inserts.
+•	 
+D. Estimate the average latency for data availability after streaming inserts, and always run queries after waiting twice as long.
+Explanation
+B is more appropriate(insert in batch mode). A & D are not suitable one to me. Questions for: A - why data should be accumulated in every 2 mins(Why 2 mins, it can be 1.5 mins, 1.8 mins, 2.x mins, 3 mins) etc, what is the justification behind selecting "2 mins". D - why user should wait twice time of average latency of data availability. If average latency is 3 mins, then user should wait 6 mins to run query. BQ docs states "some recently streamed rows might not be available for table copy typically for a few minutes. In rare cases, this can take up to 90 minutes"
+Question 16: 
+Skipped
+Your startup has never implemented a formal security policy. Currently, everyone in the company has access to the datasets stored in Google BigQuery. Teams have freedom to use the service as they see fit, and they have not documented their use cases. You have been asked to secure the data warehouse. You need to discover what everyone is doing. What should you do first?
+
+
+
+
+•	 
+A. Use Google Stackdriver Audit Logs to review data access.
+(Correct)
+•	 
+B. Get the identity and access management IIAM) policy of each table
+•	 
+C. Use Stackdriver Monitoring to see the usage of BigQuery query slots.
+•	 
+D. Use the Google Cloud Billing API to see what account the warehouse is being billed to.
+Explanation
+A is correct because this is the best way to get granular access to data showing which users are accessing which data.
+B is not correct because we already know that all users already have access to all data, so this information is unlikely to be useful. It will also not show what users have done, just what they can do.
+C is not correct because slot usage will not inform security policy.
+D is not correct because a billing account is typically shared among many people and will only show the amount of data queried and stored
+https://cloud.google.com/bigquery/docs/reference/auditlogs/#mapping-audit-entries-to-log-streams
+https://cloud.google.com/bigquery/docs/monitoring#slots-available
+Question 17: 
+Skipped
+Your company is migrating their 30-node Apache Hadoop cluster to the cloud. They want to re-use Hadoop jobs they have already created and minimize the management of the cluster as much as possible. They also want to be able to persist data beyond the life of the cluster. What should you do?
+
+•	 
+A. Create a Google Cloud Dataflow job to process the data.
+•	 
+B. Create a Google Cloud Dataproc cluster that uses persistent disks for HDFS.
+•	 
+C. Create a Hadoop cluster on Google Compute Engine that uses persistent disks.
+•	 
+D. Create a Cloud Dataproc cluster that uses the Google Cloud Storage connector.
+(Correct)
+•	 
+E. Create a Hadoop cluster on Google Compute Engine that uses Local SSD disks.
+Explanation
+The correct answer is D. Here is the explanation to why Data proc and why not Data flow. When a company wants to move their existing Hadoop jobs on premise to cloud, we can simply move the jobs in cloud data prod and replace hdfs with gs:// which is google storage. This way you are keeping compute and storage separately. Hence the correct answer is D. However, if the company wants to complete create a new jobs and don’t want to use the existing Hadoop jobs running on premise, the option is to create new data flow jobs.
+Question 18: 
+Skipped
+Business owners at your company have given you a database of bank transactions. Each row contains the user ID, transaction type, transaction location, and transaction amount. They ask you to investigate what type of machine learning can be applied to the data. Which three machine learning applications can you use? (Choose three.)
+
+•	 
+A. Supervised learning to determine which transactions are most likely to be fraudulent.
+•	 
+B. Unsupervised learning to determine which transactions are most likely to be fraudulent.
+(Correct)
+•	 
+C. Clustering to divide the transactions into N categories based on feature similarity.
+(Correct)
+•	 
+D. Supervised learning to predict the location of a transaction.
+(Correct)
+•	 
+E. Reinforcement learning to predict the location of a transaction.
+•	 
+F. Unsupervised learning to predict the location of a transaction.
+Explanation
+ANSWERS: B, C and D
+i) Fraudulent transaction, is nothing but anomaly detection which falls under Unsupervised.
+ii) All transactions can be categorized using type etc - clustering algorithm.
+iii) Using location as a label, supervised classification can be developed to predict location.
+Question 19: 
+Skipped
+Your company's on-premises Apache Hadoop servers are approaching end-of-life, and IT has decided to migrate the cluster to Google Cloud Dataproc. A like-for- like migration of the cluster would require 50 TB of Google Persistent Disk per node. The CIO is concerned about the cost of using that much block storage. You want to minimize the storage cost of the migration. What should you do?
+•	 
+A. Put the data into Google Cloud Storage.
+(Correct)
+•	 
+B. Use preemptible virtual machines (VMs) for the Cloud Dataproc cluster.
+•	 
+C. Tune the Cloud Dataproc cluster so that there is just enough disk for all data.
+•	 
+D. Migrate some of the cold data into Google Cloud Storage, and keep only the hot data in Persistent Disk.
+Explanation
+Answer is A.
+B: Wrong eVM wont solve the problem of larger storage prices.
+C: May be, but nothing mentioned in terms of what to tune in the question, also this is like-for-like migration so tuning may not be part of the migration.
+D: Again, this is like-for-like so need to define what is hot data and which is cold data, also persistent disk costlier than cloud storage.
+Question 20: 
+Skipped
+You work for a car manufacturer and have set up a data pipeline using Google Cloud Pub/Sub to capture anomalous sensor events. You are using a push subscription in Cloud Pub/Sub that calls a custom HTTPS endpoint that you have created to take action of these anomalous events as they occur. Your custom
+HTTPS endpoint keeps getting an inordinate amount of duplicate messages. What is the most likely cause of these duplicate messages?
+•	 
+A. The message body for the sensor event is too large.
+•	 
+B. Your custom endpoint has an out-of-date SSL certificate.
+•	 
+C. The Cloud Pub/Sub topic has too many messages published to it.
+•	 
+D. Your custom endpoint is not acknowledging messages within the acknowledgement deadline.
+(Correct)
+Explanation
+Ans D: If a message is not acknowledged with in ackDeadline, then the message will be replayed hence causing duplicate messages.
+Question 21: 
+Skipped
+Your company uses a proprietary system to send inventory data every 6 hours to a data ingestion service in the cloud. Transmitted data includes a payload of several fields and the timestamp of the transmission. If there are any concerns about a transmission, the system re-transmits the data. How should you deduplicate the data most efficiency?
+
+
+
+
+•	 
+A. Assign global unique identifiers (GUID) to each data entry.
+(Correct)
+•	 
+B. Compute the hash value of each data entry, and compare it with all historical data.
+•	 
+C. Store each data entry as the primary key in a separate database and apply an index.
+•	 
+D. Maintain a database table to store the hash value and other metadata for each data entry.
+Explanation
+The best answer is "A". Answer "D" is not as efficient or error-proof due to two reasons 1. You need to calculate hash at sender as well as at receiver end to do the comparison. Waste of computing power. 2. Even if we discount the computing power, we should note that the system is sending inventory information. Two messages sent at different can denote same inventory level (and thus have same hash). Adding sender time stamp to hash will defeat the purpose of using hash as now retried messages will have different timestamp and a different hash. if timestamp is used as message creation timestamp than that can also be used as a UUID.
+Question 22: 
+Skipped
+Your company has hired a new data scientist who wants to perform complicated analyses across very large datasets stored in Google Cloud Storage and in a
+Cassandra cluster on Google Compute Engine. The scientist primarily wants to create labelled data sets for machine learning projects, along with some visualization tasks. She reports that her laptop is not powerful enough to perform her tasks and it is slowing her down. You want to help her perform her tasks.
+What should you do?
+
+•	 
+A. Run a local version of Jupiter on the laptop.
+•	 
+B. Grant the user access to Google Cloud Shell.
+•	 
+C. Host a visualization tool on a VM on Google Compute Engine.
+•	 
+D. Deploy Google Cloud Datalab to a virtual machine (VM) on Google Compute Engine.
+(Correct)
+Explanation
+D is the Correct answer But, a thing to note here is there are two products offer the ipynb functionality. one is DataLab another is AI Notebooks.
+
+AI Notebooks is correct answer. Google Cloud AI Platform Notebooks is effectively the upgraded version of Google Cloud Datalab and gives you benefits like being able to use the notebook directly in your browser without having to setup an ssh tunnel first (which datalab forces you to do).
+
+Link - https://stackoverflow.com/questions/58031608/what-is-the-difference-between-google-cloud-datalab-and-google-cloud-ai-platform#:~:text=Google%20Cloud%20AI%20Platform%20Notebooks%20is%20effectively%20the%20upgraded%20version,datalab%20forces%20you%20to%20do).
+Question 23: 
+Skipped
+You are deploying 10,000 new Internet of Things devices to collect temperature data in your warehouses globally. You need to process, store and analyze these very large datasets in real time. What should you do?
+
+
+
+
+•	 
+A. Send the data to Google Cloud Datastore and then export to BigQuery.
+•	 
+B. Send the data to Google Cloud Pub/Sub, stream Cloud Pub/Sub to Google Cloud Dataflow, and store the data in Google BigQuery.
+(Correct)
+•	 
+C. Send the data to Cloud Storage and then spin up an Apache Hadoop cluster as needed in Google Cloud Dataproc whenever analysis is required.
+•	 
+D. Export logs in batch to Google Cloud Storage and then spin up a Google Cloud SQL instance, import the data from Cloud Storage, and run an analysis as needed.
+Explanation
+B is more correct than other options so B is the answer. But if this is actual use case you have to deal with use Cloud BigTable instead of bigquery. So the pipeline will be like this. IOT-Devices -> Cloud Pub/Sub -> Cloud BigTable -> Cloud Data Studio (For real-time analytics)
+Question 24: 
+Skipped
+You have spent a few days loading data from comma-separated values (CSV) files into the Google BigQuery table CLICK_STREAM. The column DT stores the epoch time of click events. For convenience, you chose a simple schema where every field is treated as the STRING type. Now, you want to compute web session durations of users who visit your site, and you want to change its data type to the TIMESTAMP. You want to minimize the migration effort without making future queries computationally expensive. What should you do?
+•	 
+A. Delete the table CLICK_STREAM, and then re-create it such that the column DT is of the TIMESTAMP type. Reload the data.
+•	 
+B. Add a column TS of the TIMESTAMP type to the table CLICK_STREAM, and populate the numeric values from the column TS for each row. Reference the column TS instead of the column DT from now on.
+•	 
+C. Create a view CLICK_STREAM_V, where strings from the column DT are cast into TIMESTAMP values. Reference the view CLICK_STREAM_V instead of the table CLICK_STREAM from now on.
+•	 
+D. Add two columns to the table CLICK STREAM: TS of the TIMESTAMP type and IS_NEW of the BOOLEAN type. Reload all data in append mode. For each appended row, set the value of IS_NEW to true. For future queries, reference the column TS instead of the column DT, with the WHERE clause ensuring that the value of IS_NEW must be true.
+•	 
+E. Construct a query to return every row of the table CLICK_STREAM, while using the built-in function to cast strings from the column DT into TIMESTAMP values. Run the query into a destination table NEW_CLICK_STREAM, in which the column TS is the TIMESTAMP type. Reference the table NEW_CLICK_STREAM instead of the table CLICK_STREAM from now on. In the future, new data is loaded into the table NEW_CLICK_STREAM.
+(Correct)
+Explanation
+E as the column type cannot be changed and the column needs to casting loaded into a new table using either SQL Query or import/export.
+Refer GCP documentation - BigQuery Changing Schema: https://cloud.google.com/bigquery/docs/manually-changing-schemas#changing_a_columns_data_type
+A is wrong as with this approach all the data would be lost and needs to be reloaded
+B is wrong as numeric values cannot be used directly and would need casting.
+C is wrong as view is not materialized views, so the future queries would always be taxed as the casting would be done always.
+Question 25: 
+Skipped
+You want to use Google Stackdriver Logging to monitor Google BigQuery usage. You need an instant notification to be sent to your monitoring tool when new data is appended to a certain table using an insert job, but you do not want to receive notifications for other tables. What should you do?
+•	 
+A. Make a call to the Stackdriver API to list all logs, and apply an advanced filter.
+•	 
+B. In the Stackdriver logging admin interface, and enable a log sink export to BigQuery.
+•	 
+C. In the Stackdriver logging admin interface, enable a log sink export to Google Cloud Pub/Sub, and subscribe to the topic from your monitoring tool.
+
+•	 
+D. Using the Stackdriver API, create a project sink with advanced log filter to export to Pub/Sub, and subscribe to the topic from your monitoring tool.
+(Correct)
+Explanation
+D as the key requirement is to have notification on a particular table. It can be achieved using advanced log filter to filter only the table logs and create a project sink to Cloud Pub/Sub for notification.
+Refer GCP documentation - Advanced Logs Filters: https://cloud.google.com/logging/docs/view/advanced-queries
+A is wrong as advanced filter will help in filtering. However, there is no notification sends.
+B is wrong as it would send all the logs and BigQuery does not provide notifications.
+C is wrong as it would send all the logs.
+Question 26: 
+Skipped
+You are working on a sensitive project involving private user data. You have set up a project on Google Cloud Platform to house your work internally. An external consultant is going to assist with coding a complex transformation in a Google Cloud Dataflow pipeline for your project. How should you maintain users' privacy?
+•	 
+A. Grant the consultant the Viewer role on the project.
+•	 
+B. Grant the consultant the Cloud Dataflow Developer role on the project.
+•	 
+C. Create a service account and allow the consultant to log on with it.
+•	 
+D. Create an anonymized sample of the data for the consultant to work with in a different project.
+(Correct)
+Explanation
+The answer is D.
+
+The other options lets the external consultor access to the (not anonymized) data with personal details.
+
+Option D is a common procedure to protect any kind of private information to 3rd parties.
+Question 27: 
+Skipped
+You are building a model to predict whether or not it will rain on a given day. You have thousands of input features and want to see if you can improve training speed by removing some features while having a minimum effect on model accuracy. What can you do?
+•	 
+A. Eliminate features that are highly correlated to the output labels.
+•	 
+B. Combine highly co-dependent features into one representative feature.
+(Correct)
+•	 
+C. Instead of feeding in each feature individually, average their values in batches of 3.
+•	 
+D. Remove the features that have null values for more than 50% of the training records.
+Explanation
+Answer is: B
+A: correlated to output means that feature can contribute a lot to the model. so not a good idea.
+C: you need to run with almost same number, but you will iterate twice, once for averaging and second time to feed the averaged value.
+D: removing features even if it 50% nulls is not good idea, unless you prove that it is not at all correlated to output. But this is nowhere so can remove.
+Question 28: 
+Skipped
+Your company is performing data preprocessing for a learning algorithm in Google Cloud Dataflow. Numerous data logs are being are being generated during this step, and the team wants to analyze them. Due to the dynamic nature of the campaign, the data is growing exponentially every hour.
+The data scientists have written the following code to read the data for a new key features in the logs.
+BigQueryIO.Read -
+.named("ReadLogData")
+.from("clouddataflow-readonly:samples.log_data")
+You want to improve the performance of this data read. What should you do?
+•	 
+A. Specify the TableReference object in the code.
+
+•	 
+B. Use .fromQuery operation to read specific fields from the table.
+(Correct)
+•	 
+C. Use of both the Google BigQuery TableSchema and TableFieldSchema classes.
+•	 
+D. Call a transform that returns TableRow objects, where each element in the PCollection represents a single row in the table.
+Explanation
+B is correct: I think both read.from and read.fromQuery will use GCS as the intermediate step, but fromQuery can greatly reduce the amount of data (and is a Best Practice in BQ to query only the columns that are required), so the processing performance should be increased.
+Question 29: 
+Skipped
+Your company is streaming real-time sensor data from their factory floor into Bigtable and they have noticed extremely poor performance. How should the row key be redesigned to improve Bigtable performance on queries that populate real-time dashboards?
+•	 
+A. Use a row key of the form <timestamp>.
+•	 
+B. Use a row key of the form <sensorid>.
+•	 
+C. Use a row key of the form <timestamp>#<sensorid>.
+•	 
+D. Use a row key of the form >#<sensorid>#<timestamp>.
+(Correct)
+Explanation
+The correct answer is D.
+Refer to the link https://cloud.google.com/bigtable/docs/schema-design for Big table schema design.
+C is not the right answer becuase
+Timestamps
+If you often need to retrieve data based on the time when it was recorded, it's a good idea to include a timestamp as part of your row key. Using the timestamp by itself as the row key is not recommended, as most writes would be pushed onto a single node. For the same reason, avoid placing a timestamp at the start of the row key.
+For example, your application might need to record performance-related data, such as CPU and memory usage, once per second for a large number of machines. Your row key for this data could combine an identifier for the machine with a timestamp for the data (for example, machine_4223421#1425330757685).
+Question 30: 
+Skipped
+Your company's customer and order databases are often under heavy load. This makes performing analytics against them difficult without harming operations.
+The databases are in a MySQL cluster, with nightly backups taken using mysqldump. You want to perform analytics with minimal impact on operations. What should you do?
+•	 
+A. Add a node to the MySQL cluster and build an OLAP cube there.
+•	 
+B. Use an ETL tool to load the data from MySQL into Google BigQuery.
+(Correct)
+•	 
+C. Connect an on-premises Apache Hadoop cluster to MySQL and perform ETL.
+•	 
+D. Mount the backups to Google Cloud SQL, and then process the data using Google Cloud Dataproc.
+Explanation
+I vote for B because uses dumps and not access to DB
+and because BigG saids that with Dataproc Hub now You can analyze the data
+https://cloud.google.com/blog/products/data-analytics/run-data-science-scale-dataproc-and-apache-spark
+Continue
+Retake test
+
