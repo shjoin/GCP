@@ -1,0 +1,63 @@
+Question 1: Incorrect
+Your company built a TensorFlow neutral-network model with a large number of neurons and layers. The model fits well for the training data. However, when tested against new data, it performs poorly. What method can you employ to address this?
+
+
+
+
+
+
+•	 
+A. Threading
+
+ 
+•	 
+B. Serialization
+•	 
+C. Dropout Methods
+ 
+•	 
+D. Dimensionality Reduction
+
+
+Question 7: 
+Skipped
+You are creating a model to predict housing prices. Due to budget constraints, you must run it on a single resource-constrained virtual machine. Which learning algorithm should you use?
+•	 
+A. Linear regression
+ 
+•	 
+B. Logistic classification
+•	 
+C. Recurrent neural network
+•	 
+D. Feedforward neural network
+Explanation
+Correct answer is A. A tip here to decide when a liner regression should be used or logistics regression needs to be used. If you are forecasting that is the values in the column that you are predicting is numeric, it is always liner regression. If you are classifying, that is buy or no buy, yes or no, you will be using logistics regression.
+
+
+
+Question 18: 
+
+Business owners at your company have given you a database of bank transactions. Each row contains the user ID, transaction type, transaction location, and transaction amount. They ask you to investigate what type of machine learning can be applied to the data. Which three machine learning applications can you use? (Choose three.)
+
+•	 
+A. Supervised learning to determine which transactions are most likely to be fraudulent.
+•	 
+B. Unsupervised learning to determine which transactions are most likely to be fraudulent.
+ 
+•	 
+C. Clustering to divide the transactions into N categories based on feature similarity.
+ 
+•	 
+D. Supervised learning to predict the location of a transaction.
+ 
+•	 
+E. Reinforcement learning to predict the location of a transaction.
+•	 
+F. Unsupervised learning to predict the location of a transaction.
+
+Explanation
+ANSWERS: B, C and D
+i) Fraudulent transaction, is nothing but anomaly detection which falls under Unsupervised.
+ii) All transactions can be categorized using type etc - clustering algorithm.
+iii) Using location as a label, supervised classification can be developed to predict location.

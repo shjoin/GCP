@@ -1,0 +1,786 @@
+Question 1: 
+Skipped
+You are integrating one of your internal IT applications and Google BigQuery, so users can query BigQuery from the application's interface. You do not want individual users to authenticate to BigQuery and you do not want to give them access to the dataset. You need to securely access BigQuery from your IT application. What should you do?
+
+
+
+
+•	 
+A. Create groups for your users and give those groups access to the dataset
+•	 
+B. Integrate with a single sign-on (SSO) platform, and pass each user's credentials along with the query request
+•	 
+C. Create a service account and grant dataset access to that account. Use the service account's private key to access the dataset
+(Correct)
+•	 
+D. Create a dummy user and grant dataset access to that user. Store the username and password for that user in a file on the files system, and use those credentials to access the BigQuery dataset
+Explanation
+Answer: C Description: Service Account are best option when granting access from tools/appllications
+Question 2: 
+Skipped
+You are building a data pipeline on Google Cloud. You need to prepare data using a casual method for a machine-learning process. You want to support a logistic regression model. You also need to monitor and adjust for null values, which must remain real-valued and cannot be removed. What should you do?
+
+
+
+
+•	 
+A. Use Cloud Dataprep to find null values in sample source data. Convert all nulls to "˜none' using a Cloud Dataproc job.
+•	 
+B. Use Cloud Dataprep to find null values in sample source data. Convert all nulls to 0 using a Cloud Dataprep job.
+(Correct)
+•	 
+C. Use Cloud Dataflow to find null values in sample source data. Convert all nulls to "˜none' using a Cloud Dataprep job.
+•	 
+D. Use Cloud Dataflow to find null values in sample source data. Convert all nulls to 0 using a custom script.
+Explanation
+Answer: B Description: Dataprep is best suited for this kind of activity, as we need to just do a small function of modulating the data and dataprep is UI based
+Question 3: 
+Skipped
+You set up a streaming data insert into a Redis cluster via a Kafka cluster. Both clusters are running on Compute Engine instances. You need to encrypt data at rest with encryption keys that you can create, rotate, and destroy as needed. What should you do?
+•	 
+A. Create a dedicated service account, and use encryption at rest to reference your data stored in your Compute Engine cluster instances as part of your API service calls.
+•	 
+B. Create encryption keys in Cloud Key Management Service. Use those keys to encrypt your data in all of the Compute Engine cluster instances. Most Voted
+(Correct)
+•	 
+C. Create encryption keys locally. Upload your encryption keys to Cloud Key Management Service. Use those keys to encrypt your data in all of the Compute Engine cluster instances.
+•	 
+D. Create encryption keys in Cloud Key Management Service. Reference those keys in your API service calls when accessing the data in your Compute Engine cluster instances.
+Explanation
+B is the correct answer, check this: https://cloud.google.com/security/encryption-at-rest
+it says when you use cloud KMS, You can create, rotate, automatically rotate and destroy symmetric encryption keys
+Question 4: 
+Skipped
+You are developing an application that uses a recommendation engine on Google Cloud. Your solution should display new videos to customers based on past views. Your solution needs to generate labels for the entities in videos that the customer has viewed. Your design must be able to provide very fast filtering suggestions based on data from other customer preferences on several TB of data. What should you do?
+
+
+
+
+•	 
+A. Build and train a complex classification model with Spark MLlib to generate labels and filter the results. Deploy the models using Cloud Dataproc. Call the model from your application.
+•	 
+B. Build and train a classification model with Spark MLlib to generate labels. Build and train a second classification model with Spark MLlib to filter results to match customer preferences. Deploy the models using Cloud Dataproc. Call the models from your application.
+•	 
+C. Build an application that calls the Cloud Video Intelligence API to generate labels. Store data in Cloud Bigtable, and filter the predicted labels to match the user's viewing history to generate preferences.
+(Correct)
+•	 
+D. Build an application that calls the Cloud Video Intelligence API to generate labels. Store data in Cloud SQL, and join and filter the predicted labels to match the user's viewing history to generate preferences.
+Explanation
+Option C is the correct answer.
+1. Rather than building a new model - it is better to use Google provide APIs, here - Google Video Intelligence.
+So option A and B rules out
+2) Between SQL and Bigtable - Bigtable is the better option as Bigtable support row-key filtering. Joining the filters is not required.
+Question 5: 
+Skipped
+You are selecting services to write and transform JSON messages from Cloud Pub/Sub to BigQuery for a data pipeline on Google Cloud. You want to minimize service costs. You also want to monitor and accommodate input data volume that will vary in size with minimal manual intervention. What should you do?
+
+
+
+
+•	 
+A. Use Cloud Dataproc to run your transformations. Monitor CPU utilization for the cluster. Resize the number of worker nodes in your cluster via the command line.
+•	 
+B. Use Cloud Dataproc to run your transformations. Use the diagnose command to generate an operational output archive. Locate the bottleneck and adjust cluster resources.
+•	 
+C. Use Cloud Dataflow to run your transformations. Monitor the job system lag with Stackdriver. Use the default autoscaling setting for worker instances.
+(Correct)
+•	 
+D. Use Cloud Dataflow to run your transformations. Monitor the total execution time for a sampling of jobs. Configure the job to use non-default Compute Engine machine types when needed.
+Explanation
+Correct Answer: C
+Explanation:-This option is correct as Dataflow, provides a cost-effective solution to perform transformations on the streaming data, with autoscaling provides scaling without any intervention. System lag with
+Stackdriver provides monitoring for the streaming data. With autoscaling enabled, the Cloud Dataflow service automatically chooses the appropriate number of worker instances required to run your job.
+Question 6: 
+Skipped
+Your infrastructure includes a set of YouTube channels. You have been tasked with creating a process for sending the YouTube channel data to Google Cloud for analysis. You want to design a solution that allows your world-wide marketing teams to perform ANSI SQL and other types of analysis on up-to-date YouTube channels log data. How should you set up the log data transfer into Google Cloud?
+•	 
+A. Use Storage Transfer Service to transfer the offsite backup files to a Cloud Storage Multi-Regional storage bucket as a final destination.
+(Correct)
+•	 
+B. Use Storage Transfer Service to transfer the offsite backup files to a Cloud Storage Regional bucket as a final destination.
+•	 
+C. Use BigQuery Data Transfer Service to transfer the offsite backup files to a Cloud Storage Multi-Regional storage bucket as a final destination.
+•	 
+D. Use BigQuery Data Transfer Service to transfer the offsite backup files to a Cloud Storage Regional storage bucket as a final destination.
+Explanation
+Correct Answer: A
+
+Destination is GCS and having multi-regional so A is the best option available.
+Even since BigQuery Data Transfer Service initially supports Google application sources like Google Ads, Campaign Manager, Google Ad Manager and YouTube but it does not support destination anything other than bq data set
+Question 7: 
+Skipped
+You are designing storage for very large text files for a data pipeline on Google Cloud. You want to support ANSI SQL queries. You also want to support compression and parallel load from the input locations using Google recommended practices. What should you do?
+•	 
+A. Transform text files to compressed Avro using Cloud Dataflow. Use BigQuery for storage and query.
+•	 
+B. Transform text files to compressed Avro using Cloud Dataflow. Use Cloud Storage and BigQuery permanent linked tables for query.
+(Correct)
+•	 
+C. Compress text files to gzip using the Grid Computing Tools. Use BigQuery for storage and query.
+•	 
+D. Compress text files to gzip using the Grid Computing Tools. Use Cloud Storage, and then import into Cloud Bigtable for query.
+Explanation
+B. Transform text files to compressed Avro using Cloud Dataflow. Use Cloud Storage and BigQuery permanent linked tables for query.
+1) Avro covers parallelism and compression
+2) A and B are correct, but B is the best answer
+The advantages of creating external tables are that they are fast to create so you skip the part of importing data and no additional monthly billing storage costs are accrued to your account since you only get charged for the data that is stored in the data lake, which is comparatively cheaper than storing it in BigQuery
+https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro
+Question 8: 
+Skipped
+You are developing an application on Google Cloud that will automatically generate subject labels for users' blog posts. You are under competitive pressure to add this feature quickly, and you have no additional developer resources. No one on your team has experience with machine learning. What should you do?
+
+
+
+•	 
+A. Call the Cloud Natural Language API from your application. Process the generated Entity Analysis as labels.
+(Correct)
+•	 
+B. Call the Cloud Natural Language API from your application. Process the generated Sentiment Analysis as labels.
+
+•	 
+C. Build and train a text classification model using TensorFlow. Deploy the model using Cloud Machine Learning Engine. Call the model from your application and process the results as labels.
+•	 
+D. Build and train a text classification model using TensorFlow. Deploy the model using a Kubernetes Engine cluster. Call the model from your application and process the results as labels
+Explanation
+Correct Answer : A
+
+Entity analysis -> Identify entities within documents receipts, invoices, and contracts and label them by types such as date, person, contact information, organization, location, events, products, and media.
+Sentiment analysis -> Understand the overall opinion, feeling, or attitude sentiment expressed in a block of text.
+-- Avoid Custom models
+Question 9: 
+Skipped
+You are designing storage for 20 TB of text files as part of deploying a data pipeline on Google Cloud. Your input data is in CSV format. You want to minimize the cost of querying aggregate values for multiple users who will query the data in Cloud Storage with multiple engines. Which storage service and schema design should you use?
+
+
+
+
+
+•	 
+A. Use Cloud Bigtable for storage. Install the HBase shell on a Compute Engine instance to query the Cloud Bigtable data.
+•	 
+B. Use Cloud Bigtable for storage. Link as permanent tables in BigQuery for query.
+•	 
+C. Use Cloud Storage for storage. Link as permanent tables in BigQuery for query.
+(Correct)
+•	 
+D. Use Cloud Storage for storage. Link as temporary tables in BigQuery for query.
+Explanation
+answer C:
+BigQuery can access data in external sources, known as federated sources. Instead of first
+loading data into BigQuery, you can create a reference to an external source. External
+sources can be Cloud Bigtable, Cloud Storage, and Google Drive.
+When accessing external data, you can create either permanent or temporary external
+tables. Permanent tables are those that are created in a dataset and linked to an external
+source. Dataset-level access controls can be applied to these tables. When you are using a
+temporary table, a table is created in a special dataset and will be available for approxi-
+mately 24 hours. Temporary tables are useful for one-time operations, such as loading data
+into a data warehouse.
+"Dan Sullivan" Book
+Question 10: 
+Skipped
+You are designing storage for two relational tables that are part of a 10-TB database on Google Cloud. You want to support transactions that scale horizontally.
+You also want to optimize data for range queries on non-key columns. What should you do?
+•	 
+A. Use Cloud SQL for storage. Add secondary indexes to support query patterns.
+•	 
+B. Use Cloud SQL for storage. Use Cloud Dataflow to transform data to support query patterns.
+
+•	 
+C. Use Cloud Spanner for storage. Add secondary indexes to support query patterns.
+(Correct)
+•	 
+D. Use Cloud Spanner for storage. Use Cloud Dataflow to transform data to support query patterns.
+Explanation
+A is not correct because Cloud SQL does not natively scale horizontally.
+B is not correct because Cloud SQL does not natively scale horizontally.
+C is correct because Cloud Spanner scales horizontally, and you can create secondary indexes for the range queries that are required.
+D is not correct because Dataflow is a data pipelining tool to move and transform data, but the use case is centered around querying.
+Question 11: 
+Skipped
+Your financial services company is moving to cloud technology and wants to store 50 TB of financial time-series data in the cloud. This data is updated frequently and new data will be streaming in all the time. Your company also wants to move their existing Apache Hadoop jobs to the cloud to get insights into this data.
+Which product should they use to store the data?
+
+•	 
+A. Cloud Bigtable
+(Correct)
+•	 
+B. Google BigQuery
+•	 
+C. Google Cloud Storage
+•	 
+D. Google Cloud Datastore
+Explanation
+A:
+Bigtable is GCP’s managed wide-column database. It is also a good option for migrat-
+ing on-premises Hadoop HBase databases to a managed database because Bigtable has
+an HBase interface.
+....
+Cloud Bigtable is a wide-column NoSQL database used for high-volume databases that
+require low millisecond (ms) latency. Cloud Bigtable is used for IoT, time-series, finance,
+and similar applications.
+"Dan Sullivan" Official Google Cloud Certified Professional Data Engineer Study Guide-Sybex book
+Question 12: 
+Skipped
+An organization maintains a Google BigQuery dataset that contains tables with user-level data. They want to expose aggregates of this data to other Google
+Cloud projects, while still controlling access to the user-level data. Additionally, they need to minimize their overall storage cost and ensure the analysis cost for other projects is assigned to those projects. What should they do?
+•	 
+A. Create and share an authorized view that provides the aggregate results.
+(Correct)
+•	 
+B. Create and share a new dataset and view that provides the aggregate results.
+•	 
+C. Create and share a new dataset and table that contains the aggregate results.
+•	 
+D. Create dataViewer Identity and Access Management (IAM) roles on the dataset to enable sharing.
+Explanation
+Option A is Correct answer:
+
+Reason - In Question they want 2 things
+1. "still controlling access to the user-level data" Only Aggregation need to be given.
+2. "ensure the analysis cost for other projects is assigned to those projects." What this statement means is they need to ensure the Query job runner on auth view need to be charged. It is possible on Authorized view. Read this Useful SO Thread to understand
+- https://stackoverflow.com/questions/52201034/bigquery-authorized-view-cost-billing-account
+
+Then why not Option B.
+Reason is It is not satisfying the 1st Requirement. If you share only view the Query runner still able to see the base table data. It can be controlled by IAM but remember it is another project you are sharing the view. So It might not be possible.
+
+If you like my Explanation pls Upvote So that Future People will Read the correct explanation. All the Best Guys :)
+Question 13: 
+Skipped
+Government regulations in your industry mandate that you have to maintain an auditable record of access to certain types of data. Assuming that all expiring logs will be archived correctly, where should you store data that is subject to that mandate?
+•	 
+A. Encrypted on Cloud Storage with user-supplied encryption keys. A separate decryption key will be given to each authorized user.
+•	 
+B. In a BigQuery dataset that is viewable only by authorized personnel, with the Data Access log used to provide the auditability.
+•	 
+C. In Cloud SQL, with separate database user names to each user. The Cloud SQL Admin activity logs will be used to provide the auditability.
+•	 
+D. In a bucket on Cloud Storage that is accessible only by an AppEngine service that collects user information and logs the access before providing a link to the bucket.
+(Correct)
+Explanation
+D. In a bucket on Cloud Storage that is accessible only by an AppEngine service that collects user information and logs the access before providing a link to the bucket.
+
+1. "Archived": Immutable and hence, BQ and Cloud SQL are ruled out
+2. "Auditable": Means track any changes done.
+3. Big query for togs is too expensive plus nobody asks to provide analitycs
+Question 14: 
+Skipped
+Your neural network model is taking days to train. You want to increase the training speed. What can you do?
+
+•	 
+A. Subsample your test dataset.
+•	 
+B. Subsample your training dataset.
+(Correct)
+•	 
+C. Increase the number of input features to your model.
+•	 
+D. Increase the number of layers in your neural network.
+Explanation
+B; Subsampling modifies the topology of a dataset. It adjusts the network parameters, which helps to control the overfitting and speed up the training procedure.
+Question 15: 
+Skipped
+You are responsible for writing your company's ETL pipelines to run on an Apache Hadoop cluster. The pipeline will require some checkpointing and splitting pipelines. Which method should you use to write the pipelines?
+
+•	 
+A. PigLatin using Pig
+(Correct)
+•	 
+B. HiveQL using Hive
+•	 
+C. Java using MapReduce
+•	 
+D. Python using MapReduce
+Explanation
+Description: Pig is scripting language which can be used for checkpointing and splitting pipelines
+
+Question 16: 
+Skipped
+Your company maintains a hybrid deployment with GCP, where analytics are performed on your anonymized customer data. The data are imported to Cloud
+Storage from your data center through parallel uploads to a data transfer server running on GCP. Management informs you that the daily transfers take too long and have asked you to fix the problem. You want to maximize transfer speeds. Which action should you take?
+
+•	 
+A. Increase the CPU size on your server.
+•	 
+B. Increase the size of the Google Persistent Disk on your server.
+•	 
+C. Increase your network bandwidth from your datacenter to GCP.
+(Correct)
+•	 
+D. Increase your network bandwidth from Compute Engine to Cloud Storage.
+Explanation
+Answer: C
+Description : Speed of data transfer depends on Bandwidth
+Few things in computing highlight the hardware limitations of networks as transferring large amounts of data. Typically you can transfer 1 GB in eight seconds over a 1 Gbps network. If you scale that up to a huge dataset (for example, 100 TB), the transfer time is 12 days. Transferring huge datasets can test the limits of your infrastructure and potentially cause problems for your business.
+Question 17: 
+Skipped
+MJTelco Case Study -
+
+Company Overview -
+MJTelco is a startup that plans to build networks in rapidly growing, underserved markets around the world. The company has patents for innovative optical communications hardware. Based on these patents, they can create many reliable, high-speed backbone links with inexpensive hardware.
+
+Company Background -
+Founded by experienced telecom executives, MJTelco uses technologies originally developed to overcome communications challenges in space. Fundamental to their operation, they need to create a distributed data infrastructure that drives real-time analysis and incorporates machine learning to continuously optimize their topologies. Because their hardware is inexpensive, they plan to overdeploy the network allowing them to account for the impact of dynamic regional politics on location availability and cost.
+Their management and operations teams are situated all around the globe creating many-to-many relationship between data consumers and provides in their system. After careful consideration, they decided public cloud is the perfect environment to support their needs.
+
+Solution Concept -
+MJTelco is running a successful proof-of-concept (PoC) project in its labs. They have two primary needs:
+✑ Scale and harden their PoC to support significantly more data flows generated when they ramp to more than 50,000 installations.
+✑ Refine their machine-learning cycles to verify and improve the dynamic models they use to control topology definition.
+MJTelco will also use three separate operating environments "" development/test, staging, and production "" to meet the needs of running experiments, deploying new features, and serving production customers.
+
+Business Requirements -
+✑ Scale up their production environment with minimal cost, instantiating resources when and where needed in an unpredictable, distributed telecom user community.
+✑ Ensure security of their proprietary data to protect their leading-edge machine learning and analysis.
+✑ Provide reliable and timely access to data for analysis from distributed research workers
+✑ Maintain isolated environments that support rapid iteration of their machine-learning models without affecting their customers.
+
+Technical Requirements -
+Ensure secure and efficient transport and storage of telemetry data
+Rapidly scale instances to support between 10,000 and 100,000 data providers with multiple flows each.
+Allow analysis and presentation against data tables tracking up to 2 years of data storing approximately 100m records/day
+Support rapid iteration of monitoring infrastructure focused on awareness of data pipeline problems both in telemetry flows and in production learning cycles.
+
+CEO Statement -
+Our business model relies on our patents, analytics and dynamic machine learning. Our inexpensive hardware is organized to be highly reliable, which gives us cost advantages. We need to quickly stabilize our large distributed data pipelines to meet our reliability and capacity commitments.
+
+CTO Statement -
+Our public cloud services must operate as advertised. We need resources that scale and keep our data secure. We also need environments in which our data scientists can carefully study and quickly adapt our models. Because we rely on automation to process our data, we also need our development and test environments to work as we iterate.
+
+CFO Statement -
+The project is too large for us to maintain the hardware and software required for the data and analysis. Also, we cannot afford to staff an operations team to monitor so many data feeds, so we will rely on automation and infrastructure. Google Cloud's machine learning will allow our quantitative researchers to work on our high-value problems instead of problems with our data pipelines.
+MJTelco is building a custom interface to share data. They have these requirements:
+1. They need to do aggregations over their petabyte-scale datasets.
+2. They need to scan specific time range rows with a very fast response time (milliseconds).
+Which combination of Google Cloud Platform products should you recommend?
+
+
+
+
+•	 
+A. Cloud Datastore and Cloud Bigtable
+•	 
+B. Cloud Bigtable and Cloud SQL
+•	 
+C. BigQuery and Cloud Bigtable
+(Correct)
+•	 
+D. BigQuery and Cloud Storage
+Explanation
+the answer is c:
+They need to do aggregations over their petabyte-scale datasets: Bigquery
+They need to scan specific time range rows with a very fast response time (milliseconds): Bigtable
+Question 18: 
+Skipped
+MJTelco Case Study -
+
+Company Overview -
+MJTelco is a startup that plans to build networks in rapidly growing, underserved markets around the world. The company has patents for innovative optical communications hardware. Based on these patents, they can create many reliable, high-speed backbone links with inexpensive hardware.
+
+Company Background -
+Founded by experienced telecom executives, MJTelco uses technologies originally developed to overcome communications challenges in space. Fundamental to their operation, they need to create a distributed data infrastructure that drives real-time analysis and incorporates machine learning to continuously optimize their topologies. Because their hardware is inexpensive, they plan to overdeploy the network allowing them to account for the impact of dynamic regional politics on location availability and cost.
+Their management and operations teams are situated all around the globe creating many-to-many relationship between data consumers and provides in their system. After careful consideration, they decided public cloud is the perfect environment to support their needs.
+
+Solution Concept -
+MJTelco is running a successful proof-of-concept (PoC) project in its labs. They have two primary needs:
+✑ Scale and harden their PoC to support significantly more data flows generated when they ramp to more than 50,000 installations.
+✑ Refine their machine-learning cycles to verify and improve the dynamic models they use to control topology definition.
+MJTelco will also use three separate operating environments "" development/test, staging, and production "" to meet the needs of running experiments, deploying new features, and serving production customers.
+
+Business Requirements -
+✑ Scale up their production environment with minimal cost, instantiating resources when and where needed in an unpredictable, distributed telecom user community.
+✑ Ensure security of their proprietary data to protect their leading-edge machine learning and analysis.
+✑ Provide reliable and timely access to data for analysis from distributed research workers
+✑ Maintain isolated environments that support rapid iteration of their machine-learning models without affecting their customers.
+
+Technical Requirements -
+Ensure secure and efficient transport and storage of telemetry data
+Rapidly scale instances to support between 10,000 and 100,000 data providers with multiple flows each.
+Allow analysis and presentation against data tables tracking up to 2 years of data storing approximately 100m records/day
+Support rapid iteration of monitoring infrastructure focused on awareness of data pipeline problems both in telemetry flows and in production learning cycles.
+
+CEO Statement -
+Our business model relies on our patents, analytics and dynamic machine learning. Our inexpensive hardware is organized to be highly reliable, which gives us cost advantages. We need to quickly stabilize our large distributed data pipelines to meet our reliability and capacity commitments.
+
+CTO Statement -
+Our public cloud services must operate as advertised. We need resources that scale and keep our data secure. We also need environments in which our data scientists can carefully study and quickly adapt our models. Because we rely on automation to process our data, we also need our development and test environments to work as we iterate.
+
+CFO Statement -
+The project is too large for us to maintain the hardware and software required for the data and analysis. Also, we cannot afford to staff an operations team to monitor so many data feeds, so we will rely on automation and infrastructure. Google Cloud's machine learning will allow our quantitative researchers to work on our high-value problems instead of problems with our data pipelines.
+You need to compose visualization for operations teams with the following requirements:
+✑ Telemetry must include data from all 50,000 installations for the most recent 6 weeks (sampling once every minute)
+✑ The report must not be more than 3 hours delayed from live data.
+✑ The actionable report should only show suboptimal links.
+✑ Most suboptimal links should be sorted to the top.
+✑ Suboptimal links can be grouped and filtered by regional geography.
+✑ User response time to load the report must be <5 seconds.
+You create a data source to store the last 6 weeks of data, and create visualizations that allow viewers to see multiple date ranges, distinct geographic regions, and unique installation types. You always show the latest data without any changes to your visualizations. You want to avoid creating and updating new visualizations each month. What should you do?
+
+
+
+
+•	 
+A. Look through the current data and compose a series of charts and tables, one for each possible combination of criteria.
+•	 
+B. Look through the current data and compose a small set of generalized charts and tables bound to criteria filters that allow value selection.
+(Correct)
+•	 
+C. Export the data to a spreadsheet, compose a series of charts and tables, one for each possible combination of criteria, and spread them across multiple tabs.
+•	 
+D. Load the data into relational database tables, write a Google App Engine application that queries all rows, summarizes the data across each criteria, and then renders results using the Google Charts and visualization API.
+Explanation
+B is optimal to avoid creating and updating new visualizations each month
+Question 19: 
+Skipped
+MJTelco Case Study -
+
+Company Overview -
+MJTelco is a startup that plans to build networks in rapidly growing, underserved markets around the world. The company has patents for innovative optical communications hardware. Based on these patents, they can create many reliable, high-speed backbone links with inexpensive hardware.
+
+Company Background -
+Founded by experienced telecom executives, MJTelco uses technologies originally developed to overcome communications challenges in space. Fundamental to their operation, they need to create a distributed data infrastructure that drives real-time analysis and incorporates machine learning to continuously optimize their topologies. Because their hardware is inexpensive, they plan to overdeploy the network allowing them to account for the impact of dynamic regional politics on location availability and cost.
+Their management and operations teams are situated all around the globe creating many-to-many relationship between data consumers and provides in their system. After careful consideration, they decided public cloud is the perfect environment to support their needs.
+
+Solution Concept -
+MJTelco is running a successful proof-of-concept (PoC) project in its labs. They have two primary needs:
+✑ Scale and harden their PoC to support significantly more data flows generated when they ramp to more than 50,000 installations.
+✑ Refine their machine-learning cycles to verify and improve the dynamic models they use to control topology definition.
+MJTelco will also use three separate operating environments "" development/test, staging, and production "" to meet the needs of running experiments, deploying new features, and serving production customers.
+
+Business Requirements -
+✑ Scale up their production environment with minimal cost, instantiating resources when and where needed in an unpredictable, distributed telecom user community.
+✑ Ensure security of their proprietary data to protect their leading-edge machine learning and analysis.
+✑ Provide reliable and timely access to data for analysis from distributed research workers
+✑ Maintain isolated environments that support rapid iteration of their machine-learning models without affecting their customers.
+
+Technical Requirements -
+Ensure secure and efficient transport and storage of telemetry data
+Rapidly scale instances to support between 10,000 and 100,000 data providers with multiple flows each.
+Allow analysis and presentation against data tables tracking up to 2 years of data storing approximately 100m records/day
+Support rapid iteration of monitoring infrastructure focused on awareness of data pipeline problems both in telemetry flows and in production learning cycles.
+
+CEO Statement -
+Our business model relies on our patents, analytics and dynamic machine learning. Our inexpensive hardware is organized to be highly reliable, which gives us cost advantages. We need to quickly stabilize our large distributed data pipelines to meet our reliability and capacity commitments.
+
+CTO Statement -
+Our public cloud services must operate as advertised. We need resources that scale and keep our data secure. We also need environments in which our data scientists can carefully study and quickly adapt our models. Because we rely on automation to process our data, we also need our development and test environments to work as we iterate.
+
+CFO Statement -
+The project is too large for us to maintain the hardware and software required for the data and analysis. Also, we cannot afford to staff an operations team to monitor so many data feeds, so we will rely on automation and infrastructure. Google Cloud's machine learning will allow our quantitative researchers to work on our high-value problems instead of problems with our data pipelines.
+Given the record streams MJTelco is interested in ingesting per day, they are concerned about the cost of Google BigQuery increasing. MJTelco asks you to provide a design solution. They require a single large data table called tracking_table. Additionally, they want to minimize the cost of daily queries while performing fine-grained analysis of each day's events. They also want to use streaming ingestion. What should you do?
+
+
+
+
+•	 
+A. Create a table called tracking_table and include a DATE column.
+•	 
+B. Create a partitioned table called tracking_table and include a TIMESTAMP column.
+(Correct)
+•	 
+C. Create sharded tables for each day following the pattern tracking_table_YYYYMMDD.
+•	 
+D. Create a table called tracking_table with a TIMESTAMP column to represent the day.
+Explanation
+https://cloud.google.com/bigquery/docs/partitioned-tables#dt_partition_shard - Supports B
+
+Question 20: 
+Skipped
+Flowlogistic Case Study -
+
+Company Overview -
+Flowlogistic is a leading logistics and supply chain provider. They help businesses throughout the world manage their resources and transport them to their final destination. The company has grown rapidly, expanding their offerings to include rail, truck, aircraft, and oceanic shipping.
+
+Company Background -
+The company started as a regional trucking company, and then expanded into other logistics market. Because they have not updated their infrastructure, managing and tracking orders and shipments has become a bottleneck. To improve operations, Flowlogistic developed proprietary technology for tracking shipments in real time at the parcel level. However, they are unable to deploy it because their technology stack, based on Apache Kafka, cannot support the processing volume. In addition, Flowlogistic wants to further analyze their orders and shipments to determine how best to deploy their resources.
+
+Solution Concept -
+Flowlogistic wants to implement two concepts using the cloud:
+✑ Use their proprietary technology in a real-time inventory-tracking system that indicates the location of their loads
+✑ Perform analytics on all their orders and shipment logs, which contain both structured and unstructured data, to determine how best to deploy resources, which markets to expand info. They also want to use predictive analytics to learn earlier when a shipment will be delayed.
+
+Existing Technical Environment -
+Flowlogistic architecture resides in a single data center:
+✑ Databases
+- 8 physical servers in 2 clusters
+- SQL Server "" user data, inventory, static data
+- 3 physical servers
+- Cassandra "" metadata, tracking messages
+10 Kafka servers "" tracking message aggregation and batch insert
+✑ Application servers "" customer front end, middleware for order/customs
+- 60 virtual machines across 20 physical servers
+- Tomcat "" Java services
+- Nginx "" static content
+- Batch servers
+✑ Storage appliances
+- iSCSI for virtual machine (VM) hosts
+- Fibre Channel storage area network (FC SAN) "" SQL server storage
+Network-attached storage (NAS) image storage, logs, backups
+✑ 10 Apache Hadoop /Spark servers
+- Core Data Lake
+- Data analysis workloads
+✑ 20 miscellaneous servers
+- Jenkins, monitoring, bastion hosts,
+
+Business Requirements -
+Build a reliable and reproducible environment with scaled panty of production.
+
+✑ Aggregate data in a centralized Data Lake for analysis
+✑ Use historical data to perform predictive analytics on future shipments
+✑ Accurately track every shipment worldwide using proprietary technology
+✑ Improve business agility and speed of innovation through rapid provisioning of new resources
+✑ Analyze and optimize architecture for performance in the cloud
+✑ Migrate fully to the cloud if all other requirements are met
+
+Technical Requirements -
+✑ Handle both streaming and batch data
+✑ Migrate existing Hadoop workloads
+✑ Ensure architecture is scalable and elastic to meet the changing demands of the company.
+✑ Use managed services whenever possible
+✑ Encrypt data flight and at rest
+Connect a VPN between the production data center and cloud environment
+
+SEO Statement -
+We have grown so quickly that our inability to upgrade our infrastructure is really hampering further growth and efficiency. We are efficient at moving shipments around the world, but we are inefficient at moving data around.
+We need to organize our information so we can more easily understand where our customers are and what they are shipping.
+
+CTO Statement -
+IT has never been a priority for us, so as our data has grown, we have not invested enough in our technology. I have a good staff to manage IT, but they are so busy managing our infrastructure that I cannot get them to do the things that really matter, such as organizing our data, building the analytics, and figuring out how to implement the CFO' s tracking technology.
+
+CFO Statement -
+Part of our competitive advantage is that we penalize ourselves for late shipments and deliveries. Knowing where out shipments are at all times has a direct correlation to our bottom line and profitability. Additionally, I don't want to commit capital to building out a server environment.
+Flowlogistic's management has determined that the current Apache Kafka servers cannot handle the data volume for their real-time inventory tracking system.
+You need to build a new system on Google Cloud Platform (GCP) that will feed the proprietary tracking software. The system must be able to ingest data from a variety of global sources, process and query in real-time, and store the data reliably. Which combination of GCP products should you choose?
+
+•	 
+A. Cloud Pub/Sub, Cloud Dataflow, and Cloud Storage
+(Correct)
+•	 
+B. Cloud Pub/Sub, Cloud Dataflow, and Local SSD
+•	 
+C. Cloud Pub/Sub, Cloud SQL, and Cloud Storage
+•	 
+D. Cloud Load Balancing, Cloud Dataflow, and Cloud Storage
+•	 
+E. Cloud Dataflow, Cloud SQL, and Cloud Storage
+Explanation
+using Dataflow you can apply the propriety analytics and you can push the data in to Cloud storage
+
+Question 21: 
+Skipped
+After migrating ETL jobs to run on BigQuery, you need to verify that the output of the migrated jobs is the same as the output of the original. You've loaded a table containing the output of the original job and want to compare the contents with output from the migrated job to show that they are identical. The tables do not contain a primary key column that would enable you to join them together for comparison.
+What should you do?
+
+•	 
+A. Select random samples from the tables using the RAND() function and compare the samples.
+•	 
+B. Select random samples from the tables using the HASH() function and compare the samples.
+•	 
+C. Use a Dataproc cluster and the BigQuery Hadoop connector to read the data from each table and calculate a hash from non-timestamp columns of the table after sorting. Compare the hashes of each table.
+(Correct)
+•	 
+D. Create stratified random samples using the OVER() function and compare equivalent samples from each table.
+Explanation
+C
+Using Cloud Storage with big data
+
+Cloud Storage is a key part of storing and working with Big Data on Google Cloud. Examples include:
+
+Loading data into BigQuery.
+
+Using Dataproc, which automatically installs the HDFS-compatible Cloud Storage connector, enabling the use of Cloud Storage buckets in parallel with HDFS.
+
+Using a bucket to hold staging files and temporary data for Dataflow pipelines.
+
+For Dataflow, a Cloud Storage bucket is required. For BigQuery and Dataproc, using a Cloud Storage bucket is optional but recommended.
+
+gsutil is a command-line tool that enables you to work with Cloud Storage buckets and objects easily and robustly, in particular in big data scenarios. For example, with gsutil you can copy many files in parallel with a single command, copy large files efficiently, calculate checksums on your data, and measure performance from your local computer to Cloud Storage.
+Question 22: 
+Skipped
+You are a head of BI at a large enterprise company with multiple business units that each have different priorities and budgets. You use on-demand pricing for
+BigQuery with a quota of 2K concurrent on-demand slots per project. Users at your organization sometimes don't get slots to execute their query and you need to correct this. You'd like to avoid introducing new projects to your account.
+What should you do?
+•	 
+A. Convert your batch BQ queries into interactive BQ queries.
+•	 
+B. Create an additional project to overcome the 2K on-demand per-project quota.
+•	 
+C. Switch to flat-rate pricing and establish a hierarchical priority model for your projects.
+(Correct)
+•	 
+D. Increase the amount of concurrent slots per project at the Quotas page at the Cloud Console.
+Explanation
+Vote for 'C'.
+
+A - Interactive queries will not solve the issue (as it also compare available slots)
+B - Creating additional projects (not alllowed)
+D - Increase the slots (not possible) - max 2000 in on-demand
+Question 23: 
+Skipped
+You have an Apache Kafka cluster on-prem with topics containing web application logs. You need to replicate the data to Google Cloud for analysis in BigQuery and Cloud Storage. The preferred replication method is mirroring to avoid deployment of Kafka Connect plugins.
+What should you do?
+
+•	 
+A. Deploy a Kafka cluster on GCE VM Instances. Configure your on-prem cluster to mirror your topics to the cluster running in GCE. Use a Dataproc cluster or Dataflow job to read from Kafka and write to GCS.
+(Correct)
+•	 
+B. Deploy a Kafka cluster on GCE VM Instances with the PubSub Kafka connector configured as a Sink connector. Use a Dataproc cluster or Dataflow job to read from Kafka and write to GCS.
+•	 
+C. Deploy the PubSub Kafka connector to your on-prem Kafka cluster and configure PubSub as a Source connector. Use a Dataflow job to read from PubSub and write to GCS.
+•	 
+D. Deploy the PubSub Kafka connector to your on-prem Kafka cluster and configure PubSub as a Sink connector. Use a Dataflow job to read from PubSub and write to GCS.
+Explanation
+"A" is the answer which complies with the requirements (specifically, "The preferred replication method is mirroring to avoid deployment of Kafka Connect plugins"). Indeed, one of the uses of what is called "Geo-Replication" (or Cross-Cluster Data Mirroring) in Kafka is precisely cloud migrations: https://kafka.apache.org/documentation/#georeplication
+
+Question 24: 
+Skipped
+You've migrated a Hadoop job from an on-prem cluster to dataproc and GCS. Your Spark job is a complicated analytical workload that consists of many shuffing operations and initial data are parquet files (on average 200-400 MB size each). You see some degradation in performance after the migration to Dataproc, so you'd like to optimize for it. You need to keep in mind that your organization is very cost-sensitive, so you'd like to continue using Dataproc on preemptibles (with 2 non-preemptible workers only) for this workload.
+What should you do?
+
+
+
+•	 
+A. Increase the size of your parquet files to ensure them to be 1 GB minimum.
+•	 
+B. Switch to TFRecords formats (appr. 200MB per file) instead of parquet files.
+•	 
+C. Switch from HDDs to SSDs, copy initial data from GCS to HDFS, run the Spark job and copy results back to GCS.
+
+•	 
+D. Switch from HDDs to SSDs, override the preemptible VMs configuration to increase the boot disk size.
+(Correct)
+Explanation
+It is definitely D
+
+a) "To get optimal performance, split your data in Cloud Storage into files with sizes from 128 MB to 1 GB."
+
+https://cloud.google.com/architecture/hadoop/migrating-apache-spark-jobs-to-cloud-dataproc#optimize_performance
+
+Files are already within this size range, so increasing to 1GB or over would worsen performance.
+
+b) Same as a) - changing file type would not affect performance.
+
+c) "Your Dataproc cluster needs non-HDFS local disk space for shuffling."
+
+https://cloud.google.com/architecture/hadoop/migrating-apache-spark-jobs-to-cloud-dataproc#adjust_storage_size
+
+HDFS is not used for shuffling workloads, so copying data to it wouldn't do much.
+
+d) "If you perform many shuffling operations or partitioned writes, switch to SSDs to boost performance."
+
+"As a default, preemptible VMs are created with a smaller boot disk size, and you might want to override this configuration if you are running shuffle-heavy workloads."
+
+https://cloud.google.com/architecture/hadoop/migrating-apache-spark-jobs-to-cloud-dataproc#optimize_performance
+Question 25: 
+Skipped
+You're training a model to predict housing prices based on an available dataset with real estate properties. Your plan is to train a fully connected neural net, and you've discovered that the dataset contains latitude and longitude of the property. Real estate professionals have told you that the location of the property is highly influential on price, so you'd like to engineer a feature that incorporates this physical dependency.
+What should you do?
+•	 
+A. Provide latitude and longitude as input vectors to your neural net.
+•	 
+B. Create a numeric column from a feature cross of latitude and longitude.
+•	 
+C. Create a feature cross of latitude and longitude, bucketize at the minute level and use L1 regularization during optimization.
+(Correct)
+•	 
+D. Create a feature cross of latitude and longitude, bucketize it at the minute level and use L2 regularization during optimization
+Explanation
+A and B don’t make sense
+Now; the crossed feature represents a well defined city block. If the model learns that certain city blocks (within range of latitudes and longitudes) are more likely to be more expensive than others, it is a stronger signal than two features considered individually. BUT we’ll have way too many dimensions (and that is bad). Would L2 regularization accomplish this task? Unfortunately not. L2 regularization encourages weights to be small, but doesn’t force them to exactly 0.0.
+However, there is a regularization term called L1 regularization that serves as an approximation to L0, but has the advantage of being convex and thus efficient to compute. So we can use L1 regularization to encourage many of the uninformative coefficients in our model to be exactly 0, and thus reap RAM savings at inference time.
+https://developers.google.com/machine-learning/crash-course/regularization-for-sparsity/l1-regularization
+Question 26: 
+Skipped
+You are deploying MariaDB SQL databases on GCE VM Instances and need to configure monitoring and alerting. You want to collect metrics including network connections, disk IO and replication status from MariaDB with minimal development effort and use StackDriver for dashboards and alerts.
+What should you do?
+
+•	 
+A. Install the OpenCensus Agent and create a custom metric collection application with a StackDriver exporter.
+(Correct)
+•	 
+B. Place the MariaDB instances in an Instance Group with a Health Check.
+•	 
+C. Install the StackDriver Logging Agent and configure fluentd in_tail plugin to read MariaDB logs.
+•	 
+D. Install the StackDriver Agent and configure the MySQL plugin.
+Explanation
+It is definitely A.
+B: can't be because Health Checks just checks that machine is online
+C: StackDriver Logging is for Logging. Here we talk of Monitoring / Alerting
+D: StackDriver Agent monitors default metrics of VMs and some Database stuff with the MySQL Plugin. Here you want to monitor some more custom stuff like Replication of MariaDB (I didn't find anything of this sort in the plugin page), and you may want to use Custom Metrics rather than default metrics. "Cloud Monitoring automatically collects more than 1,500 built-in metrics from more than 100 monitored resources. But those metrics cannot capture application-specific data or client-side system data. Those metrics can give you information on backend latency or disk usage, but they can't tell you how many background routines your application spawned." https://cloud.google.com/monitoring/custom-metrics/open-census#monitoring_opencensus_metrics_quickstart-python
+Question 27: 
+Skipped
+You work for a bank. You have a labelled dataset that contains information on already granted loan application and whether these applications have been defaulted. You have been asked to train a model to predict default rates for credit applicants.
+What should you do?
+•	 
+A. Increase the size of the dataset by collecting additional data.
+•	 
+B. Train a linear regression to predict a credit default risk score.
+•	 
+C. Remove the bias from the data and collect applications that have been declined loans.
+•	 
+D. Match loan applicants with their social profiles to enable feature engineering.
+(Correct)
+Explanation
+A and B dont make sense - labelled dataset.
+C doesnt either, What should we do with the applications?
+D looks correct, in order to find new features for the model.
+Question 28: 
+Skipped
+You need to migrate a 2TB relational database to Google Cloud Platform. You do not have the resources to significantly refactor the application that uses this database and cost to operate is of primary concern.
+Which service do you select for storing and serving your data?
+
+
+
+•	 
+A. Cloud Spanner
+•	 
+B. Cloud Bigtable
+
+•	 
+C. Cloud Firestore
+•	 
+D. Cloud SQL
+(Correct)
+Explanation
+Cloud SQL supports MySQL 5.6 or 5.7, and provides up to 624 GB of RAM and 30 TB of data storage, with the option to automatically increase the storage size as needed.
+
+Question 29: 
+Skipped
+You are designing an Apache Beam pipeline to enrich data from Cloud Pub/Sub with static reference data from BigQuery. The reference data is small enough to fit in memory on a single worker. The pipeline should write enriched results to BigQuery for analysis. Which job type and transforms should this pipeline use?
+
+•	 
+A. Batch job, PubSubIO, side-inputs
+•	 
+B. Streaming job, PubSubIO, JdbcIO, side-outputs
+•	 
+C. Streaming job, PubSubIO, BigQueryIO, side-inputs
+
+(Correct)
+•	 
+D. Streaming job, PubSubIO, BigQueryIO, side-outputs
+Explanation
+the answer is: C, because data will come from Pub/Sub, so it should be streaming, we'll need PubSubIO to be able to read from PubSub and BigQueryIO to be able to write to BigQuery, finally the side-inputs pattern let us enrich data
+Question 30: 
+Skipped
+You have a data pipeline that writes data to Cloud Bigtable using well-designed row keys. You want to monitor your pipeline to determine when to increase the size of you Cloud Bigtable cluster. Which two actions can you take to accomplish this? (Choose two.)
+
+•	 
+A. Review Key Visualizer metrics. Increase the size of the Cloud Bigtable cluster when the Read pressure index is above 100.
+•	 
+B. Review Key Visualizer metrics. Increase the size of the Cloud Bigtable cluster when the Write pressure index is above 100.
+•	 
+C. Monitor the latency of write operations. Increase the size of the Cloud Bigtable cluster when there is a sustained increase in write latency.
+(Correct)
+•	 
+D. Monitor storage utilization. Increase the size of the Cloud Bigtable cluster when utilization increases above 70% of max capacity.
+(Correct)
+•	 
+E. Monitor latency of read operations. Increase the size of the Cloud Bigtable cluster of read operations take longer than 100 ms.
+Explanation
+D: In general, do not use more than 70% of the hard limit on total storage, so you have room to add more data. If you do not plan to add significant amounts of data to your instance, you can use up to 100% of the hard limit
+C: If this value is frequently at 100%, you might experience increased latency. Add nodes to the cluster to reduce the disk load percentage.
+The key visualizer metrics options, suggest other things other than increase the cluster size.
+https://cloud.google.com/bigtable/docs/monitoring-instance
+Continue
+Retake test
+

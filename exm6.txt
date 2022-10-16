@@ -1,0 +1,528 @@
+Question 1: 
+Skipped
+You are planning to migrate your current on-premises Apache Hadoop deployment to the cloud. You need to ensure that the deployment is as fault-tolerant and cost-effective as possible for long-running batch jobs. You want to use a managed service. What should you do?
+•	 
+A. Deploy a Cloud Dataproc cluster. Use a standard persistent disk and 50% preemptible workers. Store data in Cloud Storage, and change references in scripts from hdfs:// to gs://
+(Correct)
+•	 
+B. Deploy a Cloud Dataproc cluster. Use an SSD persistent disk and 50% preemptible workers. Store data in Cloud Storage, and change references in scripts from hdfs:// to gs://
+•	 
+C. Install Hadoop and Spark on a 10-node Compute Engine instance group with standard instances. Install the Cloud Storage connector, and store the data in Cloud Storage. Change references in scripts from hdfs:// to gs://
+•	 
+D. Install Hadoop and Spark on a 10-node Compute Engine instance group with preemptible instances. Store data in HDFS. Change references in scripts from hdfs:// to gs://
+Explanation
+Correct: A
+Ask for cost effective so persistent disk are HDD which are cheaper in comparison to SSD.
+Question 2: 
+Skipped
+Your team is working on a binary classification problem. You have trained a support vector machine (SVM) classifier with default parameters, and received an area under the Curve (AUC) of 0.87 on the validation set. You want to increase the AUC of the model. What should you do?
+•	 
+A. Perform hyperparameter tuning
+(Correct)
+•	 
+B. Train a classifier with deep neural networks, because neural networks would always beat SVMs
+•	 
+C. Deploy the model and measure the real-world AUC; it's always higher because of generalization
+•	 
+D. Scale predictions you get out of the model (tune a scaling factor as a hyperparameter) in order to get the highest AUC
+Explanation
+A
+Deep LEarning is not always the best solution
+D talks about fudgin the output which is wrong
+Question 3: 
+Skipped
+You need to deploy additional dependencies to all of a Cloud Dataproc cluster at startup using an existing initialization action. Company security policies require that Cloud Dataproc nodes do not have access to the Internet so public initialization actions cannot fetch resources. What should you do?
+
+•	 
+A. Deploy the Cloud SQL Proxy on the Cloud Dataproc master
+•	 
+B. Use an SSH tunnel to give the Cloud Dataproc cluster access to the Internet
+•	 
+C. Copy all dependencies to a Cloud Storage bucket within your VPC security perimeter
+
+(Correct)
+•	 
+D. Use Resource Manager to add the service account used by the Cloud Dataproc cluster to the Network User role
+Explanation
+Answer is : C
+If you create a Dataproc cluster with internal IP addresses only, attempts to access the Internet in an initialization action will fail unless you have configured routes to direct the traffic through a NAT or a VPN gateway. Without access to the Internet, you can enable Private Google Access, and place job dependencies in Cloud Storage; cluster nodes can download the dependencies from Cloud Storage from internal IPs.
+Question 4: 
+Skipped
+You need to choose a database for a new project that has the following requirements:
+✑ Fully managed
+✑ Able to automatically scale up
+✑ Transactionally consistent
+✑ Able to scale up to 6 TB
+✑ Able to be queried using SQL
+Which database do you choose?
+•	 
+A. Cloud SQL
+(Correct)
+•	 
+B. Cloud Bigtable
+•	 
+C. Cloud Spanner
+•	 
+D. Cloud Datastore
+Explanation
+Correct: A
+It asks for scaling up which can be done in cloud sql, horizontal scaling is not possible in cloud sql
+Automatic storage increase
+If you enable this setting, Cloud SQL checks your available storage every 30 seconds. If the available storage falls below a threshold size, Cloud SQL automatically adds additional storage capacity. If the available storage repeatedly falls below the threshold size, Cloud SQL continues to add storage until it reaches the maximum of 30 TB.
+Question 5: 
+Skipped
+You work for a mid-sized enterprise that needs to move its operational system transaction data from an on-premises database to GCP. The database is about 20
+TB in size. Which database should you choose?
+•	 
+A. Cloud SQL
+(Correct)
+•	 
+B. Cloud Bigtable
+•	 
+C. Cloud Spanner
+•	 
+D. Cloud Datastore
+Explanation
+Option A - Cloud SQL is the correct answer. Cloud SQL can store upto 30 TB.
+https://cloud.google.com/sql/docs/quotas#:~:text=Cloud%20SQL%20storage%20limits&text=Up%20to%2030%2C720%20GB%2C%20depending,for%20PostgreSQL%20or%20SQL%20Server.
+Question 6: 
+Skipped
+You need to choose a database to store time series CPU and memory usage for millions of computers. You need to store this data in one-second interval samples. Analysts will be performing real-time, ad hoc analytics against the database. You want to avoid being charged for every query executed and ensure that the schema design will allow for future growth of the dataset. Which database and data model should you choose?
+•	 
+A. Create a table in BigQuery, and append the new samples for CPU and memory to the table
+•	 
+B. Create a wide table in BigQuery, create a column for the sample value at each second, and update the row with the interval for each second
+•	 
+C. Create a narrow table in Cloud Bigtable with a row key that combines the Computer Engine computer identifier with the sample time at each second
+(Correct)
+•	 
+D. Create a wide table in Cloud Bigtable with a row key that combines the computer identifier with the sample time at each minute, and combine the values for each second as column data.
+Explanation
+Answer C
+
+A tall and narrow table has a small number of events per row, which could be just one event, whereas a short and wide table has a large number of events per row. As explained in a moment, tall and narrow tables are best suited for time-series data.
+For time series, you should generally use tall and narrow tables. This is for two reasons: Storing one event per row makes it easier to run queries against your data. Storing many events per row makes it more likely that the total row size will exceed the recommended maximum (see Rows can be big but are not infinite).
+https://cloud.google.com/bigtable/docs/schema-design-time-series#patterns_for_row_key_design
+Question 7: 
+Skipped
+You want to archive data in Cloud Storage. Because some data is very sensitive, you want to use the "Trust No One" (TNO) approach to encrypt your data to prevent the cloud provider staff from decrypting your data. What should you do?
+•	 
+A. Use gcloud kms keys create to create a symmetric key. Then use gcloud kms encrypt to encrypt each archival file with the key and unique additional authenticated data (AAD). Use gsutil cp to upload each encrypted file to the Cloud Storage bucket, and keep the AAD outside of Google Cloud.
+(Correct)
+•	 
+B. Use gcloud kms keys create to create a symmetric key. Then use gcloud kms encrypt to encrypt each archival file with the key. Use gsutil cp to upload each encrypted file to the Cloud Storage bucket. Manually destroy the key previously used for encryption, and rotate the key once.
+•	 
+C. Specify customer-supplied encryption key (CSEK) in the .boto configuration file. Use gsutil cp to upload each archival file to the Cloud Storage bucket. Save the CSEK in Cloud Memorystore as permanent storage of the secret.
+•	 
+D. Specify customer-supplied encryption key (CSEK) in the .boto configuration file. Use gsutil cp to upload each archival file to the Cloud Storage bucket. Save the CSEK in a different project that only the security team can access.
+Explanation
+Answer: A
+Description: AAD is used to decrypt the data so better to keep it outside GCP for safety
+Question 8: 
+Skipped
+You have data pipelines running on BigQuery, Cloud Dataflow, and Cloud Dataproc. You need to perform health checks and monitor their behavior, and then notify the team managing the pipelines if they fail. You also need to be able to work across multiple projects. Your preference is to use managed products of features of the platform. What should you do?
+•	 
+A. Export the information to Cloud Stackdriver, and set up an Alerting policy
+
+(Correct)
+•	 
+B. Run a Virtual Machine in Compute Engine with Airflow, and export the information to Stackdriver
+•	 
+C. Export the logs to BigQuery, and set up App Engine to read that information and send emails if you find a failure in the logs
+•	 
+D. Develop an App Engine application to consume logs using GCP API calls, and send emails if you find a failure in the logs
+Explanation
+Answer: A
+Description: Monitoring does not only provide you with access to Dataflow-related metrics, but also lets you to create alerting policies and dashboards so you can chart time series of metrics and choose to be notified when these metrics reach specified values.
+Question 9: 
+Skipped
+Suppose you have a table that includes a nested column called "city" inside a column called "person", but when you try to submit the following query in BigQuery, it gives you an error.
+SELECT person FROM `project1.example.table1` WHERE city = "London"
+How would you correct the error?
+•	 
+A. Add ", UNNEST(person)" before the WHERE clause.
+•	 
+B. Change "person" to "person.city".
+(Correct)
+•	 
+C. Change "person" to "city.person".
+•	 
+D. Add ", UNNEST(city)" before the WHERE clause.
+Explanation
+Answer is B :
+- 100% , see the section "A primer of nested and repeated fields" https://cloud.google.com/blog/topics/developers-practitioners/bigquery-explained-working-joins-nested-repeated-data
+Question 10: 
+Skipped
+What are two of the benefits of using denormalized data structures in BigQuery?
+•	 
+A. Reduces the amount of data processed, reduces the amount of storage required
+•	 
+B. Increases query speed, makes queries simpler
+
+(Correct)
+•	 
+C. Reduces the amount of storage required, increases query speed
+•	 
+D. Reduces the amount of data processed, increases query speed
+Explanation
+Answer is B:
+
+Cannot be A or C because:
+"Denormalized schemas aren't storage-optimal, but BigQuery's low cost of storage addresses concerns about storage inefficiency."
+Cannot be D because the amount of data processed is the same.
+As for why is it "simpler", I don't see it directly stated but it is hinted at: "Expressing records by using nested and repeated fields simplifies data load using JSON or Avro files." and "Expressing records using nested and repeated structures can provide a more natural representation of the underlying data."
+source: https://cloud.google.com/solutions/bigquery-data-warehouse
+Question 11: 
+Skipped
+Which of these statements about exporting data from BigQuery is false?
+•	 
+A. To export more than 1 GB of data, you need to put a wildcard in the destination filename.
+•	 
+B. The only supported export destination is Google Cloud Storage.
+•	 
+C. Data can only be exported in JSON or Avro format.
+(Correct)
+•	 
+D. The only compression option available is GZIP.
+Explanation
+Correct: C
+
+WheN you export data from BigQuery, note the following:
+You cannot export table data to a local file, to Google Sheets, or to Google Drive. The only supported export location is Cloud Storage. For information on saving query results, see Downloading and saving query results.
+You can export up to 1 GB of table data to a single file. If you are exporting more than 1 GB of data, use a wildcard to export the data into multiple files. When you export data to multiple files, the size of the files will vary.
+You cannot export nested and repeated data in CSV format. Nested and repeated data is supported for Avro and JSON exports.
+When you export data in JSON format, INT64 (integer) data types are encoded as JSON strings to preserve 64-bit precision when the data is read by other systems.
+You cannot export data from multiple tables in a single export job.
+You cannot choose a compression type other than GZIP when you export data using the Cloud Console or the classic BigQuery web UI.
+Question 12: 
+Skipped
+What are all of the BigQuery operations that Google charges for?
+•	 
+A. Storage, queries, and streaming inserts
+(Correct)
+•	 
+B. Storage, queries, and loading data from a file
+•	 
+C. Storage, queries, and exporting data
+•	 
+D. Queries and streaming inserts
+Explanation
+Google charges for storage, queries, and streaming inserts. Loading data from a file and exporting data are free operations.
+Reference: https://cloud.google.com/bigquery/pricing
+Question 13: 
+Skipped
+Which of the following is not possible using primitive roles?
+•	 
+A. Give a user viewer access to BigQuery and owner access to Google Compute Engine instances.
+(Correct)
+•	 
+B. Give UserA owner access and UserB editor access for all datasets in a project.
+•	 
+C. Give a user access to view all datasets in a project, but not run queries on them.
+•	 
+D. Give GroupA owner access and GroupB editor access for all datasets in a project.
+Explanation
+Give a user viewer access to BigQuery and owner access to Google Compute Engine instances
+Answer should be : A -- Primitive role is for access to all applications not confined to individual
+Question 14: 
+Skipped
+Which of these statements about BigQuery caching is true?
+•	 
+A. By default, a query's results are not cached.
+•	 
+B. BigQuery caches query results for 48 hours.
+•	 
+C. Query results are cached even if you specify a destination table.
+•	 
+D. There is no charge for a query that retrieves its results from cache.
+(Correct)
+Explanation
+When query results are retrieved from a cached results table, you are not charged for the query.
+BigQuery caches query results for 24 hours, not 48 hours.
+Query results are not cached if you specify a destination table.
+A query's results are always cached except under certain conditions, such as if you specify a destination table.
+Reference: https://cloud.google.com/bigquery/querying-data#query-caching
+Question 15: 
+Skipped
+Which of these sources can you not load data into BigQuery from?
+•	 
+A. File upload
+(Correct)
+•	 
+B. Google Drive
+•	 
+C. Google Cloud Storage
+•	 
+D. Google Cloud SQL
+Explanation
+You can load data into BigQuery from a file upload, Google Cloud Storage, Google Drive, or Google Cloud Bigtable. It is not possible to load data into BigQuery directly from Google Cloud SQL. One way to get data from Cloud SQL to BigQuery would be to export data from Cloud SQL to Cloud Storage and then load it from there.
+Reference: https://cloud.google.com/bigquery/loading-data
+Question 16: 
+Skipped
+Which of the following statements about Legacy SQL and Standard SQL is not true?
+
+•	 
+A. Standard SQL is the preferred query language for BigQuery.
+•	 
+B. If you write a query in Legacy SQL, it might generate an error if you try to run it with Standard SQL.
+•	 
+C. One difference between the two query languages is how you specify fully-qualified table names (i.e. table names that include their associated project name).
+•	 
+D. You need to set a query language for each dataset and the default is Standard SQL.
+(Correct)
+Explanation
+Answer: D
+https://cloud.google.com/bigquery/docs/reference/standard-sql/enabling-standard-sql#changing_from_the_default_dialect
+The interface you use to query your data determines which query dialect is the default:
+In the Cloud Console and the client libraries, standard SQL is the default.
+In the bq command-line tool and the REST API, legacy SQL is the default.
+Question 17: 
+Skipped
+How would you query specific partitions in a BigQuery table?
+•	 
+A. Use the DAY column in the WHERE clause
+
+•	 
+B. Use the EXTRACT(DAY) clause
+•	 
+C. Use the __PARTITIONTIME pseudo-column in the WHERE clause
+(Correct)
+•	 
+D. Use DATE BETWEEN in the WHERE clause
+Explanation
+Partitioned tables include a pseudo column named _PARTITIONTIME that contains a date-based timestamp for data loaded into the table. To limit a query to particular partitions (such as Jan 1st and 2nd of 2017), use a clause similar to this:
+WHERE _PARTITIONTIME BETWEEN TIMESTAMP('2017-01-01') AND TIMESTAMP('2017-01-02')
+Reference: https://cloud.google.com/bigquery/docs/partitioned-tables#the_partitiontime_pseudo_column
+Question 18: 
+Skipped
+Which SQL keyword can be used to reduce the number of columns processed by BigQuery?
+
+•	 
+A. BETWEEN
+•	 
+B. WHERE
+•	 
+C. SELECT
+(Correct)
+•	 
+D. LIMIT
+Explanation
+SELECT allows you to query specific columns rather than the whole table.
+LIMIT, BETWEEN, and WHERE clauses will not reduce the number of columns processed by
+BigQuery.
+Reference: https://cloud.google.com/bigquery/launch-checklist#architecture_design_and_development_checklist
+Question 19: 
+Skipped
+To give a user read permission for only the first three columns of a table, which access control method would you use?
+
+•	 
+A. Primitive role
+•	 
+B. Predefined role
+•	 
+C. Authorized view
+(Correct)
+•	 
+D. It's not possible to give access to only the first three columns of a table.
+Explanation
+An authorized view allows you to share query results with particular users and groups without giving them read access to the underlying tables. Authorized views can only be created in a dataset that does not contain the tables queried by the view.
+When you create an authorized view, you use the view's SQL query to restrict access to only the rows and columns you want the users to see.
+Reference: https://cloud.google.com/bigquery/docs/views#authorized-views
+Question 20: 
+Skipped
+What are two methods that can be used to denormalize tables in BigQuery?
+•	 
+A. 1) Split table into multiple tables; 2) Use a partitioned table
+•	 
+B. 1) Join tables into one table; 2) Use nested repeated fields
+(Correct)
+•	 
+C. 1) Use a partitioned table; 2) Join tables into one table
+
+•	 
+D. 1) Use nested repeated fields; 2) Use a partitioned table
+Explanation
+The conventional method of denormalizing data involves simply writing a fact, along with all its dimensions, into a flat table structure. For example, if you are dealing with sales transactions, you would write each individual fact to a record, along with the accompanying dimensions such as order and customer information.
+
+The other method for denormalizing data takes advantage of BigQuerys native support for nested and repeated structures in JSON or Avro input data. Expressing records using nested and repeated structures can provide a more natural representation of the underlying data. In the case of the sales order, the outer part of a
+
+JSON structure would contain the order and customer information, and the inner part of the structure would contain the individual line items of the order, which would be represented as nested, repeated elements.
+
+Reference: https://cloud.google.com/solutions/bigquery-data-warehouse#denormalizing_data
+Question 21: 
+Skipped
+Which of these is not a supported method of putting data into a partitioned table?
+•	 
+A. If you have existing data in a separate file for each day, then create a partitioned table and upload each file into the appropriate partition.
+•	 
+B. Run a query to get the records for a specific day from an existing table and for the destination table, specify a partitioned table ending with the day in the format "$YYYYMMDD".
+•	 
+C. Create a partitioned table and stream new records to it every day.
+•	 
+D. Use ORDER BY to put a table's rows into chronological order and then change the table's type to "Partitioned".
+(Correct)
+Explanation
+You cannot change an existing table into a partitioned table. You must create a partitioned table from scratch. Then you can either stream data into it every day and the data will automatically be put in the right partition, or you can load data into a specific partition by using "$YYYYMMDD" at the end of the table name.
+
+Reference: https://cloud.google.com/bigquery/docs/partitioned-tables
+Question 22: 
+Skipped
+Which of these operations can you perform from the BigQuery Web UI?
+•	 
+A. Upload a file in SQL format.
+•	 
+B. Load data with nested and repeated fields.
+(Correct)
+•	 
+C. Upload a 20 MB file.
+•	 
+D. Upload multiple files using a wildcard.
+Explanation
+You can load data with nested and repeated fields using the Web UI.
+You cannot use the Web UI to:
+- Upload a file greater than 10 MB in size
+- Upload multiple files at the same time
+- Upload a file in SQL format
+All three of the above operations can be performed using the "bq" command.
+Reference: https://cloud.google.com/bigquery/loading-data
+Question 23: 
+Skipped
+Which methods can be used to reduce the number of rows processed by BigQuery?
+
+•	 
+A. Splitting tables into multiple tables; putting data in partitions
+(Correct)
+•	 
+B. Splitting tables into multiple tables; putting data in partitions; using the LIMIT clause
+•	 
+C. Putting data in partitions; using the LIMIT clause
+•	 
+D. Splitting tables into multiple tables; using the LIMIT clause
+Explanation
+If you split a table into multiple tables (such as one table for each day), then you can limit your query to the data in specific tables (such as for particular days). A better method is to use a partitioned table, as long as your data can be separated by the day.
+If you use the LIMIT clause, BigQuery will still process the entire table.
+Reference: https://cloud.google.com/bigquery/docs/partitioned-tables
+Question 24: 
+Skipped
+Why do you need to split a machine learning dataset into training data and test data?
+•	 
+A. So you can try two different sets of features
+•	 
+B. To make sure your model is generalized for more than just the training data
+(Correct)
+•	 
+C. To allow you to create unit tests in your code
+•	 
+D. So you can use one dataset for a wide model and one for a deep model
+Explanation
+The flaw with evaluating a predictive model on training data is that it does not inform you on how well the model has generalized to new unseen data. A model that is selected for its accuracy on the training dataset rather than its accuracy on an unseen test dataset is very likely to have lower accuracy on an unseen test dataset. The reason is that the model is not as generalized. It has specialized to the structure in the training dataset. This is called overfitting.
+Reference: https://machinelearningmastery.com/a-simple-intuition-for-overfitting/
+Question 25: 
+Skipped
+Which of these numbers are adjusted by a neural network as it learns from a training dataset (select 2 answers)?
+•	 
+A. Weights
+
+(Correct)
+•	 
+B. Biases
+
+(Correct)
+•	 
+C. Continuous features
+•	 
+D. Input values
+Explanation
+A neural network is a simple mechanism thats implemented with basic math. The only difference between the traditional programming model and a neural network is that you let the computer determine the parameters (weights and bias) by learning from training datasets.
+Reference: https://cloud.google.com/blog/big-data/2016/07/understanding-neural-networks-with-tensorflow-playground
+Question 26: 
+Skipped
+The CUSTOM tier for Cloud Machine Learning Engine allows you to specify the number of which types of cluster nodes?
+•	 
+A. Workers
+•	 
+B. Masters, workers, and parameter servers
+•	 
+C. Workers and parameter servers
+(Correct)
+•	 
+D. Parameter servers
+Explanation
+The CUSTOM tier is not a set tier, but rather enables you to use your own cluster specification. When you use this tier, set values to configure your processing cluster according to these guidelines:
+You must set TrainingInput.masterType to specify the type of machine to use for your master node.
+You may set TrainingInput.workerCount to specify the number of workers to use.
+You may set TrainingInput.parameterServerCount to specify the number of parameter servers to use.
+You can specify the type of machine for the master node, but you can't specify more than one master node.
+Reference: https://cloud.google.com/ml-engine/docs/training-overview#job_configuration_parameters
+Question 27: 
+Skipped
+Which software libraries are supported by Cloud Machine Learning Engine?
+
+•	 
+A. Theano and TensorFlow
+•	 
+B. Theano and Torch
+•	 
+C. TensorFlow
+(Correct)
+•	 
+D. TensorFlow and Torch
+Explanation
+Cloud ML Engine mainly does two things:
+Enables you to train machine learning models at scale by running TensorFlow training applications in the cloud.
+Hosts those trained models for you in the cloud so that you can use them to get predictions about new data.
+Reference: https://cloud.google.com/ml-engine/docs/technical-overview#what_it_does
+Question 28: 
+Skipped
+Which TensorFlow function can you use to configure a categorical column if you don't know all of the possible values for that column?
+•	 
+A. categorical_column_with_vocabulary_list
+•	 
+B. categorical_column_with_hash_bucket
+(Correct)
+•	 
+C. categorical_column_with_unknown_values
+•	 
+D. sparse_column_with_keys
+Explanation
+If you know the set of all possible feature values of a column and there are only a few of them, you can use categorical_column_with_vocabulary_list. Each key in the list will get assigned an auto-incremental ID starting from 0.
+What if we don't know the set of possible values in advance? Not a problem. We can use categorical_column_with_hash_bucket instead. What will happen is that each possible value in the feature column occupation will be hashed to an integer ID as we encounter them in training.
+Reference: https://www.tensorflow.org/tutorials/wide
+Question 29: 
+Skipped
+Which of the following statements about the Wide & Deep Learning model are true? (Select 2 answers.)
+
+•	 
+A. The wide model is used for memorization, while the deep model is used for generalization.
+
+(Correct)
+•	 
+B. A good use for the wide and deep model is a recommender system.
+(Correct)
+•	 
+C. The wide model is used for generalization, while the deep model is used for memorization.
+•	 
+D. A good use for the wide and deep model is a small-scale linear regression problem.
+Explanation
+Can we teach computers to learn like humans do, by combining the power of memorization and generalization? It's not an easy question to answer, but by jointly training a wide linear model (for memorization) alongside a deep neural network (for generalization), one can combine the strengths of both to bring us one step closer. At Google, we call it Wide & Deep Learning. It's useful for generic large-scale regression and classification problems with sparse inputs (categorical features with a large number of possible feature values), such as recommender systems, search, and ranking problems.
+Reference: https://research.googleblog.com/2016/06/wide-deep-learning-better-together-with.html
+Question 30: 
+Skipped
+To run a TensorFlow training job on your own computer using Cloud Machine Learning Engine, what would your command start with?
+•	 
+A. gcloud ml-engine local train
+(Correct)
+•	 
+B. gcloud ml-engine jobs submit training
+•	 
+C. gcloud ml-engine jobs submit training local
+•	 
+D. You can't run a TensorFlow program on your own computer using Cloud ML Engine .
+Explanation
+gcloud ml-engine local train - run a Cloud ML Engine training job locally
+This command runs the specified module in an environment similar to that of a live Cloud ML Engine Training Job.
+This is especially useful in the case of testing distributed models, as it allows you to validate that you are properly interacting with the Cloud ML Engine cluster configuration.
+Reference: https://cloud.google.com/sdk/gcloud/reference/ml-engine/local/train
+Continue
+Retake test
+

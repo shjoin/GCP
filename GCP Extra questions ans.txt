@@ -1,0 +1,91 @@
+Google Cloud's operations suite (formerly Stackdriver) Integrated monitoring, logging, and trace managed services for applications and systems running on Google Cloud and beyond.
+
+There are 3 windowing concepts in dataflow and each can be used for below use case 1) Fixed window 2) Sliding window and 3) Session window. Fixed window = any aggregation use cases, any batch analysis of data, relatively simple use cases. Sliding window = Moving averages of data Session window = user session data, click data and real time gaming analysis.
+
+Vertex AI Workbench
+The single development environment for the entire data science workflow. 
+Natively analyze your data with a reduction in context switching between services
+
+Data to training at scale. Build and train models 5X faster, compared to traditional notebooks
+
+Scale up model development with simple connectivity to Vertex AI services
+
+
+BQ  included in a dataset for a region.
+create and populate a table for each region.
+ Ensure each table is included in a dataset for a region.
+ 
+ 
+ Scheduling jobs with cron.yaml
+
+bookmark_border
+The App Engine Cron Service allows you to configure regularly scheduled tasks that operate at defined times or regular intervals. These tasks are commonly known as cron jobs. These cron jobs are automatically triggered by the App Engine Cron Service. For instance, you might use this to send out a report email on a daily basis, to update some cached data every 10 minutes, or to update some summary information once an hour.
+
+A cron job will invoke a URL, using an HTTP GET request that is subject to the same limits as other HTTP requests .
+
+Free applications can have up to 20 scheduled tasks. Paid applications can have up to 250 scheduled tasks.
+
+
+DataFlow is only support pull subscription with cloud pub-sub.
+
+Legacy SQL is a non-standard SQL only used by BigQuery. 
+Standard SQL is compliant with the SQL 2011. Google recommends using Standard SQL and looking at the documentation and looking at the documentation it looks more and more like Google are deprecating Legacy SQL. There are multiple advantages using Standard SQL
+
+BigQuery Standard SQL is the way to go. It has much more features than Legacy SQL.
+Note: it is not binary choice. You always can use Legacy SQL - if there is something that you will find easier to express with it. From my experience it is mostly opposite - with very few exceptions. Most prominent (for me for example being) - Table Decorators - Support for table decorators in standard SQL is planned but not yet implemented.
+
+
+BigQuery supports two SQL dialects: Google Standard SQL and legacy SQL. This topic explains the differences between the two dialects, including syntax, functions, and semantics, and gives examples of some of the highlights of Google Standard SQL.
+Legacy SQL	Google Standard SQL	Notes
+BOOL	BOOL	
+INTEGER	INT64	
+FLOAT	FLOAT64	
+STRING	STRING	
+BYTES	BYTES	
+RECORD	STRUCT	
+REPEATED	ARRAY	
+TIMESTAMP	TIMESTAMP	See TIMESTAMP differences
+DATE	DATE	Legacy SQL has limited support for DATE
+TIME	TIME	Legacy SQL has limited support for TIME
+DATETIME	DATETIME	Legacy SQL has limited support for DATETIME
+
+In legacy SQL, to query a table with a project-qualified name, you use a colon, :, as a separator. For example:
+#legacySQL
+SELECT
+  word
+FROM
+  [bigquery-public-data:samples.shakespeare]
+LIMIT 1;
+
+In Google Standard SQL, you use a period, ., instead. For example:
+
+
+#standardSQL
+SELECT
+  word
+FROM
+  `bigquery-public-data.samples.shakespeare`
+LIMIT 1;
+
+#legacySQL
+SELECT COUNT(*)
+FROM TABLE_QUERY([bigquery-public-data:noaa_gsod],
+                 'table_id IN ("gsod2010", "gsod2011")');
+An equivalent query using Google Standard SQL is:
+
+
+#standardSQL
+SELECT COUNT(*)
+FROM `bigquery-public-data.noaa_gsod.*`
+WHERE _TABLE_SUFFIX IN ("gsod2010", "gsod2011");
+
+At the heart of Firebase is Google Analytics, an unlimited analytics solution available at no charge. Analytics integrates across Firebase features and provides you with unlimited reporting for up to 500 distinct events that you can define using the Firebase SDK. Analytics reports help you understand clearly how your users behave, which enables you to make informed decisions regarding app marketing and performance optimizations.
+
+
+Cloud Dataflow + Google Cloud Pub/Sub 
+
+
+Why do sensors need calibration?
+Calibrating sensors ensures that they are operating at the best possible rate and giving the best possible performance. Calibrating refers to the method which is used to check the accuracy of an instrume
+
+Sensor calibration is an adjustment or set of adjustments performed on a sensor or instrument to make that instrument function as accurately, or error free, as possible.

@@ -1,0 +1,611 @@
+Question 1: 
+Skipped
+You want to analyze hundreds of thousands of social media posts daily at the lowest cost and with the fewest steps.
+You have the following requirements:
+✑ You will batch-load the posts once per day and run them through the Cloud Natural Language API.
+✑ You will extract topics and sentiment from the posts.
+✑ You must store the raw posts for archiving and reprocessing.
+✑ You will create dashboards to be shared with people both inside and outside your organization.
+You need to store both the data extracted from the API to perform analysis as well as the raw social media posts for historical archiving. What should you do?
+
+•	 
+A. Store the social media posts and the data extracted from the API in BigQuery.
+•	 
+B. Store the social media posts and the data extracted from the API in Cloud SQL.
+
+•	 
+C. Store the raw social media posts in Cloud Storage, and write the data extracted from the API into BigQuery.
+(Correct)
+•	 
+D. Feed to social media posts into the API directly from the source, and write the extracted data from the API into BigQuery.
+Explanation
+You must store the raw posts for archiving and reprocessing, Store the raw social media posts in Cloud Storage.
+B is expensive
+D is not valid since you have to store the raw posts for archiving
+Between A and C I’s say C, since we’re going to make dashboards and Data Studio will connect well with big query.
+and besides A would probably be more expensive.
+Question 2: 
+Skipped
+You store historic data in Cloud Storage. You need to perform analytics on the historic data. You want to use a solution to detect invalid data entries and perform data transformations that will not require programming or knowledge of SQL.
+What should you do?
+
+•	 
+A. Use Cloud Dataflow with Beam to detect errors and perform transformations.
+•	 
+B. Use Cloud Dataprep with recipes to detect errors and perform transformations.
+(Correct)
+•	 
+C. Use Cloud Dataproc with a Hadoop job to detect errors and perform transformations.
+
+•	 
+D. Use federated tables in BigQuery with queries to detect errors and perform transformations.
+Explanation
+B, “Cloud Dataprep by Trifacta is an intelligent data service for visually exploring, cleaning, and preparing structured and unstructured data for analysis, reporting, and machine learning”
+https://cloud.google.com/dataprep/
+Question 3: 
+Skipped
+Your company needs to upload their historic data to Cloud Storage. The security rules don't allow access from external IPs to their on-premises resources. After an initial upload, they will add new data from existing on-premises applications every day. What should they do?
+•	 
+A. Execute gsutil rsync from the on-premises servers.
+(Correct)
+•	 
+B. Use Cloud Dataflow and write the data to Cloud Storage.
+•	 
+C. Write a job template in Cloud Dataproc to perform the data transfer.
+•	 
+D. Install an FTP server on a Compute Engine VM to receive the files and move them to Cloud Storage.
+Explanation
+A is the better and most simple IF there is no problem in having gsutil in our servers.
+B and C no way, the comms will go GCP–Home, which sais is not allowed.
+D is valid, we can send the files with http://ftp…BUT ftp is not secure, and we’ll need to move them to the cloud storage afterwards, which is not detailed in the answer.
+https://cloud.google.com/storage/docs/gsutil/commands/rsync
+Question 4: 
+Skipped
+You have a query that filters a BigQuery table using a WHERE clause on timestamp and ID columns. By using bq query "" -dry_run you learn that the query triggers a full scan of the table, even though the filter on timestamp and ID select a tiny fraction of the overall data. You want to reduce the amount of data scanned by BigQuery with minimal changes to existing SQL queries. What should you do?
+
+
+•	 
+A. Create a separate table for each ID.
+
+•	 
+B. Use the LIMIT keyword to reduce the number of rows returned.
+
+•	 
+C. Recreate the table with a partitioning column and clustering column.
+(Correct)
+•	 
+D. Use the bq query - -maximum_bytes_billed flag to restrict the number of bytes billed.
+Explanation
+https://cloud.google.com/bigquery/docs/best-practices-costs
+Applying a LIMIT clause to a SELECT * query does not affect the amount of data read. You are billed for reading all bytes in the entire table, and the query counts against your free tier quota.
+A and D doesnt make sense
+Its C, when you want to select by a partition you should write something like:
+CREATE TABLE `YYY.partitioned`
+PARTITION BY
+DATE(timestamp)
+CLUSTER BY id
+AS
+SELECT * FROM `YYY
+Question 5: 
+Skipped
+You have a requirement to insert minute-resolution data from 50,000 sensors into a BigQuery table. You expect significant growth in data volume and need the data to be available within 1 minute of ingestion for real-time analysis of aggregated trends. What should you do?
+•	 
+A. Use bq load to load a batch of sensor data every 60 seconds.
+•	 
+B. Use a Cloud Dataflow pipeline to stream data into the BigQuery table.
+(Correct)
+•	 
+C. Use the INSERT statement to insert a batch of data every 60 seconds.
+•	 
+D. Use the MERGE statement to apply updates in batch every 60 seconds.
+Explanation
+Is B, if we expect a growth we’ll need some buffer (that will be pub-sub) and the dataflow pipeline to stream data in big query.
+The tabledata.insertAll method is not valid here.
+Question 6: 
+Skipped
+You need to copy millions of sensitive patient records from a relational database to BigQuery. The total size of the database is 10 TB. You need to design a solution that is secure and time-efficient. What should you do?
+
+
+
+
+
+•	 
+A. Export the records from the database as an Avro file. Upload the file to GCS using gsutil, and then load the Avro file into BigQuery using the BigQuery web UI in the GCP Console.
+(Correct)
+•	 
+B. Export the records from the database as an Avro file. Copy the file onto a Transfer Appliance and send it to Google, and then load the Avro file into BigQuery using the BigQuery web UI in the GCP Console.
+•	 
+C. Export the records from the database into a CSV file. Create a public URL for the CSV file, and then use Storage Transfer Service to move the file to Cloud Storage. Load the CSV file into BigQuery using the BigQuery web UI in the GCP Console.
+•	 
+D. Export the records from the database as an Avro file. Create a public URL for the Avro file, and then use Storage Transfer Service to move the file to Cloud Storage. Load the Avro file into BigQuery using the BigQuery web UI in the GCP Console.
+Explanation
+Secure and **time-efficient**. Transfer appliance takes too long. Public URL is ruled out because insecure. Finally, A is left over. Question does not state whether SQL database is on prem or on cloud. A suits best.
+Question 7: 
+Skipped
+You need to create a near real-time inventory dashboard that reads the main inventory tables in your BigQuery data warehouse. Historical inventory data is stored as inventory balances by item and location. You have several thousand updates to inventory every hour. You want to maximize performance of the dashboard and ensure that the data is accurate. What should you do?
+
+
+
+
+•	 
+A. Leverage BigQuery UPDATE statements to update the inventory balances as they are changing.
+•	 
+B. Partition the inventory balance table by item to reduce the amount of data scanned with each inventory update.
+•	 
+C. Use the BigQuery streaming the stream changes into a daily inventory movement table. Calculate balances in a view that joins it to the historical inventory balance table. Update the inventory balance table nightly.
+(Correct)
+•	 
+D. Use the BigQuery bulk loader to batch load inventory changes into a daily inventory movement table. Calculate balances in a view that joins it to the historical inventory balance table. Update the inventory balance table nightly.
+Explanation
+I will go with C
+A : Not correct, due to constraint of 1500 updates / table / day
+B : Not correct. Same as A, constraint of number of updates to BQ table / day
+C : Streamed data is available for real-time analysis within a few seconds of the first streaming insertion into a table (in the table "Daily Inventory Movement Table). For the near real-time dashboard , balances are calculated in a view that joins "Daily Inventory Movement Table " and "Historical Inventory Balance Table" . Night process updates Historical Inventory Balance Table
+D : Not Correct, as it will meet the requirement of near real time
+Question 8: 
+Skipped
+You have a data stored in BigQuery. The data in the BigQuery dataset must be highly available. You need to define a storage, backup, and recovery strategy of this data that minimizes cost. How should you configure the BigQuery table?
+
+
+
+
+•	 
+A. Set the BigQuery dataset to be regional. In the event of an emergency, use a point-in-time snapshot to recover the data.
+•	 
+B. Set the BigQuery dataset to be regional. Create a scheduled query to make copies of the data to tables suffixed with the time of the backup. In the event of an emergency, use the backup copy of the table.
+•	 
+C. Set the BigQuery dataset to be multi-regional. In the event of an emergency, use a point-in-time snapshot to recover the data.
+(Correct)
+•	 
+D. Set the BigQuery dataset to be multi-regional. Create a scheduled query to make copies of the data to tables suffixed with the time of the backup. In the event of an emergency, use the backup copy of the table.
+Explanation
+Selected Answer: C
+highly available = multi-regional:
+https://cloud.google.com/bigquery/docs/locations
+recovery strategy of this data that minimizes cost = point-in-time snapshot:
+https://cloud.google.com/solutions/bigquery-data-warehouse#backup-and-recovery
+Question 9: 
+Skipped
+You used Cloud Dataprep to create a recipe on a sample of data in a BigQuery table. You want to reuse this recipe on a daily upload of data with the same schema, after the load job with variable execution time completes. What should you do?
+
+
+•	 
+A. Create a cron schedule in Cloud Dataprep.
+•	 
+B. Create an App Engine cron job to schedule the execution of the Cloud Dataprep job.
+•	 
+C. Export the recipe as a Cloud Dataprep template, and create a job in Cloud Scheduler.
+•	 
+D. Export the Cloud Dataprep job as a Cloud Dataflow template, and incorporate it into a Cloud Composer job.
+(Correct)
+Explanation
+Answer is D: Since we do not know when the load job will finish, we can not use a fixed scheduler or cron job. With composer we can define logic and dependencies to first check if the load job has finished and then run the dataprep job.
+Question 10: 
+Skipped
+You want to automate execution of a multi-step data pipeline running on Google Cloud. The pipeline includes Cloud Dataproc and Cloud Dataflow jobs that have multiple dependencies on each other. You want to use managed services where possible, and the pipeline will run every day. Which tool should you use?
+
+
+
+•	 
+A. cron
+•	 
+B. Cloud Composer
+
+(Correct)
+•	 
+C. Cloud Scheduler
+•	 
+D. Workflow Templates on Cloud Dataproc
+Explanation
+B: Cloud Composer is a fully managed workflow orchestration service that empowers you to author, schedule, and monitor pipelines that span across clouds and on-premises data centres.
+https://cloud.google.com/composer/
+Question 11: 
+Skipped
+You are managing a Cloud Dataproc cluster. You need to make a job run faster while minimizing costs, without losing work in progress on your clusters. What should you do?
+•	 
+A. Increase the cluster size with more non-preemptible workers.
+•	 
+B. Increase the cluster size with preemptible worker nodes, and configure them to forcefully decommission.
+•	 
+C. Increase the cluster size with preemptible worker nodes, and use Cloud Stackdriver to trigger a script to preserve work.
+•	 
+D. Increase the cluster size with preemptible worker nodes, and configure them to use graceful decommissioning.
+(Correct)
+Explanation
+D
+After creating a Dataproc cluster, you can adjust ("scale") the cluster by increasing or decreasing the number of primary or secondary worker nodes in the cluster. You can scale a Dataproc cluster at any time, even when jobs are running on the cluster.
+Use Dataproc Autoscaling. Instead of manually scaling clusters, enable Autoscaling to have Dataproc set the "right" number of workers for your workloads.
+
+Why scale a Dataproc cluster?
+
+to increase the number of workers to make a job run faster
+to decrease the number of workers to save money (see Graceful Decommissioning as an option to use when downsizing a cluster to avoid losing work in progress).
+to increase the number of nodes to expand available Hadoop Distributed Filesystem (HDFS) storage
+Question 12: 
+Skipped
+You work for a shipping company that uses handheld scanners to read shipping labels. Your company has strict data privacy standards that require scanners to only transmit recipients' personally identifiable information (PII) to analytics systems, which violates user privacy rules. You want to quickly build a scalable solution using cloud-native managed services to prevent exposure of PII to the analytics systems. What should you do?
+
+
+
+
+•	 
+A. Create an authorized view in BigQuery to restrict access to tables with sensitive data.
+•	 
+B. Install a third-party data validation tool on Compute Engine virtual machines to check the incoming data for sensitive information.
+•	 
+C. Use Stackdriver logging to analyze the data passed through the total pipeline to identify transactions that may contain sensitive information.
+•	 
+D. Build a Cloud Function that reads the topics and makes a call to the Cloud Data Loss Prevention API. Use the tagging and confidence levels to either pass or quarantine the data in a bucket for review.
+(Correct)
+Explanation
+Answer: D cloud.google.com/dlp
+Protection of sensitive data, like personally identifiable information (PII), is critical to your business. Deploy de-identification in migrations, data workloads, and real-time data collection and processing.
+Question 13: 
+Skipped
+You have developed three data processing jobs. One executes a Cloud Dataflow pipeline that transforms data uploaded to Cloud Storage and writes results to
+BigQuery. The second ingests data from on-premises servers and uploads it to Cloud Storage. The third is a Cloud Dataflow pipeline that gets information from third-party data providers and uploads the information to Cloud Storage. You need to be able to schedule and monitor the execution of these three workflows and manually execute them when needed. What should you do?
+
+
+
+
+•	 
+A. Create a Direct Acyclic Graph in Cloud Composer to schedule and monitor the jobs.
+(Correct)
+•	 
+B. Use Stackdriver Monitoring and set up an alert with a Webhook notification to trigger the jobs.
+•	 
+C. Develop an App Engine application to schedule and request the status of the jobs using GCP API calls.
+•	 
+D. Set up cron jobs in a Compute Engine instance to schedule and monitor the pipelines using GCP API calls.
+Explanation
+Cloud Composer is a fully managed workflow orchestration service that empowers you to author, schedule, and monitor pipelines that span across clouds and on-premises data centers.
+https://cloud.google.com/composer/?hl=en
+Question 14: 
+Skipped
+You have Cloud Functions written in Node.js that pull messages from Cloud Pub/Sub and send the data to BigQuery. You observe that the message processing rate on the Pub/Sub topic is orders of magnitude higher than anticipated, but there is no error logged in Stackdriver Log Viewer. What are the two most likely causes of this problem? (Choose two.)
+
+
+
+
+
+
+•	 
+A. Publisher throughput quota is too small.
+•	 
+B. Total outstanding messages exceed the 10-MB maximum.
+•	 
+C. Error handling in the subscriber code is not handling run-time errors properly.
+(Correct)
+•	 
+D. The subscriber code cannot keep up with the messages.
+•	 
+E. The subscriber code does not acknowledge the messages that it pulls.
+(Correct)
+Explanation
+Answer: C, E
+Description: C, E: By not acknowleding the pulled message, this result in it be putted back in Cloud Pub/Sub, meaning the messages accumulate instead of being consumed and removed from Pub/Sub. The same thing can happen ig the subscriber maintains the lease on the message it receives in case of an error. This reduces the overall rate of processing because messages get stuck on the first subscriber. Also, errors in Cloud Function do not show up in Stackdriver Log Viewer if they are not correctly handled.
+A: No problem with publisher rate as the observed result is a higher number of messages and not a lower number.
+B: if messages exceed the 10MB maximum, they cannot be published.
+D: Cloud Functions automatically scales so they should be able to keep up.
+Question 15: 
+Skipped
+You are creating a new pipeline in Google Cloud to stream IoT data from Cloud Pub/Sub through Cloud Dataflow to BigQuery. While previewing the data, you notice that roughly 2% of the data appears to be corrupt. You need to modify the Cloud Dataflow pipeline to filter out this corrupt data. What should you do?
+
+
+
+
+•	 
+A. Add a SideInput that returns a Boolean if the element is corrupt.
+•	 
+B. Add a ParDo transform in Cloud Dataflow to discard corrupt elements.
+(Correct)
+•	 
+C. Add a Partition transform in Cloud Dataflow to separate valid data from corrupt data.
+•	 
+D. Add a GroupByKey transform in Cloud Dataflow to group all of the valid data together and discard the rest.
+Explanation
+Should be B. The Partition transform would require the element identifying the valid/invalid records for partitioning the pcollection that means there is some logic to be executed before the Partition transformation is invoked. That logic can be implemented in a ParDO transform and which can both identify valid/invalid records and also generate two PCollections one with valid records and other with invalid records.
+Question 16: 
+Skipped
+You have historical data covering the last three years in BigQuery and a data pipeline that delivers new data to BigQuery daily. You have noticed that when the
+Data Science team runs a query filtered on a date column and limited to 30""90 days of data, the query scans the entire table. You also noticed that your bill is increasing more quickly than you expected. You want to resolve the issue as cost-effectively as possible while maintaining the ability to conduct SQL queries.
+What should you do?
+
+•	 
+A. Re-create the tables using DDL. Partition the tables by a column containing a TIMESTAMP or DATE Type.
+(Correct)
+•	 
+B. Recommend that the Data Science team export the table to a CSV file on Cloud Storage and use Cloud Datalab to explore the data by reading the files directly.
+•	 
+C. Modify your pipeline to maintain the last 30""90 days of data in one table and the longer history in a different table to minimize full table scans over the entire history.
+•	 
+D. Write an Apache Beam pipeline that creates a BigQuery table per day. Recommend that the Data Science team use wildcards on the table name suffixes to select the data they need.
+Explanation
+The D solution is obviously discarded.
+The request NOT require ONLY LAST 30-90 days, so the C solution is not the right solution.
+In addition to this, the request ask to keep the possibility to made queries, so B is wrost.
+Is not mandatory make the queries while you make the modify so the right answer is A
+Question 17: 
+Skipped
+You operate a logistics company, and you want to improve event delivery reliability for vehicle-based sensors. You operate small data centers around the world to capture these events, but leased lines that provide connectivity from your event collection infrastructure to your event processing infrastructure are unreliable, with unpredictable latency. You want to address this issue in the most cost-effective way. What should you do?
+•	 
+A. Deploy small Kafka clusters in your data centers to buffer events.
+
+•	 
+B. Have the data acquisition devices publish data to Cloud Pub/Sub.
+•	 
+C. Establish a Cloud Interconnect between all remote data centers and Google.
+(Correct)
+•	 
+D. Write a Cloud Dataflow pipeline that aggregates all data in session windows.
+Explanation
+Answer is C: Cloud Interconnect will connect all data centres.
+https://cloud.google.com/network-connectivity/docs/interconnect#:~:text=Cloud%20Interconnect%20extends%20your%20on,through%20a%20supported%20service%20provider.
+"Cloud Interconnect extends your on-premises network to Google's network through a highly available, low latency connection. You can use Dedicated Interconnect to connect directly to Google or use Partner Interconnect to connect to Google through a supported service provider" ...It will not require leased lines.Hence C is the most correct answer
+Question 18: 
+Skipped
+You are a retailer that wants to integrate your online sales capabilities with different in-home assistants, such as Google Home. You need to interpret customer voice commands and issue an order to the backend systems. Which solutions should you choose?
+
+•	 
+A. Cloud Speech-to-Text API
+•	 
+B. Cloud Natural Language API
+•	 
+C. Dialogflow Enterprise Edition
+
+(Correct)
+•	 
+D. Cloud AutoML Natural Language
+Explanation
+C: Dialogflow Enterprise Edition is an end-to-end development suite for building conversational interfaces for websites, mobile applications, popular messaging platforms, and IoT devices. You can use it to build interfaces (e.g., chatbots) that are capable of natural and rich interactions between your users and your business. It is powered by machine learning to recognize the intent and context of what a user says, allowing your conversational interface to provide highly efficient and accurate responses.
+https://cloud.google.com/dialogflow/
+Dialogflow API V2 is the new iteration of our developer API. The new API integrates Google Cloud Speech-to-Text, enabling developers to send audio directly to Dialogflow for combined speech recognition and natural language understanding.
+https://dialogflow.com/v2-faq
+https://cloud.google.com/blog/products/gcp/introducing-dialogflow-enterprise-edition-a-new-way-to-build-voice-and-text-conversational-apps
+Question 19: 
+Skipped
+Your company has a hybrid cloud initiative. You have a complex data pipeline that moves data between cloud provider services and leverages services from each of the cloud providers. Which cloud-native service should you use to orchestrate the entire pipeline?
+
+
+
+
+•	 
+A. Cloud Dataflow
+•	 
+B. Cloud Composer
+(Correct)
+•	 
+C. Cloud Dataprep
+•	 
+D. Cloud Dataproc
+Explanation
+B:
+Cloud Composer is a fully managed workflow orchestration service that empowers you to author, schedule, and monitor pipelines that span across clouds and on-premises data centers.
+https://cloud.google.com/composer/
+Cloud Composer can help create workflows that connect data, processing, and services across clouds, giving you a unified data environment.
+Built on the popular Apache Airflow open source project and operated using the Python programming language, Cloud Composer is free from lock-in and easy to use.
+Cloud Composer gives you the ability to connect your pipeline through a single orchestration tool whether your workflow Eves on-premises, in multiple clouds, or fully within GCP. The ability to author, schedule, and monitor your workflows in a unified manner means you can break down the silos in your environment and focus less on infrastructure.
+Question 20: 
+Skipped
+You use a dataset in BigQuery for analysis. You want to provide third-party companies with access to the same dataset. You need to keep the costs of data sharing low and ensure that the data is current. Which solution should you choose?
+•	 
+A. Create an authorized view on the BigQuery table to control data access, and provide third-party companies with access to that view.
+(Correct)
+•	 
+B. Use Cloud Scheduler to export the data on a regular basis to Cloud Storage, and provide third-party companies with access to the bucket.
+•	 
+C. Create a separate dataset in BigQuery that contains the relevant data to share, and provide third-party companies with access to the new dataset.
+•	 
+D. Create a Cloud Dataflow job that reads the data in frequent time intervals, and writes it to the relevant BigQuery dataset or Cloud Storage bucket for third-party companies to use.
+Explanation
+A: By creating an authorized view one assures that the data is current and avoids taking more storage space (and cost) in order to share a dataset. B and D are not cost optimal and C does not guarantee that the data is kept updated
+Question 21: 
+Skipped
+A shipping company has live package-tracking data that is sent to an Apache Kafka stream in real time. This is then loaded into BigQuery. Analysts in your company want to query the tracking data in BigQuery to analyze geospatial trends in the lifecycle of a package. The table was originally created with ingest-date partitioning. Over time, the query processing time has increased. You need to implement a change that would improve query performance in BigQuery. What should you do?
+
+
+
+•	 
+A. Implement clustering in BigQuery on the ingest date column.
+•	 
+B. Implement clustering in BigQuery on the package-tracking ID column.
+
+(Correct)
+•	 
+C. Tier older data onto Cloud Storage files, and leverage extended tables.
+
+•	 
+D. Re-create the table using data partitioning on the package delivery date.
+Explanation
+B as Clustering the data on the package Id can greatly improve the performance. Refer GCP documentation - BigQuery Clustered Table: https://cloud.google.com/bigquery/docs/clustered-tables
+Question 22: 
+Skipped
+You are designing a data processing pipeline. The pipeline must be able to scale automatically as load increases. Messages must be processed at least once and must be ordered within windows of 1 hour. How should you design the solution?
+•	 
+A. Use Apache Kafka for message ingestion and use Cloud Dataproc for streaming analysis.
+•	 
+B. Use Apache Kafka for message ingestion and use Cloud Dataflow for streaming analysis.
+
+•	 
+C. Use Cloud Pub/Sub for message ingestion and Cloud Dataproc for streaming analysis.
+•	 
+D. Use Cloud Pub/Sub for message ingestion and Cloud Dataflow for streaming analysis.
+(Correct)
+Explanation
+D: Pub/Sub + Dataflow
+https://cloud.google.com/solutions/stream-analytics/
+https://cloud.google.com/blog/products/data-analytics/streaming-analytics-now-simpler-more-cost-effective-cloud-dataflow
+Question 23: 
+Skipped
+You need to set access to BigQuery for different departments within your company. Your solution should comply with the following requirements:
+✑ Each department should have access only to their data.
+Each department will have one or more leads who need to be able to create and update tables and provide them to their team.
+
+✑ Each department has data analysts who need to be able to query but not modify data.
+How should you set access to the data in BigQuery?
+
+
+
+
+•	 
+A. Create a dataset for each department. Assign the department leads the role of OWNER, and assign the data analysts the role of WRITER on their dataset.
+•	 
+B. Create a dataset for each department. Assign the department leads the role of WRITER, and assign the data analysts the role of READER on their dataset.
+(Correct)
+•	 
+C. Create a table for each department. Assign the department leads the role of Owner, and assign the data analysts the role of Editor on the project the table is in.
+•	 
+D. Create a table for each department. Assign the department leads the role of Editor, and assign the data analysts the role of Viewer on the project the table is in.
+Explanation
+B: By default, granting access to a project also grants access to datasets within it. Default access can be overridden on a per-dataset basis.
+Primitive roles apply at the dataset level:
+https://cloud.google.com/bigquery/docs/access-control-primitive-roles
+Question 24: 
+Skipped
+You operate a database that stores stock trades and an application that retrieves average stock price for a given company over an adjustable window of time. The data is stored in Cloud Bigtable where the datetime of the stock trade is the beginning of the row key. Your application has thousands of concurrent users, and you notice that performance is starting to degrade as more stocks are added. What should you do to improve the performance of your application?
+•	 
+A. Change the row key syntax in your Cloud Bigtable table to begin with the stock symbol.
+
+(Correct)
+•	 
+B. Change the row key syntax in your Cloud Bigtable table to begin with a random number per second.
+•	 
+C. Change the data pipeline to use BigQuery for storing stock trades, and update your application.
+•	 
+D. Use Cloud Dataflow to write summary of each day's stock trades to an Avro file on Cloud Storage. Update your application to read from Cloud Storage and Cloud Bigtable to compute the responses.
+Explanation
+A: https://cloud.google.com/bigtable/docs/schema-design-time-series#prefer_rows_to_column_versions
+Question 25: 
+Skipped
+You are operating a Cloud Dataflow streaming pipeline. The pipeline aggregates events from a Cloud Pub/Sub subscription source, within a window, and sinks the resulting aggregation to a Cloud Storage bucket. The source has consistent throughput. You want to monitor an alert on behavior of the pipeline with Cloud
+Stackdriver to ensure that it is processing data. Which Stackdriver alerts should you create?
+
+•	 
+A. An alert based on a decrease of subscription/num_undelivered_messages for the source and a rate of change increase of instance/storage/ used_bytes for the destination
+•	 
+B. An alert based on an increase of subscription/num_undelivered_messages for the source and a rate of change decrease of instance/storage/ used_bytes for the destination
+(Correct)
+•	 
+C. An alert based on a decrease of instance/storage/used_bytes for the source and a rate of change increase of subscription/ num_undelivered_messages for the destination
+
+•	 
+D. An alert based on an increase of instance/storage/used_bytes for the source and a rate of change decrease of subscription/ num_undelivered_messages for the destination
+Explanation
+The answer is B.
+subscription/num_undelivered_messages: the number of messages that subscribers haven't processed https://cloud.google.com/pubsub/docs/monitoring#monitoring_forwarded_undeliverable_messages
+Question 26: 
+Skipped
+You currently have a single on-premises Kafka cluster in a data center in the us-east region that is responsible for ingesting messages from IoT devices globally.
+Because large parts of globe have poor internet connectivity, messages sometimes batch at the edge, come in all at once, and cause a spike in load on your
+Kafka cluster. This is becoming difficult to manage and prohibitively expensive. What is the Google-recommended cloud native architecture for this scenario?
+•	 
+A. Edge TPUs as sensor devices for storing and transmitting the messages.
+•	 
+B. Cloud Dataflow connected to the Kafka cluster to scale the processing of incoming messages.
+•	 
+C. An IoT gateway connected to Cloud Pub/Sub, with Cloud Dataflow to read and process the messages from Cloud Pub/Sub.
+(Correct)
+•	 
+D. A Kafka cluster virtualized on Compute Engine in us-east with Cloud Load Balancing to connect to the devices around the world.
+Explanation
+Answer is Option C.
+Alterative to Kafka in google cloud native service is Pub/Sub and Dataflow punched with Pub/Sub is the google recommended option
+Question 27: 
+Skipped
+You decided to use Cloud Datastore to ingest vehicle telemetry data in real time. You want to build a storage system that will account for the long-term data growth, while keeping the costs low. You also want to create snapshots of the data periodically, so that you can make a point-in-time (PIT) recovery, or clone a copy of the data for Cloud Datastore in a different environment. You want to archive these snapshots for a long time. Which two methods can accomplish this?
+(Choose two.)
+
+
+
+
+
+•	 
+A. Use managed export, and store the data in a Cloud Storage bucket using Nearline or Coldline class.
+(Correct)
+•	 
+B. Use managed export, and then import to Cloud Datastore in a separate project under a unique namespace reserved for that export.
+(Correct)
+•	 
+C. Use managed export, and then import the data into a BigQuery table created just for that export, and delete temporary export files.
+•	 
+D. Write an application that uses Cloud Datastore client libraries to read all the entities. Treat each entity as a BigQuery table row via BigQuery streaming insert. Assign an export timestamp for each export, and attach it as an extra column for each row. Make sure that the BigQuery table is partitioned using the export timestamp column.
+•	 
+E. Write an application that uses Cloud Datastore client libraries to read all the entities. Format the exported data into a JSON file. Apply compression before storing the data in Cloud Source Repositories.
+Explanation
+Option A; Cheap storage and it is a supported method https://cloud.google.com/datastore/docs/export-import-entities
+Option B; Rationale - "Data exported from one Datastore mode database can be imported into another Datastore mode database, even one in another project." <https://cloud.google.com/datastore/docs/export-import-entities>
+Question 28: 
+Skipped
+You need to create a data pipeline that copies time-series transaction data so that it can be queried from within BigQuery by your data science team for analysis.
+Every hour, thousands of transactions are updated with a new status. The size of the intitial dataset is 1.5 PB, and it will grow by 3 TB per day. The data is heavily structured, and your data science team will build machine learning models based on this data. You want to maximize performance and usability for your data science team. Which two strategies should you adopt? (Choose two.)
+
+
+
+
+
+•	 
+A. Denormalize the data as must as possible. Most Voted
+(Correct)
+•	 
+B. Preserve the structure of the data as much as possible.
+•	 
+C. Use BigQuery UPDATE to further reduce the size of the dataset.
+•	 
+D. Develop a data pipeline where status updates are appended to BigQuery instead of updated. Most Voted
+(Correct)
+•	 
+E. Copy a daily snapshot of transaction data to Cloud Storage and store it as an Avro file. Use BigQuery's support for external data sources to query.
+Explanation
+A: Denormalization increases query speed for tables with billions of rows because BigQuery's performance degrades when doing JOINs on large tables, but with a denormalized data structure, you don't have to use JOINs, since all of the data has been combined into one table.
+Denormalization also makes queries simpler because you do not have to use JOIN clauses.
+https://cloud.google.com/solutions/bigquery-data-warehouse#denormalizing_data
+D: BigQuery append
+Question 29: 
+Skipped
+You are designing a cloud-native historical data processing system to meet the following conditions:
+✑ The data being analyzed is in CSV, Avro, and PDF formats and will be accessed by multiple analysis tools including Cloud Dataproc, BigQuery, and Compute
+Engine.
+✑ A streaming data pipeline stores new data daily.
+✑ Peformance is not a factor in the solution.
+✑ The solution design should maximize availability.
+How should you design data storage for this solution?
+
+•	 
+A. Create a Cloud Dataproc cluster with high availability. Store the data in HDFS, and peform analysis as needed.
+•	 
+B. Store the data in BigQuery. Access the data using the BigQuery Connector on Cloud Dataproc and Compute Engine.
+•	 
+C. Store the data in a regional Cloud Storage bucket. Access the bucket directly using Cloud Dataproc, BigQuery, and Compute Engine.
+•	 
+D. Store the data in a multi-regional Cloud Storage bucket. Access the data directly using Cloud Dataproc, BigQuery, and Compute Engine
+(Correct)
+Explanation
+correct D:
+the question didn't said high availability, said maximize availability, then multi-region increase availability in general and it's correct.
+Question 30: 
+Skipped
+You have a petabyte of analytics data and need to design a storage and processing platform for it. You must be able to perform data warehouse-style analytics on the data in Google Cloud and expose the dataset as files for batch analysis tools in other cloud providers. What should you do?
+
+
+
+
+•	 
+A. Store and process the entire dataset in BigQuery.
+•	 
+B. Store and process the entire dataset in Cloud Bigtable.
+•	 
+C. Store the full dataset in BigQuery, and store a compressed copy of the data in a Cloud Storage bucket.
+(Correct)
+•	 
+D. Store the warm data as files in Cloud Storage, and store the active data in BigQuery. Keep this ratio as 80% warm and 20% active.
+Explanation
+Vote for 'C'
+A - Only Half requirement fulfil, expose as a file not getting fulfiled
+B - Not a warehouse
+C. Both requirements fulfiled...Bigquery and GCS
+D. Both requirement fulfiled...but what if other cloud provider wants to analysis on rest 80% of the data. -
+
+So out of 4 options, C looks okay
+Continue
+Retake test
+
