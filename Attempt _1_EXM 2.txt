@@ -1,0 +1,909 @@
+Question 1: 
+ 
+You have Google Cloud Dataflow streaming pipeline running with a Google Cloud Pub/Sub subscription as the source. You need to make an update to the code that will make the new Cloud Dataflow pipeline incompatible with the current version. You do not want to lose any data when making this update. What should you do?
+
+•	 
+A. Update the current pipeline and use the drain flag.
+ 
+•	 
+B. Update the current pipeline and provide the transform mapping JSON object.
+•	 
+C. Create a new pipeline that has the same Cloud Pub/Sub subscription and cancel the old pipeline.
+•	 
+D. Create a new pipeline that has a new Cloud Pub/Sub subscription and cancel the old pipeline.
+
+Question 2: 
+ 
+Your company is running their first dynamic campaign, serving different offers by analyzing real-time data during the holiday season. The data scientists are collecting terabytes of data that rapidly grows every hour during their 30-day campaign. They are using Google Cloud Dataflow to preprocess the data and collect the feature (signals) data that is needed for the machine learning model in Google Cloud Bigtable. The team is observing suboptimal performance with reads and writes of their initial load of 10 TB of data. They want to improve this performance while minimizing cost. What should they do?
+
+• 
+A. Redefine the schema by evenly distributing reads and writes across the row space of the table.
+ 
+•	 
+B. The performance issue should be resolved over time as the site of the BigDate cluster is increased.
+•	 
+C. Redesign the schema to use a single row key to identify values that need to be updated frequently in the cluster.
+•	 
+D. Redesign the schema to use row keys based on numeric IDs that increase sequentially per user viewing the offers.
+
+Question 3: 
+ 
+Your software uses a simple JSON format for all messages. These messages are published to Google Cloud Pub/Sub, then processed with Google Cloud
+Dataflow to create a real-time dashboard for the CFO. During testing, you notice that some messages are missing in the dashboard. You check the logs, and all messages are being published to Cloud Pub/Sub successfully. What should you do next?
+
+
+
+•	 
+A. Check the dashboard application to see if it is not displaying correctly.
+•	 
+B. Run a fixed dataset through the Cloud Dataflow pipeline and analyze the output.
+•	 
+C. Use Google Stackdriver Monitoring on Cloud Pub/Sub to find the missing messages.
+ 
+•	 
+D. Switch Cloud Dataflow to pull messages from Cloud Pub/Sub instead of Cloud Pub/Sub pushing messages to Cloud Dataflow.
+
+
+
+Question 4: 
+ 
+Flowlogistic Case Study -
+
+Company Overview -
+Flowlogistic is a leading logistics and supply chain provider. They help businesses throughout the world manage their resources and transport them to their final destination. The company has grown rapidly, expanding their offerings to include rail, truck, aircraft, and oceanic shipping.
+
+Company Background -
+The company started as a regional trucking company, and then expanded into other logistics market. Because they have not updated their infrastructure, managing and tracking orders and shipments has become a bottleneck. To improve operations, Flowlogistic developed proprietary technology for tracking shipments in real time at the parcel level. However, they are unable to deploy it because their technology stack, based on Apache Kafka, cannot support the processing volume. In addition, Flowlogistic wants to further analyze their orders and shipments to determine how best to deploy their resources.
+
+Solution Concept -
+Flowlogistic wants to implement two concepts using the cloud:
+✑ Use their proprietary technology in a real-time inventory-tracking system that indicates the location of their loads
+✑ Perform analytics on all their orders and shipment logs, which contain both structured and unstructured data, to determine how best to deploy resources, which markets to expand info. They also want to use predictive analytics to learn earlier when a shipment will be delayed.
+
+Existing Technical Environment -
+Flowlogistic architecture resides in a single data center:
+✑ Databases
+8 physical servers in 2 clusters
+- SQL Server "" user data, inventory, static data
+3 physical servers
+- Cassandra "" metadata, tracking messages
+10 Kafka servers "" tracking message aggregation and batch insert
+✑ Application servers "" customer front end, middleware for order/customs
+60 virtual machines across 20 physical servers
+- Tomcat "" Java services
+- Nginx "" static content
+- Batch servers
+✑ Storage appliances
+- iSCSI for virtual machine (VM) hosts
+- Fibre Channel storage area network (FC SAN) "" SQL server storage
+- Network-attached storage (NAS) image storage, logs, backups
+✑ 10 Apache Hadoop /Spark servers
+- Core Data Lake
+- Data analysis workloads
+✑ 20 miscellaneous servers
+- Jenkins, monitoring, bastion hosts,
+
+Business Requirements -
+✑ Build a reliable and reproducible environment with scaled panty of production.
+✑ Aggregate data in a centralized Data Lake for analysis
+✑ Use historical data to perform predictive analytics on future shipments
+✑ Accurately track every shipment worldwide using proprietary technology
+✑ Improve business agility and speed of innovation through rapid provisioning of new resources
+✑ Analyze and optimize architecture for performance in the cloud
+✑ Migrate fully to the cloud if all other requirements are met
+
+Technical Requirements -
+✑ Handle both streaming and batch data
+✑ Migrate existing Hadoop workloads
+✑ Ensure architecture is scalable and elastic to meet the changing demands of the company.
+✑ Use managed services whenever possible
+✑ Encrypt data flight and at rest
+✑ Connect a VPN between the production data center and cloud environment
+
+SEO Statement -
+We have grown so quickly that our inability to upgrade our infrastructure is really hampering further growth and efficiency. We are efficient at moving shipments around the world, but we are inefficient at moving data around.
+We need to organize our information so we can more easily understand where our customers are and what they are shipping.
+
+CTO Statement -
+IT has never been a priority for us, so as our data has grown, we have not invested enough in our technology. I have a good staff to manage IT, but they are so busy managing our infrastructure that I cannot get them to do the things that really matter, such as organizing our data, building the analytics, and figuring out how to implement the CFO' s tracking technology.
+
+CFO Statement -
+Part of our competitive advantage is that we penalize ourselves for late shipments and deliveries. Knowing where out shipments are at all times has a direct correlation to our bottom line and profitability. Additionally, I don't want to commit capital to building out a server environment.
+Flowlogistic wants to use Google BigQuery as their primary analysis system, but they still have Apache Hadoop and Spark workloads that they cannot move to
+BigQuery. Flowlogistic does not know how to store the data that is common to both workloads. What should they do?
+
+
+
+•	 
+A. Store the common data in BigQuery as partitioned tables.
+•	 
+B. Store the common data in BigQuery and expose authorized views.
+•	 
+C. Store the common data encoded as Avro in Google Cloud Storage.
+ 
+•	 
+D. Store he common data in the HDFS storage for a Google Cloud Dataproc cluster.
+
+Question 5: 
+ 
+Flowlogistic Case Study -
+
+Company Overview -
+Flowlogistic is a leading logistics and supply chain provider. They help businesses throughout the world manage their resources and transport them to their final destination. The company has grown rapidly, expanding their offerings to include rail, truck, aircraft, and oceanic shipping.
+
+Company Background -
+The company started as a regional trucking company, and then expanded into other logistics market. Because they have not updated their infrastructure, managing and tracking orders and shipments has become a bottleneck. To improve operations, Flowlogistic developed proprietary technology for tracking shipments in real time at the parcel level. However, they are unable to deploy it because their technology stack, based on Apache Kafka, cannot support the processing volume. In addition, Flowlogistic wants to further analyze their orders and shipments to determine how best to deploy their resources.
+
+Solution Concept -
+Flowlogistic wants to implement two concepts using the cloud:
+✑ Use their proprietary technology in a real-time inventory-tracking system that indicates the location of their loads
+✑ Perform analytics on all their orders and shipment logs, which contain both structured and unstructured data, to determine how best to deploy resources, which markets to expand info. They also want to use predictive analytics to learn earlier when a shipment will be delayed.
+
+Existing Technical Environment -
+Flowlogistic architecture resides in a single data center:
+✑ Databases
+8 physical servers in 2 clusters
+- SQL Server "" user data, inventory, static data
+3 physical servers
+- Cassandra "" metadata, tracking messages
+10 Kafka servers "" tracking message aggregation and batch insert
+✑ Application servers "" customer front end, middleware for order/customs
+60 virtual machines across 20 physical servers
+- Tomcat "" Java services
+- Nginx "" static content
+- Batch servers
+✑ Storage appliances
+- iSCSI for virtual machine (VM) hosts
+- Fibre Channel storage area network (FC SAN) "" SQL server storage
+- Network-attached storage (NAS) image storage, logs, backups
+✑ 10 Apache Hadoop /Spark servers
+- Core Data Lake
+- Data analysis workloads
+✑ 20 miscellaneous servers
+- Jenkins, monitoring, bastion hosts,
+
+Business Requirements -
+✑ Build a reliable and reproducible environment with scaled panty of production.
+✑ Aggregate data in a centralized Data Lake for analysis
+✑ Use historical data to perform predictive analytics on future shipments
+✑ Accurately track every shipment worldwide using proprietary technology
+✑ Improve business agility and speed of innovation through rapid provisioning of new resources
+✑ Analyze and optimize architecture for performance in the cloud
+Migrate fully to the cloud if all other requirements are met
+
+ 
+
+
+Technical Requirements -
+✑ Handle both streaming and batch data
+✑ Migrate existing Hadoop workloads
+✑ Ensure architecture is scalable and elastic to meet the changing demands of the company.
+✑ Use managed services whenever possible
+✑ Encrypt data flight and at rest
+✑ Connect a VPN between the production data center and cloud environment
+
+SEO Statement -
+We have grown so quickly that our inability to upgrade our infrastructure is really hampering further growth and efficiency. We are efficient at moving shipments around the world, but we are inefficient at moving data around.
+We need to organize our information so we can more easily understand where our customers are and what they are shipping.
+
+CTO Statement -
+IT has never been a priority for us, so as our data has grown, we have not invested enough in our technology. I have a good staff to manage IT, but they are so busy managing our infrastructure that I cannot get them to do the things that really matter, such as organizing our data, building the analytics, and figuring out how to implement the CFO' s tracking technology.
+
+CFO Statement -
+Part of our competitive advantage is that we penalize ourselves for late shipments and deliveries. Knowing where out shipments are at all times has a direct correlation to our bottom line and profitability. Additionally, I don't want to commit capital to building out a server environment.
+Flowlogistic's management has determined that the current Apache Kafka servers cannot handle the data volume for their real-time inventory tracking system.
+You need to build a new system on Google Cloud Platform (GCP) that will feed the proprietary tracking software. The system must be able to ingest data from a variety of global sources, process and query in real-time, and store the data reliably. Which combination of GCP products should you choose?
+
+
+
+•	 
+A. Cloud Pub/Sub, Cloud Dataflow, and Cloud Storage
+ 
+•	 
+B. Cloud Pub/Sub, Cloud Dataflow, and Local SSD
+•	 
+C. Cloud Pub/Sub, Cloud SQL, and Cloud Storage
+
+•	 
+D. Cloud Load Balancing, Cloud Dataflow, and Cloud Storage
+
+Question 6: 
+ 
+Flowlogistic Case Study -
+
+Company Overview -
+Flowlogistic is a leading logistics and supply chain provider. They help businesses throughout the world manage their resources and transport them to their final destination. The company has grown rapidly, expanding their offerings to include rail, truck, aircraft, and oceanic shipping.
+
+Company Background -
+The company started as a regional trucking company, and then expanded into other logistics market. Because they have not updated their infrastructure, managing and tracking orders and shipments has become a bottleneck. To improve operations, Flowlogistic developed proprietary technology for tracking shipments in real time at the parcel level. However, they are unable to deploy it because their technology stack, based on Apache Kafka, cannot support the processing volume. In addition, Flowlogistic wants to further analyze their orders and shipments to determine how best to deploy their resources.
+
+Solution Concept -
+Flowlogistic wants to implement two concepts using the cloud:
+✑ Use their proprietary technology in a real-time inventory-tracking system that indicates the location of their loads
+✑ Perform analytics on all their orders and shipment logs, which contain both structured and unstructured data, to determine how best to deploy resources, which markets to expand info. They also want to use predictive analytics to learn earlier when a shipment will be delayed.
+
+Existing Technical Environment -
+Flowlogistic architecture resides in a single data center:
+✑ Databases
+8 physical servers in 2 clusters
+- SQL Server "" user data, inventory, static data
+3 physical servers
+- Cassandra "" metadata, tracking messages
+10 Kafka servers "" tracking message aggregation and batch insert
+✑ Application servers "" customer front end, middleware for order/customs
+60 virtual machines across 20 physical servers
+- Tomcat "" Java services
+- Nginx "" static content
+- Batch servers
+✑ Storage appliances
+- iSCSI for virtual machine (VM) hosts
+- Fibre Channel storage area network (FC SAN) "" SQL server storage
+- Network-attached storage (NAS) image storage, logs, backups
+✑ 10 Apache Hadoop /Spark servers
+- Core Data Lake
+- Data analysis workloads
+✑ 20 miscellaneous servers
+- Jenkins, monitoring, bastion hosts,
+
+Business Requirements -
+✑ Build a reliable and reproducible environment with scaled panty of production.
+✑ Aggregate data in a centralized Data Lake for analysis
+✑ Use historical data to perform predictive analytics on future shipments
+✑ Accurately track every shipment worldwide using proprietary technology
+✑ Improve business agility and speed of innovation through rapid provisioning of new resources
+✑ Analyze and optimize architecture for performance in the cloud
+✑ Migrate fully to the cloud if all other requirements are met
+
+Technical Requirements -
+✑ Handle both streaming and batch data
+✑ Migrate existing Hadoop workloads
+✑ Ensure architecture is scalable and elastic to meet the changing demands of the company.
+✑ Use managed services whenever possible
+✑ Encrypt data flight and at rest
+✑ Connect a VPN between the production data center and cloud environment
+
+SEO Statement -
+We have grown so quickly that our inability to upgrade our infrastructure is really hampering further growth and efficiency. We are efficient at moving shipments around the world, but we are inefficient at moving data around.
+We need to organize our information so we can more easily understand where our customers are and what they are shipping.
+
+CTO Statement -
+IT has never been a priority for us, so as our data has grown, we have not invested enough in our technology. I have a good staff to manage IT, but they are so busy managing our infrastructure that I cannot get them to do the things that really matter, such as organizing our data, building the analytics, and figuring out how to implement the CFO' s tracking technology.
+
+CFO Statement -
+Part of our competitive advantage is that we penalize ourselves for late shipments and deliveries. Knowing where out shipments are at all times has a direct correlation to our bottom line and profitability. Additionally, I don't want to commit capital to building out a server environment.
+
+Flowlogistic's CEO wants to gain rapid insight into their customer base so his sales team can be better informed in the field. This team is not very technical, so they've purchased a visualization tool to simplify the creation of BigQuery reports. However, they've been overwhelmed by all the data in the table, and are spending a lot of money on queries trying to find the data they need. You want to solve their problem in the most cost-effective way. What should you do?
+
+
+•	 
+A. Export the data into a Google Sheet for virtualization.
+•	 
+B. Create an additional table with only the necessary columns.
+
+•	 
+C. Create a view on the table to present to the virtualization tool.
+ 
+•	 
+D. Create identity and access management (IAM) roles on the appropriate columns, so only they appear in a query.
+
+Question 7: 
+ 
+Flowlogistic Case Study -
+
+Company Overview -
+Flowlogistic is a leading logistics and supply chain provider. They help businesses throughout the world manage their resources and transport them to their final destination. The company has grown rapidly, expanding their offerings to include rail, truck, aircraft, and oceanic shipping.
+
+Company Background -
+The company started as a regional trucking company, and then expanded into other logistics market. Because they have not updated their infrastructure, managing and tracking orders and shipments has become a bottleneck. To improve operations, Flowlogistic developed proprietary technology for tracking shipments in real time at the parcel level. However, they are unable to deploy it because their technology stack, based on Apache Kafka, cannot support the processing volume. In addition, Flowlogistic wants to further analyze their orders and shipments to determine how best to deploy their resources.
+
+Solution Concept -
+Flowlogistic wants to implement two concepts using the cloud:
+✑ Use their proprietary technology in a real-time inventory-tracking system that indicates the location of their loads
+✑ Perform analytics on all their orders and shipment logs, which contain both structured and unstructured data, to determine how best to deploy resources, which markets to expand info. They also want to use predictive analytics to learn earlier when a shipment will be delayed.
+
+Existing Technical Environment -
+Flowlogistic architecture resides in a single data center:
+✑ Databases
+8 physical servers in 2 clusters
+- SQL Server "" user data, inventory, static data
+3 physical servers
+- Cassandra "" metadata, tracking messages
+10 Kafka servers "" tracking message aggregation and batch insert
+✑ Application servers "" customer front end, middleware for order/customs
+60 virtual machines across 20 physical servers
+- Tomcat "" Java services
+- Nginx "" static content
+- Batch servers
+✑ Storage appliances
+- iSCSI for virtual machine (VM) hosts
+- Fibre Channel storage area network (FC SAN) "" SQL server storage
+- Network-attached storage (NAS) image storage, logs, backups
+✑ 10 Apache Hadoop /Spark servers
+- Core Data Lake
+- Data analysis workloads
+✑ 20 miscellaneous servers
+- Jenkins, monitoring, bastion hosts,
+
+Business Requirements -
+✑ Build a reliable and reproducible environment with scaled panty of production.
+✑ Aggregate data in a centralized Data Lake for analysis
+✑ Use historical data to perform predictive analytics on future shipments
+✑ Accurately track every shipment worldwide using proprietary technology
+✑ Improve business agility and speed of innovation through rapid provisioning of new resources
+✑ Analyze and optimize architecture for performance in the cloud
+✑ Migrate fully to the cloud if all other requirements are met
+
+Technical Requirements -
+✑ Handle both streaming and batch data
+✑ Migrate existing Hadoop workloads
+✑ Ensure architecture is scalable and elastic to meet the changing demands of the company.
+✑ Use managed services whenever possible
+✑ Encrypt data flight and at rest
+Connect a VPN between the production data center and cloud environment
+
+ 
+
+
+SEO Statement -
+We have grown so quickly that our inability to upgrade our infrastructure is really hampering further growth and efficiency. We are efficient at moving shipments around the world, but we are inefficient at moving data around.
+We need to organize our information so we can more easily understand where our customers are and what they are shipping.
+
+CTO Statement -
+IT has never been a priority for us, so as our data has grown, we have not invested enough in our technology. I have a good staff to manage IT, but they are so busy managing our infrastructure that I cannot get them to do the things that really matter, such as organizing our data, building the analytics, and figuring out how to implement the CFO' s tracking technology.
+
+CFO Statement -
+Part of our competitive advantage is that we penalize ourselves for late shipments and deliveries. Knowing where out shipments are at all times has a direct correlation to our bottom line and profitability. Additionally, I don't want to commit capital to building out a server environment.
+Flowlogistic is rolling out their real-time inventory tracking system. The tracking devices will all send package-tracking messages, which will now go to a single
+Google Cloud Pub/Sub topic instead of the Apache Kafka cluster. A subscriber application will then process the messages for real-time reporting and store them in
+Google BigQuery for historical analysis. You want to ensure the package data can be analyzed over time.
+Which approach should you take?
+
+
+
+
+•	 
+A. Attach the timestamp on each message in the Cloud Pub/Sub subscriber application as they are received.
+•	 
+B. Attach the timestamp and Package ID on the outbound message from each publisher device as they are sent to Clod Pub/Sub.
+ 
+•	 
+C. Use the NOW () function in BigQuery to record the event's time.
+•	 
+D. Use the automatically generated timestamp from Cloud Pub/Sub to order the data.
+
+Question 8: 
+ 
+MJTelco Case Study -
+
+Company Overview -
+MJTelco is a startup that plans to build networks in rapidly growing, underserved markets around the world. The company has patents for innovative optical communications hardware. Based on these patents, they can create many reliable, high-speed backbone links with inexpensive hardware.
+
+Company Background -
+Founded by experienced telecom executives, MJTelco uses technologies originally developed to overcome communications challenges in space. Fundamental to their operation, they need to create a distributed data infrastructure that drives real-time analysis and incorporates machine learning to continuously optimize their topologies. Because their hardware is inexpensive, they plan to overdeploy the network allowing them to account for the impact of dynamic regional politics on location availability and cost.
+Their management and operations teams are situated all around the globe creating many-to-many relationship between data consumers and provides in their system. After careful consideration, they decided public cloud is the perfect environment to support their needs.
+
+Solution Concept -
+MJTelco is running a successful proof-of-concept (PoC) project in its labs. They have two primary needs:
+✑ Scale and harden their PoC to support significantly more data flows generated when they ramp to more than 50,000 installations.
+✑ Refine their machine-learning cycles to verify and improve the dynamic models they use to control topology definition.
+MJTelco will also use three separate operating environments "" development/test, staging, and production "" to meet the needs of running experiments, deploying new features, and serving production customers.
+
+Business Requirements -
+✑ Scale up their production environment with minimal cost, instantiating resources when and where needed in an unpredictable, distributed telecom user community.
+✑ Ensure security of their proprietary data to protect their leading-edge machine learning and analysis.
+✑ Provide reliable and timely access to data for analysis from distributed research workers
+✑ Maintain isolated environments that support rapid iteration of their machine-learning models without affecting their customers.
+
+Technical Requirements -
+✑ Ensure secure and efficient transport and storage of telemetry data
+✑ Rapidly scale instances to support between 10,000 and 100,000 data providers with multiple flows each.
+✑ Allow analysis and presentation against data tables tracking up to 2 years of data storing approximately 100m records/day
+✑ Support rapid iteration of monitoring infrastructure focused on awareness of data pipeline problems both in telemetry flows and in production learning cycles.
+
+CEO Statement -
+Our business model relies on our patents, analytics and dynamic machine learning. Our inexpensive hardware is organized to be highly reliable, which gives us cost advantages. We need to quickly stabilize our large distributed data pipelines to meet our reliability and capacity commitments.
+
+CTO Statement -
+Our public cloud services must operate as advertised. We need resources that scale and keep our data secure. We also need environments in which our data scientists can carefully study and quickly adapt our models. Because we rely on automation to process our data, we also need our development and test environments to work as we iterate.
+
+CFO Statement -
+The project is too large for us to maintain the hardware and software required for the data and analysis. Also, we cannot afford to staff an operations team to monitor so many data feeds, so we will rely on automation and infrastructure. Google Cloud's machine learning will allow our quantitative researchers to work on our high-value problems instead of problems with our data pipelines.
+MJTelco's Google Cloud Dataflow pipeline is now ready to start receiving data from the 50,000 installations. You want to allow Cloud Dataflow to scale its compute power up as required. Which Cloud Dataflow pipeline configuration setting should you update?
+
+
+
+•	 
+A. The zone
+•	 
+B. The number of workers
+•	 
+C. The disk size per worker
+•	 
+D. The maximum number of workers
+ 
+Question 9: 
+ 
+MJTelco Case Study -
+
+Company Overview -
+MJTelco is a startup that plans to build networks in rapidly growing, underserved markets around the world. The company has patents for innovative optical communications hardware. Based on these patents, they can create many reliable, high-speed backbone links with inexpensive hardware.
+
+Company Background -
+Founded by experienced telecom executives, MJTelco uses technologies originally developed to overcome communications challenges in space. Fundamental to their operation, they need to create a distributed data infrastructure that drives real-time analysis and incorporates machine learning to continuously optimize their topologies. Because their hardware is inexpensive, they plan to overdeploy the network allowing them to account for the impact of dynamic regional politics on location availability and cost.
+Their management and operations teams are situated all around the globe creating many-to-many relationship between data consumers and provides in their system. After careful consideration, they decided public cloud is the perfect environment to support their needs.
+
+Solution Concept -
+MJTelco is running a successful proof-of-concept (PoC) project in its labs. They have two primary needs:
+✑ Scale and harden their PoC to support significantly more data flows generated when they ramp to more than 50,000 installations.
+✑ Refine their machine-learning cycles to verify and improve the dynamic models they use to control topology definition.
+MJTelco will also use three separate operating environments "" development/test, staging, and production "" to meet the needs of running experiments, deploying new features, and serving production customers.
+
+Business Requirements -
+✑ Scale up their production environment with minimal cost, instantiating resources when and where needed in an unpredictable, distributed telecom user community.
+✑ Ensure security of their proprietary data to protect their leading-edge machine learning and analysis.
+✑ Provide reliable and timely access to data for analysis from distributed research workers
+✑ Maintain isolated environments that support rapid iteration of their machine-learning models without affecting their customers.
+
+Technical Requirements -
+✑ Ensure secure and efficient transport and storage of telemetry data
+✑ Rapidly scale instances to support between 10,000 and 100,000 data providers with multiple flows each.
+✑ Allow analysis and presentation against data tables tracking up to 2 years of data storing approximately 100m records/day
+✑ Support rapid iteration of monitoring infrastructure focused on awareness of data pipeline problems both in telemetry flows and in production learning cycles.
+
+CEO Statement -
+Our business model relies on our patents, analytics and dynamic machine learning. Our inexpensive hardware is organized to be highly reliable, which gives us cost advantages. We need to quickly stabilize our large distributed data pipelines to meet our reliability and capacity commitments.
+
+CTO Statement -
+Our public cloud services must operate as advertised. We need resources that scale and keep our data secure. We also need environments in which our data scientists can carefully study and quickly adapt our models. Because we rely on automation to process our data, we also need our development and test environments to work as we iterate.
+
+CFO Statement -
+The project is too large for us to maintain the hardware and software required for the data and analysis. Also, we cannot afford to staff an operations team to monitor so many data feeds, so we will rely on automation and infrastructure. Google Cloud's machine learning will allow our quantitative researchers to work on our high-value problems instead of problems with our data pipelines.
+You need to compose visualizations for operations teams with the following requirements:
+✑ The report must include telemetry data from all 50,000 installations for the most resent 6 weeks (sampling once every minute).
+✑ The report must not be more than 3 hours delayed from live data.
+✑ The actionable report should only show suboptimal links.
+✑ Most suboptimal links should be sorted to the top.
+✑ Suboptimal links can be grouped and filtered by regional geography.
+✑ User response time to load the report must be <5 seconds.
+Which approach meets the requirements?
+
+
+•	 
+A. Load the data into Google Sheets, use formulas to calculate a metric, and use filters/sorting to show only suboptimal links in a table.
+•	 
+B. Load the data into Google BigQuery tables, write Google Apps Script that queries the data, calculates the metric, and shows only suboptimal rows in a table in Google Sheets.
+•	 
+C. Load the data into Google Cloud Datastore tables, write a Google App Engine Application that queries all rows, applies a function to derive the metric, and then renders results in a table using the Google charts and visualization API.
+
+•	 
+D. Load the data into Google BigQuery tables, write a Google Data Studio 360 report that connects to your data, calculates a metric, and then uses a filter expression to show only suboptimal rows in a table.
+ 
+
+Question 10: 
+ 
+MJTelco Case Study -
+
+Company Overview -
+MJTelco is a startup that plans to build networks in rapidly growing, underserved markets around the world. The company has patents for innovative optical communications hardware. Based on these patents, they can create many reliable, high-speed backbone links with inexpensive hardware.
+
+Company Background -
+Founded by experienced telecom executives, MJTelco uses technologies originally developed to overcome communications challenges in space. Fundamental to their operation, they need to create a distributed data infrastructure that drives real-time analysis and incorporates machine learning to continuously optimize their topologies. Because their hardware is inexpensive, they plan to overdeploy the network allowing them to account for the impact of dynamic regional politics on location availability and cost.
+Their management and operations teams are situated all around the globe creating many-to-many relationship between data consumers and provides in their system. After careful consideration, they decided public cloud is the perfect environment to support their needs.
+
+Solution Concept -
+MJTelco is running a successful proof-of-concept (PoC) project in its labs. They have two primary needs:
+✑ Scale and harden their PoC to support significantly more data flows generated when they ramp to more than 50,000 installations.
+✑ Refine their machine-learning cycles to verify and improve the dynamic models they use to control topology definition.
+MJTelco will also use three separate operating environments "" development/test, staging, and production "" to meet the needs of running experiments, deploying new features, and serving production customers.
+
+Business Requirements -
+✑ Scale up their production environment with minimal cost, instantiating resources when and where needed in an unpredictable, distributed telecom user community.
+✑ Ensure security of their proprietary data to protect their leading-edge machine learning and analysis.
+✑ Provide reliable and timely access to data for analysis from distributed research workers
+✑ Maintain isolated environments that support rapid iteration of their machine-learning models without affecting their customers.
+
+Technical Requirements -
+✑ Ensure secure and efficient transport and storage of telemetry data
+✑ Rapidly scale instances to support between 10,000 and 100,000 data providers with multiple flows each.
+✑ Allow analysis and presentation against data tables tracking up to 2 years of data storing approximately 100m records/day
+✑ Support rapid iteration of monitoring infrastructure focused on awareness of data pipeline problems both in telemetry flows and in production learning cycles.
+
+CEO Statement -
+Our business model relies on our patents, analytics and dynamic machine learning. Our inexpensive hardware is organized to be highly reliable, which gives us cost advantages. We need to quickly stabilize our large distributed data pipelines to meet our reliability and capacity commitments.
+
+CTO Statement -
+Our public cloud services must operate as advertised. We need resources that scale and keep our data secure. We also need environments in which our data scientists can carefully study and quickly adapt our models. Because we rely on automation to process our data, we also need our development and test environments to work as we iterate.
+
+CFO Statement -
+The project is too large for us to maintain the hardware and software required for the data and analysis. Also, we cannot afford to staff an operations team to monitor so many data feeds, so we will rely on automation and infrastructure. Google Cloud's machine learning will allow our quantitative researchers to work on our high-value problems instead of problems with our data pipelines.
+You create a new report for your large team in Google Data Studio 360. The report uses Google BigQuery as its data source. It is company policy to ensure employees can view only the data associated with their region, so you create and populate a table for each region. You need to enforce the regional access policy to the data.
+Which two actions should you take? (Choose two.)
+
+
+
+
+
+•	 
+A. Ensure all the tables are included in global dataset.
+•	 
+B. Ensure each table is included in a dataset for a region.
+ 
+•	 
+C. Adjust the settings for each table to allow a related region-based security group view access.
+ 
+•	 
+D. Adjust the settings for each view to allow a related region-based security group view access.
+•	 
+E. Adjust the settings for each dataset to allow a related region-based security group view access.
+
+
+
+Question 11: 
+ 
+MJTelco Case Study -
+
+Company Overview -
+MJTelco is a startup that plans to build networks in rapidly growing, underserved markets around the world. The company has patents for innovative optical communications hardware. Based on these patents, they can create many reliable, high-speed backbone links with inexpensive hardware.
+
+Company Background -
+Founded by experienced telecom executives, MJTelco uses technologies originally developed to overcome communications challenges in space. Fundamental to their operation, they need to create a distributed data infrastructure that drives real-time analysis and incorporates machine learning to continuously optimize their topologies. Because their hardware is inexpensive, they plan to overdeploy the network allowing them to account for the impact of dynamic regional politics on location availability and cost.
+Their management and operations teams are situated all around the globe creating many-to-many relationship between data consumers and provides in their system. After careful consideration, they decided public cloud is the perfect environment to support their needs.
+
+Solution Concept -
+MJTelco is running a successful proof-of-concept (PoC) project in its labs. They have two primary needs:
+✑ Scale and harden their PoC to support significantly more data flows generated when they ramp to more than 50,000 installations.
+✑ Refine their machine-learning cycles to verify and improve the dynamic models they use to control topology definition.
+MJTelco will also use three separate operating environments "" development/test, staging, and production "" to meet the needs of running experiments, deploying new features, and serving production customers.
+
+Business Requirements -
+✑ Scale up their production environment with minimal cost, instantiating resources when and where needed in an unpredictable, distributed telecom user community.
+✑ Ensure security of their proprietary data to protect their leading-edge machine learning and analysis.
+✑ Provide reliable and timely access to data for analysis from distributed research workers
+✑ Maintain isolated environments that support rapid iteration of their machine-learning models without affecting their customers.
+
+Technical Requirements -
+✑ Ensure secure and efficient transport and storage of telemetry data
+✑ Rapidly scale instances to support between 10,000 and 100,000 data providers with multiple flows each.
+✑ Allow analysis and presentation against data tables tracking up to 2 years of data storing approximately 100m records/day
+✑ Support rapid iteration of monitoring infrastructure focused on awareness of data pipeline problems both in telemetry flows and in production learning cycles.
+
+CEO Statement -
+Our business model relies on our patents, analytics and dynamic machine learning. Our inexpensive hardware is organized to be highly reliable, which gives us cost advantages. We need to quickly stabilize our large distributed data pipelines to meet our reliability and capacity commitments.
+
+CTO Statement -
+Our public cloud services must operate as advertised. We need resources that scale and keep our data secure. We also need environments in which our data scientists can carefully study and quickly adapt our models. Because we rely on automation to process our data, we also need our development and test environments to work as we iterate.
+
+CFO Statement -
+The project is too large for us to maintain the hardware and software required for the data and analysis. Also, we cannot afford to staff an operations team to monitor so many data feeds, so we will rely on automation and infrastructure. Google Cloud's machine learning will allow our quantitative researchers to work on our high-value problems instead of problems with our data pipelines.
+MJTelco needs you to create a schema in Google Bigtable that will allow for the historical analysis of the last 2 years of records. Each record that comes in is sent every 15 minutes,  
+Which schema should you use?
+•	 
+A. Rowkey: date#device_id Column data: data_point
+ 
+•	 
+B. Rowkey: date Column data: device_id, data_point
+•	 
+C. Rowkey: device_id Column data: date, data_point
+•	 
+D. Rowkey: data_point Column data: device_id, date
+
+•	 
+E. Rowkey: date#data_point Column data: device_id
+
+Question 12: 
+ 
+Your company has recently grown rapidly and now ingesting data at a significantly higher rate than it was previously. You manage the daily batch MapReduce analytics jobs in Apache Hadoop. However, the recent increase in data has meant the batch jobs are falling behind. You were asked to recommend ways the development team could increase the responsiveness of the analytics without increasing costs. What should you recommend they do?
+
+
+
+
+•	 
+A. Rewrite the job in Pig.
+•	 
+B. Rewrite the job in Apache Spark.
+•	 
+C. Increase the size of the Hadoop cluster.
+ •	 
+D. Decrease the size of the Hadoop cluster but also rewrite the job in Hive.
+
+
+Question 13: 
+ 
+You work for a large fast food restaurant chain with over 400,000 employees. You store employee information in Google BigQuery in a Users table consisting of a FirstName field and a LastName field. A member of IT is building an application and asks you to modify the schema and data in BigQuery so the application can query a FullName field consisting of the value of the FirstName field concatenated with a space, followed by the value of the LastName field for each employee. How can you make that data available while minimizing cost?
+•	 
+A. Create a view in BigQuery that concatenates the FirstName and LastName field values to produce the FullName.
+•	 
+B. Add a new column called FullName to the Users table. Run an UPDATE statement that updates the FullName column for each user with the concatenation of the FirstName and LastName values.
+•	 
+C. Create a Google Cloud Dataflow job that queries BigQuery for the entire Users table, concatenates the FirstName value and LastName value for each user, and loads the proper values for FirstName, LastName, and FullName into a new table in BigQuery.
+ 
+•	 
+D. Use BigQuery to export the data for the table to a CSV file. Create a Google Cloud Dataproc job to process the CSV file and output a new CSV file containing the proper values for FirstName, LastName and FullName. Run a BigQuery load job to load the new CSV file into BigQuery.
+ 
+Question 14: 
+ 
+You work for a manufacturing plant that batches application log files together into a single log file once a day at 2:00 AM. You have written a Google Cloud
+Dataflow job to process that log file. You need to make sure the log file in processed once per day as inexpensively as possible. What should you do?
+
+•	 
+A. Change the processing job to use Google Cloud Dataproc instead.
+•	 
+B. Manually start the Cloud Dataflow job each morning when you get into the office.
+•	 
+C. Create a cron job with Google App Engine Cron Service to run the Cloud Dataflow job.
+•	 
+D. Configure the Cloud Dataflow job as a streaming job so that it processes the log data immediately.
+
+Question 15: 
+ 
+You work for an economic consulting firm that helps companies identify economic trends as they happen. As part of your analysis, you use Google BigQuery to correlate customer data with the average prices of the 100 most common goods sold, including bread, gasoline, milk, and others. The average prices of these goods are updated every 30 minutes. You want to make sure this data stays up to date so you can combine it with other data in BigQuery as cheaply as possible.
+What should you do?
+
+
+
+
+•	 
+A. Load the data every 30 minutes into a new partitioned table in BigQuery.
+•	 
+B. Store and update the data in a regional Google Cloud Storage bucket and create a federated data source in BigQuery
+ 
+•	 
+C. Store the data in Google Cloud Datastore. Use Google Cloud Dataflow to query BigQuery and combine the data programmatically with the data stored in Cloud Datastore
+•	 
+D. Store the data in a file in a regional Google Cloud Storage bucket. Use Cloud Dataflow to query BigQuery and combine the data programmatically with the data stored in Google Cloud Storage.
+
+
+Question 16: 
+ 
+You are designing the database schema for a machine learning-based food ordering service that will predict what users want to eat. Here is some of the information you need to store:
+✑ The user profile: What the user likes and doesn't like to eat
+✑ The user account information: Name, address, preferred meal times
+✑ The order information: When orders are made, from where, to whom
+The database will be used to store all the transactional data of the product. You want to optimize the data schema. Which Google Cloud Platform product should you use?
+
+•	 
+A. BigQuery
+•	 
+B. Cloud SQL
+
+•	 
+C. Cloud Bigtable
+•	 
+D. Cloud Datastore
+ 
+Question 17: 
+ 
+Your company is loading comma-separated values (CSV) files into Google BigQuery. The data is fully imported successfully; however, the imported data is not matching byte-to-byte to the source file. What is the most likely cause of this problem?
+
+
+•	 
+A. The CSV data loaded in BigQuery is not flagged as CSV.
+•	 
+B. The CSV data has invalid rows that were   on import.
+•	 
+C. The CSV data loaded in BigQuery is not using BigQuery's default encoding.
+ 
+•	 
+D. The CSV data has not gone through an ETL phase before loading into BigQuery.
+
+
+Question 18: 
+ 
+Your company produces 20,000 files every hour. Each data file is formatted as a comma separated values (CSV) file that is less than 4 KB. All files must be ingested on Google Cloud Platform before they can be processed. Your company site has a 200 ms latency to Google Cloud, and your Internet connection bandwidth is limited as 50 Mbps. You currently deploy a secure FTP (SFTP) server on a virtual machine in Google Compute Engine as the data ingestion point. A local SFTP client runs on a dedicated machine to transmit the CSV files as is. The goal is to make reports with data from the previous day available to the executives by 10:00 a.m. each day. This design is barely able to keep up with the current volume, even though the bandwidth utilization is rather low.
+You are told that due to seasonality, your company expects the number of files to double for the next three months. Which two actions should you take? (Choose two.)
+
+
+
+•	 
+A. Introduce data compression for each file to increase the rate file of file transfer.
+
+•	 
+B. Contact your internet service provider (ISP) to increase your maximum bandwidth to at least 100 Mbps.
+•	 
+C. Redesign the data ingestion process to use gsutil tool to send the CSV files to a storage bucket in parallel.
+ 
+•	 
+D. Assemble 1,000 files into a tape archive (TAR) file. Transmit the TAR files instead, and disassemble the CSV files in the cloud upon receiving them.
+ 
+•	 
+E. Create an S3-compatible storage endpoint in your network, and use Google Cloud Storage Transfer Service to transfer on-premises data to the designated storage bucket.
+
+Question 19: 
+ 
+You are choosing a NoSQL database to handle telemetry data submitted from millions of Internet-of-Things (IoT) devices. The volume of data is growing at 100TB per year, and each data entry has about 100 attributes. The data processing pipeline does not require atomicity, consistency, isolation, and durability (ACID).
+However, high availability and low latency are required.
+You need to analyze the data by querying against individual fields. Which three databases meet your requirements? (Choose three.)
+
+•	 
+A. Redis
+•	 
+B. HBase
+ •	 
+C. MySQL
+•	 
+D. MongoDB
+ 	 
+E. Cassandra
+ 	 
+F. HDFS with Hive
+
+Question 20: 
+ 
+You are training a spam classifier. You notice that you are overfitting the training data. Which three actions can you take to resolve this problem? (Choose three.)
+
+•	 
+A. Get more training examples
+  
+B. Reduce the number of training examples
+•	 
+C. Use a smaller set of features
+	 
+D. Use a larger set of features
+•	 
+E. Increase the regularization parameters
+ 
+F. Decrease the regularization parameters
+
+
+Question 21: 
+ 
+You are implementing security best practices on your data pipeline. Currently, you are manually executing jobs as the Project Owner. You want to automate these jobs by taking nightly batch files containing non-public information from Google Cloud Storage, processing them with a Spark Scala job on a Google Cloud
+Dataproc cluster, and depositing the results into Google BigQuery.
+How should you securely run this workload?
+
+
+
+•	 
+A. Restrict the Google Cloud Storage bucket so only you can see the files
+•	 
+B. Grant the Project Owner role to a service account, and run the job with it
+•	 
+C. Use a service account with the ability to read the batch files and to write to BigQuery
+ 
+•	 
+D. Use a user account with the Project Viewer role on the Cloud Dataproc cluster to read the batch files and write to BigQuery
+
+Question 22: 
+ 
+Your globally distributed auction application allows users to bid on items. Occasionally, users place identical bids at nearly identical times, and different application servers process those bids. Each bid event contains the item, amount, user, and timestamp. You want to collate those bid events into a single location in real time to determine which user bid first. What should you do?
+
+	 
+A. Create a file on a shared file and have the application servers write all bid events to that file. Process the file with Apache Hadoop to identify which user bid first.
+•	 
+B. Have each application server write the bid events to Cloud Pub/Sub as they occur. Push the events from Cloud Pub/Sub to a custom endpoint that writes the bid event information into Cloud SQL.
+ 
+•	 
+C. Set up a MySQL database for each application server to write bid events into. Periodically query each of those distributed MySQL databases and update a master MySQL database with bid event information.
+•	 
+D. Have each application server write the bid events to Google Cloud Pub/Sub as they occur. Use a pull subscription to pull the bid events using Google Cloud Dataflow. Give the bid for each item to the user in the bid event that is processed first.
+
+
+Question 23: 
+ 
+Your organization has been collecting and analyzing data in Google BigQuery for 6 months. The majority of the data analyzed is placed in a time-partitioned table named events_partitioned. To reduce the cost of queries, your organization created a view called events, which queries only the last 14 days of data. The view is described in legacy SQL. Next month, existing applications will be connecting to BigQuery to read the events data via an ODBC connection. You need to ensure the applications can connect. Which two actions should you take? (Choose two.)
+
+•	 
+A. Create a new view over events using standard SQL
+•	 
+B. Create a new partitioned table using a standard SQL query
+•	 
+C. Create a new view over events_partitioned using standard SQL
+•	 
+D. Create a service account for the ODBC connection to use for authentication
+•	 
+E. Create a Google Cloud Identity and Access Management (Cloud IAM) role for the ODBC connection and shared "events"
+
+Question 24: 
+ 
+You have enabled the free integration between Firebase Analytics and Google BigQuery. Firebase now automatically creates a new table daily in BigQuery in the format app_events_YYYYMMDD. You want to query all of the tables for the past 30 days in legacy SQL. What should you do?
+
+
+•	 
+A. Use the TABLE_DATE_RANGE function
+  
+B. Use the WHERE_PARTITIONTIME pseudo column
+•	 
+C. Use WHERE date BETWEEN YYYY-MM-DD AND YYYY-MM-DD
+ 
+D. Use SELECT IF.(date >= YYYY-MM-DD AND date <= YYYY-MM-DD
+
+
+Question 25: 
+ 
+Your company is currently setting up data pipelines for their campaign. For all the Google Cloud Pub/Sub streaming data, one of the important business requirements is to be able to periodically identify the inputs and their timings during their campaign. Engineers have decided to use windowing and transformation in Google Cloud Dataflow for this purpose. However, when testing this feature, they find that the Cloud Dataflow job fails for the all streaming insert. What is the most likely cause of this problem?
+
+
+
+
+•	 
+A. They have not assigned the timestamp, which causes the job to fail
+•	 
+B. They have not set the triggers to accommodate the data coming in late, which causes the job to fail
+•	 
+C. They have not applied a global windowing function, which causes the job to fail when the pipeline is created
+•	 
+D. They have not applied a non-global windowing function, which causes the job to fail when the pipeline is created
+ 
+
+Question 26: 
+ 
+You architect a system to analyze seismic data. Your extract, transform, and load (ETL) process runs as a series of MapReduce jobs on an Apache Hadoop cluster. The ETL process takes days to process a data set because some steps are computationally expensive. Then you discover that a sensor calibration step has been omitted. How should you change your ETL process to carry out sensor calibration systematically in the future?
+
+
+
+
+•	 
+A. Modify the transformMapReduce jobs to apply sensor calibration before they do anything else.
+•	 
+B. Introduce a new MapReduce job to apply sensor calibration to raw data, and ensure all other MapReduce jobs are chained after this.
+  
+C. Add sensor calibration data to the output of the ETL process, and document that all users need to apply sensor calibration themselves.
+•	 
+D. Develop an algorithm through simulation to predict variance of data output from the last MapReduce job based on calibration factors, and apply the correction to all data.
+
+
+Question 27: 
+ 
+An online retailer has built their current application on Google App Engine. A new initiative at the company mandates that they extend their application to allow their customers to transact directly via the application. They need to manage their shopping transactions and analyze combined data from multiple datasets using a business intelligence (BI) tool. They want to use only a single database for this purpose. Which Google Cloud database should they choose?
+
+
+
+•	 
+A. BigQuery
+•	 
+B. Cloud SQL  
+•	 
+C. Cloud BigTable
+•	 
+D. Cloud Datastore
+
+
+Question 28: 
+ 
+You launched a new gaming app almost three years ago. You have been uploading log files from the previous day to a separate Google BigQuery table with the table name format LOGS_yyyymmdd. You have been using table wildcard functions to generate daily and monthly reports for all time ranges. Recently, you discovered that some queries that cover long date ranges are exceeding the limit of 1,000 tables and failing. How can you resolve this issue?
+
+
+
+
+•	 
+A. Convert all daily log tables into date-partitioned tables
+•	 
+B. Convert the sharded tables into a single partitioned table
+  
+C. Enable query caching so you can cache data from previous months
+•	 
+D. Create separate views to cover each month, and query from these views
+
+Question 29: 
+ 
+Your analytics team wants to build a simple statistical model to determine which customers are most likely to work with your company again, based on a few different metrics. They want to run the model on Apache Spark, using data housed in Google Cloud Storage, and you have recommended using Google Cloud
+Dataproc to execute this job. Testing has shown that this workload can run in approximately 30 minutes on a 15-node cluster, outputting the results into Google
+BigQuery. The plan is to run this workload weekly. How should you optimize the cluster for cost?
+
+
+
+
+•	 
+A. Migrate the workload to Google Cloud Dataflow
+•	 
+B. Use pre-emptible virtual machines (VMs) for the cluster
+ 
+C. Use a higher-memory node so that the job runs faster
+•	 
+D. Use SSDs on the worker nodes so that the job can run faster
+
+Question 30: 
+ 
+Your company receives both batch- and stream-based event data. You want to process the data using Google Cloud Dataflow over a predictable time period.
+However, you realize that in some instances data can arrive late or out of order. How should you design your Cloud Dataflow pipeline to handle data that is late or out of order?
+
+
+•	 
+A. Set a single global window to capture all the data.
+•	 
+B. Set sliding windows to capture all the lagged data.
+•	 
+C. Use watermarks and timestamps to capture the lagged data.
+ 
+D. Ensure every datasource type (stream or batch) has a timestamp, and use the timestamps to define the logic for lagged data.
+

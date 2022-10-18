@@ -1,0 +1,385 @@
+Question 1: 
+Skipped
+You are planning to migrate your current on-premises Apache Hadoop deployment to the cloud. You need to ensure that the deployment is as fault-tolerant and cost-effective as possible for long-running batch jobs. You want to use a managed service. What should you do?
+•	 
+A. Deploy a Cloud Dataproc cluster. Use a standard persistent disk and 50% preemptible workers. Store data in Cloud Storage, and change references in scripts from hdfs:// to gs://
+•	 
+B. Deploy a Cloud Dataproc cluster. Use an SSD persistent disk and 50% preemptible workers. Store data in Cloud Storage, and change references in scripts from hdfs:// to gs://
+•	 
+C. Install Hadoop and Spark on a 10-node Compute Engine instance group with standard instances. Install the Cloud Storage connector, and store the data in Cloud Storage. Change references in scripts from hdfs:// to gs://
+•	 
+D. Install Hadoop and Spark on a 10-node Compute Engine instance group with preemptible instances. Store data in HDFS. Change references in scripts from hdfs:// to gs://
+
+Question 2: 
+Skipped
+Your team is working on a binary classification problem. You have trained a support vector machine (SVM) classifier with default parameters, and received an area under the Curve (AUC) of 0.87 on the validation set. You want to increase the AUC of the model. What should you do?
+•	 
+A. Perform hyperparameter tuning
+•	 
+B. Train a classifier with deep neural networks, because neural networks would always beat SVMs
+•	 
+C. Deploy the model and measure the real-world AUC; it's always higher because of generalization
+•	 
+D. Scale predictions you get out of the model (tune a scaling factor as a hyperparameter) in order to get the highest AUC
+
+Question 3: 
+Skipped
+You need to deploy additional dependencies to all of a Cloud Dataproc cluster at startup using an existing initialization action. Company security policies require that Cloud Dataproc nodes do not have access to the Internet so public initialization actions cannot fetch resources. What should you do?
+•	 
+A. Deploy the Cloud SQL Proxy on the Cloud Dataproc master
+•	 
+B. Use an SSH tunnel to give the Cloud Dataproc cluster access to the Internet
+•	 
+C. Copy all dependencies to a Cloud Storage bucket within your VPC security perimeter
+
+•	 
+D. Use Resource Manager to add the service account used by the Cloud Dataproc cluster to the Network User role
+
+Question 4: 
+Skipped
+You need to choose a database for a new project that has the following requirements:
+✑ Fully managed
+✑ Able to automatically scale up
+✑ Transactionally consistent
+✑ Able to scale up to 6 TB
+✑ Able to be queried using SQL
+Which database do you choose?
+•	 
+A. Cloud SQL
+•	 
+B. Cloud Bigtable
+•	 
+C. Cloud Spanner
+•	 
+D. Cloud Datastore
+
+Question 5: 
+Skipped
+You work for a mid-sized enterprise that needs to move its operational system transaction data from an on-premises database to GCP. The database is about 20
+TB in size. Which database should you choose?
+•	 
+A. Cloud SQL
+•	 
+B. Cloud Bigtable
+•	 
+C. Cloud Spanner
+•	 
+D. Cloud Datastore
+
+Question 6: 
+Skipped
+You need to choose a database to store time series CPU and memory usage for millions of computers. You need to store this data in one-second interval samples. Analysts will be performing real-time, ad hoc analytics against the database. You want to avoid being charged for every query executed and ensure that the schema design will allow for future growth of the dataset. Which database and data model should you choose?
+•	 
+A. Create a table in BigQuery, and append the new samples for CPU and memory to the table
+•	 
+B. Create a wide table in BigQuery, create a column for the sample value at each second, and update the row with the interval for each second
+•	 
+C. Create a narrow table in Cloud Bigtable with a row key that combines the Computer Engine computer identifier with the sample time at each second
+•	 
+D. Create a wide table in Cloud Bigtable with a row key that combines the computer identifier with the sample time at each minute, and combine the values for each second as column data.
+
+Question 7: 
+Skipped
+You want to archive data in Cloud Storage. Because some data is very sensitive, you want to use the "Trust No One" (TNO) approach to encrypt your data to prevent the cloud provider staff from decrypting your data. What should you do?
+•	 
+A. Use gcloud kms keys create to create a symmetric key. Then use gcloud kms encrypt to encrypt each archival file with the key and unique additional authenticated data (AAD). Use gsutil cp to upload each encrypted file to the Cloud Storage bucket, and keep the AAD outside of Google Cloud.
+•	 
+B. Use gcloud kms keys create to create a symmetric key. Then use gcloud kms encrypt to encrypt each archival file with the key. Use gsutil cp to upload each encrypted file to the Cloud Storage bucket. Manually destroy the key previously used for encryption, and rotate the key once.
+•	 
+C. Specify customer-supplied encryption key (CSEK) in the .boto configuration file. Use gsutil cp to upload each archival file to the Cloud Storage bucket. Save the CSEK in Cloud Memorystore as permanent storage of the secret.
+•	 
+D. Specify customer-supplied encryption key (CSEK) in the .boto configuration file. Use gsutil cp to upload each archival file to the Cloud Storage bucket. Save the CSEK in a different project that only the security team can access.
+
+Question 8: 
+Skipped
+You have data pipelines running on BigQuery, Cloud Dataflow, and Cloud Dataproc. You need to perform health checks and monitor their behavior, and then notify the team managing the pipelines if they fail. You also need to be able to work across multiple projects. Your preference is to use managed products of features of the platform. What should you do?
+•	 
+A. Export the information to Cloud Stackdriver, and set up an Alerting policy
+•	 
+B. Run a Virtual Machine in Compute Engine with Airflow, and export the information to Stackdriver
+•	 
+C. Export the logs to BigQuery, and set up App Engine to read that information and send emails if you find a failure in the logs
+•	 
+D. Develop an App Engine application to consume logs using GCP API calls, and send emails if you find a failure in the logs
+
+Question 9: 
+Skipped
+Suppose you have a table that includes a nested column called "city" inside a column called "person", but when you try to submit the following query in BigQuery, it gives you an error.
+SELECT person FROM `project1.example.table1` WHERE city = "London"
+How would you correct the error?
+•	 
+A. Add ", UNNEST(person)" before the WHERE clause.
+•	 
+B. Change "person" to "person.city".
+•	 
+C. Change "person" to "city.person".
+•	 
+D. Add ", UNNEST(city)" before the WHERE clause.
+
+Question 10: 
+Skipped
+What are two of the benefits of using denormalized data structures in BigQuery?
+•	 
+A. Reduces the amount of data processed, reduces the amount of storage required
+•	 
+B. Increases query speed, makes queries simpler
+
+•	 
+C. Reduces the amount of storage required, increases query speed
+•	 
+D. Reduces the amount of data processed, increases query speed
+
+Question 11: 
+Skipped
+Which of these statements about exporting data from BigQuery is false?
+•	 
+A. To export more than 1 GB of data, you need to put a wildcard in the destination filename.
+•	 
+B. The only supported export destination is Google Cloud Storage.
+•	 
+C. Data can only be exported in JSON or Avro format.
+•	 
+D. The only compression option available is GZIP.
+
+
+
+Question 12: 
+Skipped
+What are all of the BigQuery operations that Google charges for?
+•	 
+A. Storage, queries, and streaming inserts
+•	 
+B. Storage, queries, and loading data from a file
+•	 
+C. Storage, queries, and exporting data
+•	 
+D. Queries and streaming inserts
+
+Question 13: 
+Skipped
+Which of the following is not possible using primitive roles?
+•	 
+A. Give a user viewer access to BigQuery and owner access to Google Compute Engine instances.
+•	 
+B. Give UserA owner access and UserB editor access for all datasets in a project.
+•	 
+C. Give a user access to view all datasets in a project, but not run queries on them.
+•	 
+D. Give GroupA owner access and GroupB editor access for all datasets in a project.
+
+Question 14: 
+Skipped
+Which of these statements about BigQuery caching is true?
+•	 
+A. By default, a query's results are not cached.
+•	 
+B. BigQuery caches query results for 48 hours.
+•	 
+C. Query results are cached even if you specify a destination table.
+•	 
+D. There is no charge for a query that retrieves its results from cache.
+
+
+Question 15: 
+Skipped
+Which of these sources can you not load data into BigQuery from?
+•	 
+A. File upload
+•	 
+B. Google Drive
+•	 
+C. Google Cloud Storage
+•	 
+D. Google Cloud SQL
+
+Question 16: 
+Skipped
+Which of the following statements about Legacy SQL and Standard SQL is not true?
+
+•	 
+A. Standard SQL is the preferred query language for BigQuery.
+•	 
+B. If you write a query in Legacy SQL, it might generate an error if you try to run it with Standard SQL.
+•	 
+C. One difference between the two query languages is how you specify fully-qualified table names (i.e. table names that include their associated project name).
+•	 
+D. You need to set a query language for each dataset and the default is Standard SQL.
+
+
+Question 17: 
+Skipped
+How would you query specific partitions in a BigQuery table?
+•	 
+A. Use the DAY column in the WHERE clause
+•	 
+B. Use the EXTRACT(DAY) clause
+•	 
+C. Use the __PARTITIONTIME pseudo-column in the WHERE clause
+•	 
+D. Use DATE BETWEEN in the WHERE clause
+
+Question 18: 
+Skipped
+Which SQL keyword can be used to reduce the number of columns processed by BigQuery?
+
+•	 
+A. BETWEEN
+•	 
+B. WHERE
+•	 
+C. SELECT
+•	 
+D. LIMIT
+
+Question 19: 
+Skipped
+To give a user read permission for only the first three columns of a table, which access control method would you use?
+
+•	 
+A. Primitive role
+•	 
+B. Predefined role
+•	 
+C. Authorized view
+
+D. It's not possible to give access to only the first three columns of a table.
+
+Question 20: 
+Skipped
+What are two methods that can be used to denormalize tables in BigQuery?
+•	 
+A. 1) Split table into multiple tables; 2) Use a partitioned table
+•	 
+B. 1) Join tables into one table; 2) Use nested repeated fields
+•	 
+C. 1) Use a partitioned table; 2) Join tables into one table
+•	 
+D. 1) Use nested repeated fields; 2) Use a partitioned table
+
+
+
+Question 21: 
+Skipped
+Which of these is not a supported method of putting data into a partitioned table?
+•	 
+A. If you have existing data in a separate file for each day, then create a partitioned table and upload each file into the appropriate partition.
+•	 
+B. Run a query to get the records for a specific day from an existing table and for the destination table, specify a partitioned table ending with the day in the format "$YYYYMMDD".
+•	 
+C. Create a partitioned table and stream new records to it every day.
+•	 
+D. Use ORDER BY to put a table's rows into chronological order and then change the table's type to "Partitioned".
+
+Question 22: 
+Skipped
+Which of these operations can you perform from the BigQuery Web UI?
+•	 
+A. Upload a file in SQL format.
+•	 
+B. Load data with nested and repeated fields.
+•	 
+C. Upload a 20 MB file.
+•	 
+D. Upload multiple files using a wildcard.
+
+Question 23: 
+Skipped
+Which methods can be used to reduce the number of rows processed by BigQuery?
+
+•	 
+A. Splitting tables into multiple tables; putting data in partitions
+•	 
+B. Splitting tables into multiple tables; putting data in partitions; using the LIMIT clause
+•	 
+C. Putting data in partitions; using the LIMIT clause
+•	 
+D. Splitting tables into multiple tables; using the LIMIT clause
+
+Question 24: 
+Skipped
+Why do you need to split a machine learning dataset into training data and test data?
+•	 
+A. So you can try two different sets of features
+•	 
+B. To make sure your model is generalized for more than just the training data
+•	 
+C. To allow you to create unit tests in your code
+•	 
+D. So you can use one dataset for a wide model and one for a deep model
+
+Question 25: 
+Skipped
+Which of these numbers are adjusted by a neural network as it learns from a training dataset (select 2 answers)?
+•	 
+A. Weights
+•	 
+B. Biases
+•	 
+C. Continuous features
+•	 
+D. Input values
+
+Question 26: 
+Skipped
+The CUSTOM tier for Cloud Machine Learning Engine allows you to specify the number of which types of cluster nodes?
+•	 
+A. Workers
+•	 
+B. Masters, workers, and parameter servers
+•	 
+C. Workers and parameter servers
+•	 
+D. Parameter servers
+
+
+Question 27: 
+Skipped
+Which software libraries are supported by Cloud Machine Learning Engine?
+
+•	 
+A. Theano and TensorFlow
+•	 
+B. Theano and Torch
+•	 
+C. TensorFlow
+•	 
+D. TensorFlow and Torch
+
+Question 28: 
+Skipped
+Which TensorFlow function can you use to configure a categorical column if you don't know all of the possible values for that column?
+•	 
+A. categorical_column_with_vocabulary_list
+•	 
+B. categorical_column_with_hash_bucket
+•	 
+C. categorical_column_with_unknown_values
+•	 
+D. sparse_column_with_keys
+
+Question 29: 
+Skipped
+Which of the following statements about the Wide & Deep Learning model are true? (Select 2 answers.)
+
+•	 
+A. The wide model is used for memorization, while the deep model is used for generalization.
+•	 
+B. A good use for the wide and deep model is a recommender system.
+•	 
+C. The wide model is used for generalization, while the deep model is used for memorization.
+•	 
+D. A good use for the wide and deep model is a small-scale linear regression problem.
+
+Question 30: 
+Skipped
+To run a TensorFlow training job on your own computer using Cloud Machine Learning Engine, what would your command start with?
+•	 
+A. gcloud ml-engine local train
+•	 
+B. gcloud ml-engine jobs submit training
+•	 
+C. gcloud ml-engine jobs submit training local
+•	 
+D. You can't run a TensorFlow program on your own computer using Cloud ML Engine .
+
+
