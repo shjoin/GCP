@@ -215,7 +215,13 @@ STEP010)
   echo "******************************************************"      2>&1  
   GV_ERROR=$?
   err_chk
-  GV_NEXT_STEP=STEP999
+if [[ $GV_NEXT_STEP = $GV_LAST_STEP ]]
+  then
+  	GV_NEXT_STEP=LASTSTEP
+  elif [[ $GV_NEXT_STEP != $GV_LAST_STEP ]]
+  then
+  	GV_NEXT_STEP=STEP020
+  fi
   ;;
 
 STEP999)
