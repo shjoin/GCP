@@ -1,0 +1,182 @@
+echo "Setting ENV variables"
+
+GV_HOME=/z325719dir
+#LOG=$GV_HOME/z325719dir/SEER_NCI/log
+LOG=/z325719dir/SEER_NCI/log
+
+GV_USER=
+RSFILE=/z325719dir/SEER_NCI/util/.credential.gpg
+export IBSGPG1=/z325719dir/SEER_NCI/util/gpgprod
+
+ARCHIVE=/CVSWINDOWNET/sFTP_Data/Prod/IDW/Retailfiles/ARCHIVE
+ 
+# General
+Var_time=`date "+%d%m%Y-%H%M%S"`
+Var_Year=`date +"%Y"`
+Var_Month=`date +"%m"`
+Var_Day=`date +"%d"`
+if [ "$1" ]
+then
+    KSHname=$1
+    LOGname=$LOG/$KSHname.$Var_time
+    export Var_time LOGname
+fi
+
+
+
+# Get Redshift Password Connection Function
+#*******************************************************************************************#
+#get_rs_password                                                                    #
+# Description : This function will decrypt file to obtain and set the Redshift password     #
+#*******************************************************************************************#
+function get_rs_password
+{
+  # Set local variables from global variables
+  echo "Password Function" 2>&1
+  echo "Setting local variables from global values" 2>&1
+  LV_RSUSER="SAS_SERVER_PWD"
+  #LV_DB=$GV_DB
+  # temporary output file
+  echo "Setting up temp file" 2>&1
+  LV_TMPFILE=$GV_HOME/SEER_NCI/util/env/rsenv_$LV_RSUSER.dat
+  # file containing password
+  LV_FILE=$RSFILE
+  # File containing passphrase for gpg public key used to encrypt file
+  echo "obtaining passphrase for gpg file" 2>&1
+  LV_GPGPASSFILE=$IBSGPG1
+  # Decrypt password file with passphrase
+  echo "decrypting gpg file" 2>&1
+  gpg -d --batch --yes --passphrase-fd 0 -o $LV_TMPFILE $LV_FILE < $LV_GPGPASSFILE
+  #chmod file to read only from HOME user
+  chmod 700 $LV_TMPFILE
+  # Set password variable with contents of decrypted file
+  echo "setting variable" 2>&1
+  PGPASSWORD=`cat $LV_TMPFILE`
+  export PGPASSWORD
+  #remove temp file once variable has been set
+  rm $LV_TMPFILE
+}
+
+
+
+
+# Number of Parameter Check
+#*******************************************************************************************#
+# parameter_check <RequiredParameter> <ActualParameterPassed>                               #
+# This script will check the parameters passed it if they are not email it will fail and    #
+# exits with error code 1                                                                   #
+# RequiredParameter     : 3                                                                 #
+# ActualParameterPassed : 3                                                                 #
+#*******************************************************************************************#
+function parameter_check
+{
+  PV_MODULE=$1
+  PV_REQUIRED_PARAMETER=$2
+  PV_ACTUAL_PARAMETER=$3
+  if [[ $PV_REQUIRED_PARAMETER != $PV_ACTUAL_PARAMETER ]]
+  then
+    echo "$PV_MODULE : Insufficient Parameter"
+    mailx -s "$PV_MODULE : Insufficient Parameter" "$EMAIL_ERROR_GROUP" < $LOGname
+    exit 1;
+  fi
+}
+
+
+# Check the File exist 
+#*******************************************************************************************#
+# chk_file_exists FileName Email                                                   #
+# Description           : This function will verify the existance of the file and exists    #
+#                         the application if the required file is not existing              #
+# Parameters                                                                                #
+# ----------                                                                                #
+# File Name             : camsxxx.sql                                                       #
+# Email Group           : xyz@email.com                                   #
+# Email Subject         : Script Name                                     #
+#*******************************************************************************************#
+function chk_file_exists
+{
+  PV_FILE_NAME="$1"
+  PV_EMAIL="$2"
+  PV_EMAIL_SUBJECT="$3"
+
+  LV_ERROR=0
+  #---- Check the file exists --------
+  if [[ -f $PV_FILE_NAME ]]
+  then
+    LV_ERROR=0 # File Found and Accessible
+	echo "File ($PV_FILE_NAME) Found and Accessible"
+  else
+    echo "$PV_EMAIL_SUBJECT : No such file or directory or Not able to access ($PV_FILE_NAME)"
+    LV_ERROR=1 # File Not Found or Not Accessible
+  fi
+
+  return $LV_ERROR
+}
+
+
+
+# Error Check Function
+#*******************************************************************************************#
+# err_chk <ReturnCode> <SendEmailFlag> <EmailGroup> <EmailSubject> <LogFileFlag> <ExitFlag> #
+# Description : This script will check return code and send out email based on the          #
+#               the parameter passed.                                                       #
+# Parameters (all sourced from calling KSH)                                                 #
+# ----------                                                                                #
+# Return Code           : 0,1,2...                                                          #
+# Send Mail             : Y/N                                                               #
+# Email Group           : xyz@emaildomain.com                                               #
+# Email Subject         : Description / Ksh Name                                            #
+# Send Log File         : Y/N                                                               #
+# Use Exit Logic        : Y/N                                                               #
+#*******************************************************************************************#
+function err_chk
+{
+  # Check The total Number of parameters Passed
+  LV_TOTAL_PARAMETER=$#
+  parameter_check "err_chk" "$LV_TOTAL_PARAMETER" "0"
+
+  #PV_RETURN_CODE=$1             # Return Code           : 0,1,2...
+  #PV_SEND_MAIL=$2               # Send Mail             : Y/N
+  #PV_EMAIL_GROUP=$3             # Email Group           : xyz@emaildomain.com
+  #PV_EMAIL_SUBJECT=$4           # Email Subject         : Description / Ksh Name
+  #PV_SEND_LOG_FILE=$5           # Send Log File         : Y/N
+  #PV_EXIT_FLAG=$6               # Use Exit Logic        : Y/N
+
+  # Echo Return Status
+  echo "Error Check Return Code:  $GV_ERROR"
+
+  # Assign Return Status
+  PV_RETURN_CODE=$GV_ERROR
+
+  if [[ $PV_RETURN_CODE = 0 ]]
+  then
+    grep "ORA-01017" $LOGname # Looking for any oracle error which are not trapped
+    LV_ERROR=$?
+    if  [[ $LV_ERROR = 0 ]]
+    then
+      LV_STATUS="FAILED"
+      PV_RETURN_CODE=1
+    else
+      LV_STATUS="SUCCESS"
+    fi
+  else
+    LV_STATUS="FAILED"
+  fi
+
+  # Pre-Fix Status and Step to the subject
+  LV_EMAIL_SUBJECT1="$LV_STATUS : $GV_EMAIL_SUBJECT"
+
+  # Send Email logic
+  if [[ $GV_SEND_MAIL = "Y" && $PV_RETURN_CODE != 0 ]]
+  then
+    send_email "$GV_EMAIL_GROUP" "$LV_EMAIL_SUBJECT1" "$GV_SEND_LOG_FILE"
+  fi
+
+  # Exit with return code
+  if [[ $PV_RETURN_CODE != 0 && $GV_EXIT_FLAG = "Y" ]]
+  then
+    exit $PV_RETURN_CODE
+  fi
+}
+
+

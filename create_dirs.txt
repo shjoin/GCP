@@ -1,0 +1,20 @@
+#!/usr/bin/bash
+
+apt-get install openssh-client #Installing ssh and scp  in Ubuntu
+apt-get install gnupg
+apt update
+apt upgrade
+apt-get install vim
+ 
+rm -r /z325719dir
+mkdir -p /z325719dir/SEER_NCI/{RETAIL_MONTHLY_INCREMENTAL_DATA,SEER-NCI-MONTHLY_DATA_RELESE,util,ksh,log}
+mkdir /z325719dir/SEER_NCI/util/env
+
+#mkdir /z325719dir/SEER_NCI/util/gpgprod
+#mkdir /z325719dir/SEER_NCI/RETAIL_MONTHLY_INCREMENTAL_DATA/archive
+#mkdir /CVSWINDOWNET/sFTP_Data/Prod/IDW/Retailfiles/ARCHIVE
+
+
+rm -r /CVSWINDOWNET
+mkdir -p /CVSWINDOWNET/sFTP_Data/Prod/IDW/Retailfiles
+

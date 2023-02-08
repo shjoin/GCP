@@ -1,0 +1,258 @@
+#!/usr/bin/bash
+# ---- Global Env Pass Start ----
+set +o xtrace
+set +o verbose
+# ---- Global Env Pass End ----
+#
+#****************************************************************
+#Name:          MVM_IMS_ETL.ksh
+#Written by:    Shailendra Joshi
+#Date:          02/02/2023
+#Description:   Extract Claims(PBM/SPCLT/RETAIL data in files
+#
+#Parameters:    P1 = DESIRE_MONTH_YEAR(Optional)
+#               P2 = DESIRE_FILE_SUFFIX(Optional)
+#               P3= Restart Step Label (Optional)
+#
+#
+#Modifications:
+#Date           Name            Description
+#--------       ------------    -------------------------
+#02/02/2023     Shailendra Joshi Initial creation
+#****************************************************************
+#
+#
+# ---- Global Variable Area Start ----
+GV_JOB_NAME="job_mvm_ims_elt_extract"
+GV_DESIRE_MONTH_YEAR=$1 #202212 # OPTIONAL
+GV_DESIRE_FILE_SUFFIX=$2 #0 or 1 #OPTIONAL
+GV_NEXT_STEP=$3  #OPTIONAL
+GV_CURRENT_STEP=STEP000
+GV_RESTART_STEP=STEP000
+GV_ERROR=0
+GV_WARNING=0
+GV_KSHname=${0%".ksh"}
+
+# ---- Global Application Environment Setup ----
+#GV_HOME=/ano_ops
+GV_HOME=$HOME
+
+
+
+
+export KSHname=$GV_KSHname
+#KSHname=${KSHname#"$GV_HOME/z325719dir/SEER_NCI/ksh/"}
+KSHname=${KSHname#"/z325719dir/SEER_NCI/ksh/"}
+KSHname=${KSHname#"./"}
+
+# --- Environment Setup ---
+#source FILENAME [arguments]
+#source $GV_HOME/z325719dir/SEER_NCI/util/env/env_mvm $KSHname
+source /z325719dir/SEER_NCI/util/env/env_mvm $KSHname
+
+
+
+#Source
+#RETAIL DATA
+SRC_WIN_NET_USR="root" #SFTP_USER
+SRC_WIN_NET_SERVER_NM="/CVSWINDOWNET/sFTP_Data/Prod/IDW/Retailfiles" #RETAIL DATA-Source#windows network dir
+SRC_WIN_NET_CONN="$SRC_WIN_NET_USR@$SRC_WIN_NET_SERVER_NM"
+
+ #Destination
+#ano_ops SAS/UNIX Machine for RETAIL FILES
+#TRG_UNIX_DIR_RETAIL= $GV_HOME/z325719dir/SEER_NCI/RETAIL_MONTHLY_INCREMENTAL_DATA
+TRG_UNIX_DIR_RETAIL="/z325719dir/SEER_NCI/RETAIL_MONTHLY_INCREMENTAL_DATA"
+
+
+#ano_ops SAS/UNIX Machine for IMS-INC TWO FILES
+#TRG_UNIX_DIR_IMS_NCI= $GV_HOME/z325719dir/SEER_NCI/SEER-NCI-MONTHLY_DATA_RELESE
+TRG_UNIX_DIR_IMS_NCI="/z325719dir/SEER_NCI/SEER-NCI-MONTHLY_DATA_RELESE"
+
+
+echo "**** Log File name $LOGname     ***" 
+echo "**** Home Location $GV_HOME     ***" 
+echo "**** Shell Script name $KSHname   ***" 
+
+
+#Email Initialization
+# the below variables control the email functionality for the err_chk function
+GV_SEND_MAIL="N"                     # Y/N | If a batch process; always N
+GV_EMAIL_GROUP="shjoin@gmail.com"    # where should the emails go to
+GV_EMAIL_SUBJECT="MVM_IMS_ETL.ksh"   # description/KSHname
+GV_SEND_LOG_FILE="Y"                 # Y/N
+GV_EXIT_FLAG="Y"                     # Y/N
+
+# ---- Log Creation ----
+echo $LOGname
+touch $LOGname
+
+# ---- Global Function Area Start ----
+ 
+# ---- Main Program Start ----
+# Command Grouping Begins Here ..
+#
+
+{
+  if [[ $GV_DESIRE_MONTH_YEAR = "" ]]
+  then	
+	CURRMONTH=`(date +%Y-%m)` #Current month like 2023-02
+    GV_MONTH_YEAR=`date -d "$CURRMONTH-15 last month" '+%Y%m'`
+  elif   [[ $GV_DESIRE_MONTH_YEAR != "" ]]	
+  then
+    GV_MONTH_YEAR=$GV_DESIRE_MONTH_YEAR
+  fi
+  
+  if [[ $GV_DESIRE_FILE_SUFFIX = "" ]]
+  then	
+		FILE_SUFFIX=0		
+  elif [[ $GV_DESIRE_FILE_SUFFIX != "" ]]	
+  then
+	  FILE_SUFFIX=$GV_DESIRE_FILE_SUFFIX
+  fi  
+  	
+  
+  if [[ $GV_NEXT_STEP != "" ]]
+  then
+    GV_RESTART_STEP=$GV_NEXT_STEP
+    echo "*****************************************************"    2>&1
+    echo "**** JOB RESTARTED AT $GV_RESTART_STEP            ***"    2>&1
+    echo "*****************************************************"    2>&1
+  elif  [[ $GV_NEXT_STEP = "" ]]
+  then
+    GV_NEXT_STEP=STEP010
+  fi
+  
+  until  [[ $GV_NEXT_STEP = "LASTSTEP"  ]]
+do
+case $GV_NEXT_STEP in
+
+STEP010)
+# ---Retail-Monthly TAG Files move from windows network Dir to SAS/UNIX-teradat -----------
+  GV_CURRENT_STEP=STEP010
+  GV_RESTART_STEP=STEP010
+  
+  LOG_REMARK=" downloading from Windows network Retail file(s) "
+  echo "***************************************************"   >>  $LOGname 2>&1
+  echo "$GV_CURRENT_STEP: `date "+%H:%M:%S"`    $LOG_REMARK       "   >>  $LOGname 2>&1
+  echo "***************************************************"   >>  $LOGname 2>&1
+  
+   # Get actual remote file name, for files that are to be copied..  
+  RetailFilename_TAG=$SRC_WIN_NET_SERVER_NM/SEER_CVS_PharmacyDrug"_"$GV_MONTH_YEAR"_TAG_"$FILE_SUFFIX".txt"
+  RetailFilename=$SRC_WIN_NET_SERVER_NM/SEER_CVS_PharmacyDrug"_"$GV_MONTH_YEAR"_"$FILE_SUFFIX".txt" 
+  echo "Retail file name $RetailFilename_TAG"
+  chk_file_exists "$RetailFilename_TAG" "$GV_EMAIL_GROUP" "$KSHname:$GV_CURRENT_STEP"
+  chk_file_exists "$RetailFilename" "$GV_EMAIL_GROUP" "$KSHname:$GV_CURRENT_STEP"
+  LV_FILE_PATTERN="SEER_CVS_PharmacyDrug_"$GV_MONTH_YEAR  
+  #FILES=$(ssh $SRC_WIN_NET_CONN ls -tr $SRC_WIN_NET_SERVER_NM| grep -i $LV_FILE_PATTERN )
+  get_rs_password
+  echo "Password is  $PGPASSWORD"
+  FILES=$(ls -tr $SRC_WIN_NET_SERVER_NM| grep -i $LV_FILE_PATTERN )
+  echo "file_count= $file_count"   >>  $LOGname 2>&1
+  
+  if [ "${FILES}" == "" ]
+  then
+    echo "Alert: No Retail Files is available to copy from the remote server.$SRC_WIN_NET_SERVER_NM "| tee -a $LOGname
+    GV_NEXT_STEP=LASTSTEP
+  else
+        echo $FILES  | tee -a $LOGname
+  for i in $FILES ;
+  do
+  scp_file_name=$(echo $i)
+  remote_file_name="$SRC_WIN_NET_SERVER_NM/$scp_file_name"
+  echo $remote_file_name  | tee -a $LOGname
+  
+  echo " "   | tee -a $LOGname
+  echo "***************************************************"                     | tee -a $LOGname
+  echo "${GV_CURRENT_STEP} :  SCP Get Step with Checksum:  `date "+%H:%M:%S"`"   | tee -a $LOGname
+  echo "************************************ ***************"                     | tee -a $LOGname
+ 
+  # Get checksum at source, for files that are to be copied..
+  
+  if [ "${scp_file_name}" != "" ]
+  then
+  Before_Checksum=$(cksum $remote_file_name | awk '{print $1}')
+  else
+  Before_Checksum=""
+  fi
+  
+  if [ "${Before_Checksum}" == "" ]
+  then
+    echo "Alert: No Retail Files is available to copy from the remote server(Before_Checksum)."    | tee -a $LOGname
+    GV_NEXT_STEP=LASTSTEP
+   else
+    #scp $SRC_WIN_NET_CONN:$remote_file_name $TRG_UNIX_DIR_RETAIL  >> $LOGname 2>&1
+	echo "downloading file $i "  >>  $LOGname 2>&1
+	scp $remote_file_name $TRG_UNIX_DIR_RETAIL  >> $LOGname 2>&1
+    GV_ERROR=$?
+    err_chk
+	
+	# Get checksum at destn, for files that are to be copied..
+    After_Checksum=$(cksum $TRG_UNIX_DIR_RETAIL/$scp_file_name | awk '{print $1}')
+	
+	# Verify that the Checksums at destn match with those at source ..
+    if [ "${After_Checksum}" == "${Before_Checksum}" ]
+    then
+      echo "Checksums match between Source and Destn." | tee -a $LOGname
+      #ssh $SRC_WIN_NET_CONN rm $remote_file_name   2>&1
+	  #rm $remote_file_name   2>&1
+	  mv $remote_file_name $ARCHIVE/$scp_file_name  >> $LOGname 2>&1
+    else
+      echo "Error: Checksums do not match between Source and Destn!"   | tee -a $LOGname
+      echo "Before Checksum: "${Before_Checksum} | tee -a $LOGname
+      echo "After Checksum: "${After_Checksum} | tee -a $LOGname
+      GV_ERROR=255
+      err_chk
+    fi
+   echo " "  | tee -a $LOGname
+   GV_NEXT_STEP=STEP020
+   fi
+   done
+   fi
+  
+  LV_JOB=$GV_JOB_NAME" "$LOG_REMARK
+  echo "******************************************************"      2>&1
+  echo " $GV_CURRENT_STEP : JOB  $LV_JOB : `date "+%H:%M:%S"` "         2>&1
+  echo "******************************************************"      2>&1  
+  GV_ERROR=$?
+  err_chk
+  GV_NEXT_STEP=STEP999
+  ;;
+
+STEP999)
+#---------- SEND EMAIL -----------
+  GV_CURRENT_STEP=STEP999
+  GV_RESTART_STEP=STEP999
+  echo "******************************************************"      2>&1
+  echo "$GV_CURRENT_STEP : SEND EMAIL  `date "+%H:%M:%S"`"           2>&1
+  echo "******************************************************"      2>&1
+  #send_email $GV_EMAIL_GROUP "Job $GV_JOB_NAME Successfully Completed." $GV_SEND_MAIL
+  GV_ERROR=$?
+  err_chk
+  GV_NEXT_STEP=LASTSTEP
+  ;;
+esac
+done
+
+#
+# Following echo statements are also mandatory..
+#
+if [[ $GV_WARNING -eq 3 ]]
+then
+  echo " "
+  echo "******************************************************"   | tee -a $LOGname
+  echo "**** WARNING: $KSHname HAS COMPLETED WITH WARNING! ***"   | tee -a $LOGname
+  echo "******************************************************"   | tee -a $LOGname
+fi
+  echo " "
+  echo "******************************************************"      2>&1
+  echo "*** SUCCESS:  $KSHname HAS COMPLETED SUCCESSFULLY! ***"      2>&1
+  echo "******************************************************"      2>&1
+}  |  tee $LOGname
+
+# Exit script normally with exit 0
+  echo " "
+  echo "******************************************************"      | tee -a $LOGname
+  echo "*** SUCCESS:  $KSHname HAS COMPLETED SUCCESSFULLY! ***"      | tee -a $LOGname
+  echo "******************************************************"      | tee -a $LOGname
+  exit 0
+  
